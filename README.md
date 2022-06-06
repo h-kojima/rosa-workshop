@@ -1,4 +1,4 @@
-## Welcome to GitHub Pages
+## Welcome to GitHub Pages rosa-workshop contents.
 
 You can use the [editor on GitHub](https://github.com/h-kojima/rosa-workshop/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
 
