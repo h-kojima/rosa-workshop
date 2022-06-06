@@ -5,7 +5,7 @@ You can use the [editor on GitHub](https://github.com/h-kojima/rosa-workshop/edi
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
 PDF
-<embed src="https://h-kojima.github.io/rosa-workshop/pdf/2022-rosa-workshop-lecture.pdf" type="application/pdf" width="1920" height="1080">
+<embed src="https://h-kojima.github.io/rosa-workshop/pdf/2022-rosa-workshop-lecture.pdf" type="application/pdf" width="640" height="360">
 
 ### Markdown
 
