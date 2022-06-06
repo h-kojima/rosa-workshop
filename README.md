@@ -4,6 +4,9 @@ You can use the [editor on GitHub](https://github.com/h-kojima/rosa-workshop/edi
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
+PDF
+<embed src="https://h-kojima.github.io/rosa-workshop/pdf/2022-rosa-workshop-lecture.pdf" type="application/pdf" width="100%" height="100%">
+
 ### Markdown
 
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
