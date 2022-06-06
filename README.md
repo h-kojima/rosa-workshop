@@ -6,6 +6,7 @@ Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://j
 
 PDF
 <embed src="https://h-kojima.github.io/rosa-workshop/pdf/2022-rosa-workshop-lecture.pdf" type="application/pdf" width="640" height="360">
+<embed src="https://h-kojima.github.io/rosa-workshop/pdf/2022-rosa-workshop-lecture.pdf#page=1&scrollbar=0&view=Fit&viewrect=0,0,570,0" width="640" height="360" hspace="0" vspace="0">
 
 ### Markdown
 
