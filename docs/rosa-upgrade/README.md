@@ -6,34 +6,34 @@ OpenShift Cluster Manager (OCM)を使用して、AWS STSを使用するROSAク�
 
 [OCMにログイン](https://console.redhat.com/openshift/)して、アップグレードするROSAクラスターを選択し、Settingsタブをクリックして、「Update」ボタンをクリックします。
 
-![ROSAサービスの有効化](./images/rosa-enable.png)
-<div style="text-align: center;">ROSAサービスの有効化</div>　　
+![ROSAクラスターの設定](./images/rosa-settings.png)
+<div style="text-align: center;">ROSAクラスターの設定画面</div>　　
 
 アップグレードするバージョンを選択して、「Next」をクリックします。
 
-![ROSAサービスの有効化](./images/rosa-enable.png)
-<div style="text-align: center;">ROSAサービスの有効化</div>　　
+![バージョンの選択](./images/version-select.png)
+<div style="text-align: center;">バージョンの選択</div>　　
 
 クラスターのアップグレードをスケジュールします。 1時間以内にアップグレードするには、「Update now」を選択し、「Next」をクリックします。
 指定した時間にアップグレードするには、「Schedule a different time」を選択し、アップグレードの日時を設定します。「Next」をクリックして確認ダイアログに進みます。
 
-![ROSAサービスの有効化](./images/rosa-enable.png)
-<div style="text-align: center;">ROSAサービスの有効化</div>　　
+![アップグレードのスケジュール](./images/schedule.png)
+<div style="text-align: center;">アップグレードのスケジュール</div>　　
 
 アップグレードするバージョンとスケジュールを確認したら、「Confirm Update」をクリックして、アップグレードをスケジュールします。
 
-![ROSAサービスの有効化](./images/rosa-enable.png)
-<div style="text-align: center;">ROSAサービスの有効化</div>　
+![アップグレードの確認](./images/confirm.png)
+<div style="text-align: center;">アップグレードの確認</div>　
 
 アップグレードのステータスが「Update status」ペインに表示されます。
 
-![ROSAサービスの有効化](./images/rosa-enable.png)
-<div style="text-align: center;">ROSAサービスの有効化</div>　　
+![アップグレードのステータス](./images/status.png)
+<div style="text-align: center;">アップグレードのステータス</div>　　
 
-アップグレードをキャンセルしたい場合、「Cancel this update」をクリックして、「Cancel this update」をクリックします。
+アップグレードをキャンセルしたい場合、「Cancel this update」を選択します。
 
-![ROSAサービスの有効化](./images/rosa-enable.png)
-<div style="text-align: center;">ROSAサービスの有効化</div>　　
+![アップグレードのキャンセル](./images/cancel.png)
+<div style="text-align: center;">アップグレードのキャンセル</div>　　
 
 ### ROSA CLIを使用したアップグレード
 
@@ -71,4 +71,28 @@ VERSION  NOTES
 4.10.15  scheduled for 2022-06-07 08:00 UTC
 ```
 
-現時点で、ROSA CLIによるアップグレードのキャンセルはできませんので、アップグレードのキャンセルをしたい場合、OCMのコンソールから実施してください。
+現時点で、ROSA CLIによるアップグレードのキャンセルはできませんので、アップグレードのキャンセルをしたい場合、OCMのコンソールから実施してください。アップグレードを指定またはキャンセルすると、Red Hat SREチームからメールの通知がきます。
+
+- アップグレードの指定をした場合の通知メールの例
+```
+Hello Hiforumi,
+
+This notification is for your test-cluster01 cluster.
+Your Cluster is scheduled for upgrade maintenance to version '4.10.15' on 2022-06-07 at 08:00 UTC.
+
+Please contact Red Hat support if you have any questions.
+Thank you for choosing Red Hat OpenShift Service on AWS,
+OpenShift SRE
+```
+
+- アップグレードのキャンセルをした場合の通知メールの例
+```
+Hello Hiforumi,
+
+This notification is for your test-cluster01 cluster.
+Your Cluster upgrade maintenance to version '4.10.15' on 2022-06-07 at 06:00 UTC has been cancelled.
+
+If you have any questions, please contact us. Review the support process for guidance on working with Red Hat support.
+Thank you for choosing Red Hat OpenShift Service on AWS,
+OpenShift SRE
+```
