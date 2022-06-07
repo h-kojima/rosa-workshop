@@ -15,7 +15,7 @@ PDFの資料は[こちら](https://h-kojima.github.io/rosa-workshop/docs/pdf/202
 
 ### Contents
 
-- \[デモ\] ROSA環境の作成(https://github.com/h-kojima/rosa-workshop/tree/main/docs/rosa-create)
+- [\[デモ\] ROSA環境の作成](https://github.com/h-kojima/rosa-workshop/tree/main/docs/rosa-create)
 - \[ハンズオン\] ROSA環境へのアクセス
 - \[ハンズオン\] アプリケーションのデプロイのクイックスタート
 - \[ハンズオン\] 永続ボリュームとしての AWS EBS/EFS の利用設定
