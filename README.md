@@ -21,6 +21,6 @@ PDFの資料は[こちら](docs/pdf/2022-rosa-workshop-lecture.pdf)からダウ�
 - \[ハンズオン\] 永続ボリュームとしての AWS EBS/EFS の利用設定
 - \[ハンズオン\] AWS Controllers for Kubernetes (ACK) による AWS S3の利用
 - [\[デモ\] ROSAクラスターのアップグレード](docs/rosa-upgrade)
-- \[デモ\] ROSAクラスターの削除
+- [\[デモ\] ROSAクラスターの削除](docs/rosa-delete)
 - \[ハンズオン\] サンプルアプリのデプロイを通した、Kubernetes/OpenShiftの様々な機能の体感
 
