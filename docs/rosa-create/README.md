@@ -235,4 +235,4 @@ State:                      installing
 $ rosa logs install -c test-cluster01 --watch
 ```
 
-40分くらい待つと、ROSAクラスターのデプロイが完了し、STATEが「ready」状態になり、ROSAクラスターにアクセスできるようになります。
+40分くらい待つとROSAクラスターのデプロイが完了し、STATEが「ready」状態になり、ROSAクラスターにアクセスできます。
