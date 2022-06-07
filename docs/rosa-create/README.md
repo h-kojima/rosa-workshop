@@ -240,6 +240,24 @@ State:                      installing
 また、クラスターのデプロイログは次のコマンドで確認できます。
 ```
 $ rosa logs install -c test-cluster01 --watch
+...<省略>...
+time="2022-06-07T03:52:52Z" level=info msg="Install complete!"
+time="2022-06-07T03:52:52Z" level=info msg="To access the cluster as the system:admin user when using 'oc', run 'export KUBECONFIG=/output/auth/kubeconfig'"
+time="2022-06-07T03:52:52Z" level=info msg="Access the OpenShift web-console here: https://console-openshift-console.apps.test-cluster01.XXXXX.p1.openshiftapps.com"
+REDACTED LINE OF OUTPUT
+time="2022-06-07T03:52:52Z" level=debug msg="Time elapsed per stage:"
+time="2022-06-07T03:52:52Z" level=debug msg="           cluster: 5m28s"
+time="2022-06-07T03:52:52Z" level=debug msg="         bootstrap: 54s"
+time="2022-06-07T03:52:52Z" level=debug msg="Bootstrap Complete: 13m11s"
+time="2022-06-07T03:52:52Z" level=debug msg="               API: 3m32s"
+time="2022-06-07T03:52:52Z" level=debug msg=" Bootstrap Destroy: 1m7s"
+time="2022-06-07T03:52:52Z" level=debug msg=" Cluster Operators: 12m47s"
+time="2022-06-07T03:52:52Z" level=info msg="Time elapsed: 33m33s"
+time="2022-06-07T03:52:53Z" level=info msg="command completed successfully" installID=qcsg75m8
+time="2022-06-07T03:52:53Z" level=info msg="saving installer output" installID=qcsg75m8
+...<省略>...
+time="2022-06-07T03:52:53Z" level=info msg="install completed successfully" installID=qcsg75m8
+I: Cluster 'test-cluster01' is now ready
 ```
 
 40分くらい待つとROSAクラスターのデプロイが完了して、STATEが「ready」状態になり、作成したROSAクラスターにアクセスできるようになります。
