@@ -12,6 +12,7 @@ ROSAクラスターをデプロイするには、AWSアカウントと[Red Hat�
 [AWSコンソール](https://console.aws.amazon.com/rosa/)でROSAサービスを有効にします。AWSアカウントにログインして、「Enable OpenShift」をクリックします。次のような画面になれば、ROSAサービスが有効になっています。
 
 ![ROSAサービスの有効化](./images/rosa-enable.png)
+<div style="text-align: center;">ROSAサービスの有効化</div>
 
 AWS CLIを[インストール](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)して、[設定](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-chap-configure.html)します。このとき、「~/.aws/credentials」で、次の情報を設定する必要があります。
 
