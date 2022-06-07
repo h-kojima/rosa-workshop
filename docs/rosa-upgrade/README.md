@@ -86,7 +86,6 @@ Thank you for choosing Red Hat OpenShift Service on AWS,
 OpenShift SRE
 ```
 
-　　
 - アップグレードのキャンセルをした場合の通知メールの例
 
 ```
