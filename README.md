@@ -15,12 +15,12 @@ PDFの資料は[こちら](docs/pdf/2022-rosa-workshop-lecture.pdf)からダウ�
 
 ### Contents
 
-- [\[デモ\] ROSA環境の作成](docs/rosa-create)
-- \[ハンズオン\] ROSA環境へのアクセス
+- [\[デモ\] ROSAクラスターの作成](docs/rosa-create)
+- \[ハンズオン\] ROSAクラスターへのアクセス
 - \[ハンズオン\] アプリケーションのデプロイのクイックスタート
 - \[ハンズオン\] 永続ボリュームとしての AWS EBS/EFS の利用設定
 - \[ハンズオン\] AWS Controllers for Kubernetes (ACK) による AWS S3の利用
-- \[デモ\] ROSA環境のアップデート
-- \[デモ\] ROSA環境の削除
+- \[デモ\] ROSAクラスターのアップデート
+- \[デモ\] ROSAクラスターの削除
 - \[ハンズオン\] サンプルアプリのデプロイを通した、Kubernetes/OpenShiftの様々な機能の体感
 
