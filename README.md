@@ -2,7 +2,7 @@
 
 Red OpenShift Service on AWS (ROSA) Workshops プロジェクトは、インストラクター主導のワークショップまたはセルフペースの演習で、ROSAを効果的に紹介及び体感していただくことを目的としています。
 
-最初に受講者は、下記の資料でコンテナ/Kubernetes/OpenShift/ROSAの概要を学習します。
+最初に受講者は、コンテナ/Kubernetes/OpenShift/ROSAの概要を学習します。
 
 <embed src="https://h-kojima.github.io/rosa-workshop/pdf/2022-rosa-workshop-lecture.pdf#&scrollbar=0&view=Fit&viewrect=0,0,570,0" width="640" height="360" hspace="0" vspace="0">
 
