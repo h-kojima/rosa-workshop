@@ -11,7 +11,7 @@ ROSAクラスターをデプロイするには、AWSアカウントと[Red Hat�
 
 [AWSコンソール](https://console.aws.amazon.com/rosa/)でROSAサービスを有効にします。AWSアカウントにログインして、「Enable OpenShift」をクリックします。次のような画面になれば、ROSAサービスが有効になっています。
 
-「ROSAサービス有効化の画像を貼り付け」
+![ROSAサービスの有効化](./images/rosa-enable.png)
 
 AWS CLIを[インストール](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)して、[設定](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-chap-configure.html)します。このとき、「~/.aws/credentials」で、次の情報を設定する必要があります。
 
@@ -36,11 +36,11 @@ $ aws iam create-service-linked-role --aws-service-name "elasticloadbalancing.am
 
 IAMロールが作成されると、次のような画面を確認できます。
 
-「IAMポリシーの画像を貼り付け」
+![AWS ELBのロール](./images/iam-elb-role.png)
 
 続いて、[ROSA CLI](https://console.redhat.com/openshift/downloads)をダウンロードして、PATHを設定します。
 
-「ROSA CLIのダウンロード画像を貼り付け」
+![ROSA CLIのダウンロード画面](./images/rosa-cli-download.png)
 
 ```
 $ chmod +x rosa
@@ -120,11 +120,12 @@ I: To create a cluster with these roles, run the following command:
 rosa create cluster --sts
 ```
 
-必要なIAMロールとポリシーが作成されていることを確認できます。
+AWSコンソールから、必要なIAMロールとポリシーが作成されていることを確認できます。
 
-「IAMロールとポリシーの画像貼り付け」
+![作成されたIAMロール](./images/managed-openshift-roles.png)
+![作成されたIAMポリシー](./images/managed-openshift-policies.png)
 
-どのようなポリシーが作成されているかは、[こちらのドキュメント](https://docs.openshift.com/rosa/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-account-wide-roles-and-policies-creation-methods_rosa-sts-about-iam-resources)から確認することもできます。
+どのようなAWSのアクションを許可するポリシーが作成されているかは、[こちらのドキュメント](https://docs.openshift.com/rosa/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-account-wide-roles-and-policies-creation-methods_rosa-sts-about-iam-resources)から確認することもできます。
 
 ROSAクラスターの作成コマンドを実行します。
 ```
@@ -235,4 +236,4 @@ State:                      installing
 $ rosa logs install -c test-cluster01 --watch
 ```
 
-40分くらい待つとROSAクラスターのデプロイが完了し、STATEが「ready」状態になり、ROSAクラスターにアクセスできます。
+40分くらい待つとROSAクラスターのデプロイが完了し、STATEが「ready」状態になり、作成したROSAクラスターにアクセスできるようになります。
