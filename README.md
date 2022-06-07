@@ -1,40 +1,26 @@
-## Welcome to GitHub Pages rosa-workshop contents.
+## Red OpenShift Service on AWS (ROSA) Workshops
 
-You can use the [editor on GitHub](https://github.com/h-kojima/rosa-workshop/edit/main/README.md) to maintain and preview the content for your website in Markdown files.
+Red OpenShift Service on AWS (ROSA) Workshops プロジェクトは、インストラクター主導のワークショップまたはセルフペースの演習で、ROSAを効果的に紹介及び体感していただくことを目的としています。
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+最初に受講者は、下記の資料でコンテナ/Kubernetes/OpenShift/ROSAの概要を学習します。
 
-PDF
 <embed src="https://h-kojima.github.io/rosa-workshop/pdf/2022-rosa-workshop-lecture.pdf#&scrollbar=0&view=Fit&viewrect=0,0,570,0" width="640" height="360" hspace="0" vspace="0">
 
-### Markdown
+PDFの資料は[こちら](https://h-kojima.github.io/rosa-workshop/pdf/2022-rosa-workshop-lecture.pdf)からダウンロードできます。
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+次に下記のデモ紹介及び演習を実施します。コンテンツは以下の種類に分かれます。
 
-```markdown
-Syntax highlighted code block
+- \[デモ\]: インストラクターによるデモ紹介です。受講者は、コマンド実行やGUIの操作をする必要はありません。
+- \[ハンズオン\]: セルフペースの演習です。受講者は、コマンド実行やGUIの操作をしてワークショップを進めます。
 
-# Header 1
-## Header 2
-### Header 3
+### Contents
 
-- Bulleted
-- List
+- \[デモ\] ROSA環境の作成
+- \[ハンズオン\] ROSA環境へのアクセス
+- \[ハンズオン\] アプリケーションのデプロイのクイックスタート
+- \[ハンズオン\] 永続ボリュームとしての AWS EBS/EFS の利用設定
+- \[ハンズオン\] AWS Controllers for Kubernetes (ACK) による AWS S3の利用
+- \[デモ\] ROSA環境のアップデート
+- \[デモ\] ROSA環境の削除
+- \[ハンズオン\] サンプルアプリのデプロイを通した、Kubernetes/OpenShiftの様々な機能の体感
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/h-kojima/rosa-workshop/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
