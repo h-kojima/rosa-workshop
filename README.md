@@ -1,12 +1,12 @@
 ## Red Hat OpenShift Service on AWS (ROSA) Workshops
 
-Red Hat OpenShift Service on AWS (ROSA) Workshops プロジェクトは、インストラクター主導のワークショップまたはセルフペースの演習で、ROSAを効果的に紹介及び体感していただくことを目的としています。
+Red Hat OpenShift Service on AWS (ROSA) Workshops プロジェクトは、インストラクター主導のデモ紹介またはセルフペースの演習で、ROSAを効果的に紹介及び体感していただくことを目的としています。
 
 最初に受講者は、コンテナ/Kubernetes/OpenShift/ROSAの概要を学習します。
 
-<embed src="https://h-kojima.github.io/rosa-workshop/pdf/2022-rosa-workshop-lecture.pdf#&scrollbar=0&view=Fit&viewrect=0,0,570,0" width="640" height="360" hspace="0" vspace="0">
+<embed src="https://h-kojima.github.io/rosa-workshop/docs/pdf/2022-rosa-workshop-lecture.pdf#&scrollbar=0&view=Fit&viewrect=0,0,570,0" width="640" height="360" hspace="0" vspace="0">
 
-PDFの資料は[こちら](https://h-kojima.github.io/rosa-workshop/pdf/2022-rosa-workshop-lecture.pdf)からダウンロードできます。
+PDFの資料は[こちら](https://h-kojima.github.io/rosa-workshop/docs/pdf/2022-rosa-workshop-lecture.pdf)からダウンロードできます。
 
 次に下記のデモ紹介及び演習を実施します。コンテンツは以下の種類に分かれます。
 
@@ -15,7 +15,7 @@ PDFの資料は[こちら](https://h-kojima.github.io/rosa-workshop/pdf/2022-ros
 
 ### Contents
 
-- \[デモ\] ROSA環境の作成
+- \[デモ\] ROSA環境の作成(https://github.com/h-kojima/rosa-workshop/tree/main/docs/rosa-create)
 - \[ハンズオン\] ROSA環境へのアクセス
 - \[ハンズオン\] アプリケーションのデプロイのクイックスタート
 - \[ハンズオン\] 永続ボリュームとしての AWS EBS/EFS の利用設定
