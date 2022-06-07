@@ -1,56 +1,63 @@
-## ROSAクラスターの削除
+## 永続ボリュームとしてのAWS EBSの利用設定
 
-OpenShift Cluster Manager (OCM) のコンソールか、ROSA CLIを使用してROSAクラスターを削除します。
+ROSAには、AWS Elastic Block Store (EBS) ボリュームを使用するストレージクラスが事前に構築されています。これにより、[AWS EBSのgp2, gp3ボリュームタイプ](https://aws.amazon.com/jp/ebs/general-purpose/)がすぐに使えるように設定されています。
 
-OCMを利用する場合は、削除対象のROSAクラスターを選択して、Settingsタブの「Actions」から「Delete cluster」をクリックします。そして、削除対象のクラスター名を入力して「Delete」をクリックすると、ROSAクラスターが削除されます。
+![ROSAですぐに利用可能なストレージクラス](./images/storage-class.png)
+<div style="text-align: center;">ROSAですぐに利用可能なストレージクラス</div>　　
 
-![ROSAクラスターの削除](./images/delete.png)
-![ROSAクラスターの削除確認](./images/delete-confirm.png)
-<div style="text-align: center;">ROSAクラスターの削除</div>　　
+このうち、デフォルトのストレージクラスがgp2として設定されており、外部ストレージを永続ボリュームとして利用する際のデフォルトとして利用されます。
 
+![gp2ストレージクラス](./images/gp2.png)
+<div style="text-align: center;">gp2ストレージクラス</div>　　
 
-または、ROSA CLIを使用して、ROSAクラスターを削除します。
+また、前の演習で作成しました、PostgreSQLサンプルアプリでも、gp2ストレージクラスを利用して、gp2ボリュームタイプのAWS EBSにデータを保存するように設定されています。
+
+![PostgreSQLが利用する永続ボリューム (Persistent Volume, PV)](./images/postgresql-pvc.png)
+<div style="text-align: center;">PostgreSQLが利用する永続ボリューム (Persistent Volume, PV)</div>　
+
+ここでgp2ストレージクラスを利用するために、新しく永続ボリューム要求(Persistent Volume Claim, PVC)を作成します。永続ボリューム要求の名前は、任意の名前(ここではtest-pvc-20)を入力し、要求するサイズは1GiBと指定します。
+
+![PVCの作成](./images/pvc-create1.png)
+![PVCの作成](./images/pvc-create2.png)
+<div style="text-align: center;">PVC　(test-pvc-20) の作成</div>　　
+
+このgp2ストレージクラスは、ボリュームバインディングモードが「WaitForFirstConsumer」と指定されており、最初にPodから永続ボリューム要求が利用されるまで、永続ボリュームの割り当てが行われない(ステータスがPendingのまま)ようになっています。ボリュームバインディングモードが「Immediate」となっている場合、PVC作成後すぐに永続ボリュームの割り当てが行われます。
+
+そして、Podを作成します。「Podの作成」から、次のYAMLファイルを入力してPodを作成します。下記の「claimName: test-pvc-20」となっているところは、作成したPVCの名前に応じて、適宜変更してください。
 ```
-$ rosa delete cluster --cluster test-cluster01 --watch   
-? Are you sure you want to delete cluster test-cluster01? Yes
-I: Cluster 'test-cluster01' will start uninstalling now
-I: Your cluster 'test-cluster01' will be deleted but the following objects may remain
-I: Operator IAM Roles: - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-cloud-network-config-controller-cl
- - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-machine-api-aws-cloud-credentials
- - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-cloud-credential-operator-cloud-cr
- - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-image-registry-installer-cloud-cre
- - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-ingress-operator-cloud-credentials
- - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-cluster-csi-drivers-ebs-cloud-cred
-
-I: OIDC Provider : https://rh-oidc.s3.us-east-1.amazonaws.com/XXXXXXXX
-
-I: Once the cluster is uninstalled use the following commands to remove the above aws resources.
-
-	rosa delete operator-roles -c XXXXXXXX
-	rosa delete oidc-provider -c XXXXXXXX
-W: Logs for cluster 'test-cluster01' are not available
-/ time="2022-06-07T05:59:28Z" level=debug msg="Couldn't find install logs provider environment variable. Skipping."
-time="2022-06-07T05:59:28Z" level=debug msg="search for matching resources by tag in ap-northeast-1 matching aws.Filter{\"kubernetes.io/cluster/test-cluster01-xxxxxxx\":\"owned\"}"
-time="2022-06-07T05:59:28Z" level=info msg="running file observer" files="[/etc/aws-creds/..2022_06_07_05_59_25.1832513202/aws_config]"
-...<省略>...
-\ I: Cluster 'test-cluster01' completed uninstallation
-```
-
-ROSAクラスターが削除完了したあとに、ROSAクラスターが認証に利用するIAMロールとOIDCプロバイダーを削除します。このとき、「rosa delete cluster」コマンドを実行したときに表示された、「rosa delete operator-roles」, 「rosa delete oidc-provider」コマンドを実行します。
-```
-$ rosa delete operator-roles -c XXXXXXXX --mode auto -y
-I: Fetching operator roles for the cluster: XXXXXXXX
-I: Successfully deleted the operator roles
-$ rosa delete oidc-provider -c XXXXXXXX --mode auto -y
-I: Successfully deleted the OIDC provider arn:aws:iam::XXXXXXXX:oidc-provider/rh-oidc.s3.us-east-1.amazonaws.com/XXXXXXXX
-```
-
-ROSAクラスター作成の前準備で作成した、AWSアカウントのIAMロール(ManagedOpenShift-XXX-Role)を削除します。
-```
-$ rosa delete account-roles --mode auto -y
-? Role prefix: ManagedOpenShift
-? Account role deletion mode: auto
-I: Successfully deleted the account roles
+apiVersion: v1
+kind: Pod
+metadata:
+ name: test-ebs
+spec:
+ volumes:
+   - name: ebs-storage-vol
+     persistentVolumeClaim:
+       claimName: test-pvc-20
+ containers:
+   - name: test-ebs
+     image: centos:latest
+     command: [ "/bin/bash", "-c", "--" ]
+     args: [ "while true; do touch /mnt/ebs-data/verify-ebs && echo 'hello ebs' && sleep 30; done;" ]
+     volumeMounts:
+       - mountPath: "/mnt/ebs-data"
+         name: ebs-storage-vol
 ```
 
-ManagedOpenShift-XXX-Roleに紐づけられていたManagedOpenShift-XXXXXポリシーは削除されませんので、必要に応じてAWS CLIやIAMコンソールから、手動で削除します。これで、ROSAクラスターの削除とAWSアカウントのクリーンアップが完了します。
+![Podの作成](./images/pod-create1.png)
+![Podの作成](./images/pod-create2.png)
+![Podの作成](./images/pod-create3.png)
+<div style="text-align: center;">Pod (test-ebs) の作成</div>　　
+
+test-ebsという名前でPodが作成されて、Podにより「test-pvc-20」PVCが利用されて、永続ボリュームとして外部ストレージの利用が開始されます。
+
+![Podの作成](./images/pod-pvc.png)
+<div style="text-align: center;">Pod (test-ebs) の作成</div>　　
+
+このPodのターミナルやログから、マウント状況や動作状況を確認できます。
+
+![Podの情報確認](./images/pod-log.png)
+![Podの情報確認](./images/pod-terminal.png)
+<div style="text-align: center;">Podの情報確認</div>　
+
+ここで上記画像にあるように、ターミナルから、echoコマンドなどで永続ボリュームのマウントポイントである「/mnt/ebs-data」ディレクトリに、適当なファイルを作成します。Podを削除(該当Podを選択して、「アクション」->「Podの削除」を選択)した後に、再度「test-pvc-20」PVCを指定してPodを作成すると、作成したテストファイルが残っていることを確認できます。
