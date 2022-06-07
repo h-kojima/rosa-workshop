@@ -12,7 +12,7 @@ ROSAクラスターをデプロイするには、AWSアカウントと[Red Hat�
 [AWSコンソール](https://console.aws.amazon.com/rosa/)でROSAサービスを有効にします。AWSアカウントにログインして、「Enable OpenShift」をクリックします。次のような画面になれば、ROSAサービスが有効になっています。
 
 ![ROSAサービスの有効化](./images/rosa-enable.png)
-<div style="text-align: center;">ROSAサービスの有効化</div>
+<div style="text-align: center;">ROSAサービスの有効化</div>　　
 
 AWS CLIを[インストール](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)して、[設定](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-chap-configure.html)します。このとき、「~/.aws/credentials」で、次の情報を設定する必要があります。
 
@@ -38,10 +38,12 @@ $ aws iam create-service-linked-role --aws-service-name "elasticloadbalancing.am
 IAMロールが作成されると、次のような画面を確認できます。
 
 ![AWS ELBのロール](./images/iam-elb-role.png)
+<div style="text-align: center;">AWS ELBのロール</div>　　
 
 続いて、[ROSA CLI](https://console.redhat.com/openshift/downloads)をダウンロードして、PATHを設定します。
 
 ![ROSA CLIのダウンロード画面](./images/rosa-cli-download.png)
+<div style="text-align: center;">ROSA　CLIのダウンロード画面</div>　　
 
 ```
 $ chmod +x rosa
@@ -124,7 +126,10 @@ rosa create cluster --sts
 AWSコンソールから、必要なIAMロールとポリシーが作成されていることを確認できます。
 
 ![作成されたIAMロール](./images/managed-openshift-roles.png)
+<div style="text-align: center;">作成されたIAMロール</div>　　
+
 ![作成されたIAMポリシー](./images/managed-openshift-policies.png)
+<div style="text-align: center;">作成されたIAMポリシー</div>　　
 
 どのようなAWSのアクションを許可するポリシーが作成されているかは、[こちらのドキュメント](https://docs.openshift.com/rosa/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-account-wide-roles-and-policies-creation-methods_rosa-sts-about-iam-resources)から確認することもできます。
 
@@ -208,13 +213,13 @@ I: To determine when your cluster is Ready, run 'rosa describe cluster -c test-c
 I: To watch your cluster installation logs, run 'rosa logs install -c test-cluster01 --watch'.
 ```
 
-ここで作成するROSAクラスター専用IAMロールと、OpenID Connect (OIDC) プロバイダーを作成します。これを作成しないと、ROSAクラスター作成状態が「Waiting」のままで、インストール待ちの状態が続きます。
+ここで作成するROSAクラスター専用IAMロールと、OpenID Connect (OIDC) プロバイダーを作成します。これらを作成しないと、ROSAクラスター作成状態が「Waiting」のままで、デプロイが完了しません。
 ```
 $ rosa create operator-roles --cluster test-cluster01 --mode auto -y
 $ rosa create oidc-provider --cluster test-cluster01　--mode auto -y
 ```
 
-クラスターのインストール状態を次のコマンドで確認できます。
+クラスターのデプロイ状態を次のコマンドで確認できます。
 ```
 $ rosa list clusters
 ID                                NAME            STATE
@@ -225,16 +230,16 @@ State:                      installing
 ...<省略>...
 ```
 
-インストール状態(STATE)は、インストールの進捗として次のように出力されます。
+デプロイ状態(STATE)は、デプロイの進捗として次のように出力されます。
 - waiting (Waiting for OIDC configuration)
 - pending (Preparing account)
 - installing (DNS setup in progress)
 - installing
 - ready
 
-また、クラスターのインストールログは次のコマンドで確認できます。
+また、クラスターのデプロイログは次のコマンドで確認できます。
 ```
 $ rosa logs install -c test-cluster01 --watch
 ```
 
-40分くらい待つとROSAクラスターのデプロイが完了し、STATEが「ready」状態になり、作成したROSAクラスターにアクセスできるようになります。
+40分くらい待つとROSAクラスターのデプロイが完了して、STATEが「ready」状態になり、作成したROSAクラスターにアクセスできるようになります。
