@@ -17,7 +17,7 @@ PDFの資料は[こちら](docs/pdf/2022-rosa-workshop-lecture.pdf)からダウ�
 
 - [\[デモ\] ROSAクラスターの作成](docs/rosa-create)
 - [\[ハンズオン\] ROSAクラスターへのアクセス](docs/rosa-access)
-- \[ハンズオン\] アプリケーションのデプロイのクイックスタート
+- [\[ハンズオン\] アプリケーションのデプロイのクイックスタート](docs/rosa-app-deploy-quickstart)
 - \[ハンズオン\] 永続ボリュームとしての AWS EBS/EFS の利用設定
 - \[ハンズオン\] AWS Controllers for Kubernetes (ACK) による AWS S3の利用
 - \[ハンズオン\] コンピュートノードの追加/削除とオートスケールの設定
