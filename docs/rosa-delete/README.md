@@ -1,100 +1,56 @@
-## ROSAクラスターのアップグレード
+## ROSAクラスターの削除
 
-### コンソールを使用したアップグレード
+OpenShift Cluster Manager (OCM) のコンソールか、ROSA CLIを使用してROSAクラスターを削除します。
 
-OpenShift Cluster Manager (OCM)を使用して、AWS STSを使用するROSAクラスターを手動でアップグレードできます。
+OCMを利用する場合は、削除対象のROSAクラスターを選択して、Settingsタブの「Actions」から「Delete cluster」をクリックします。そして、削除対象のクラスター名を入力して「Delete」をクリックすると、ROSAクラスターが削除されます。
 
-[OCMにログイン](https://console.redhat.com/openshift/)して、アップグレードするROSAクラスターを選択し、Settingsタブをクリックして、「Update」ボタンをクリックします。
+![ROSAクラスターの削除](./images/delete.png)
+![ROSAクラスターの削除確認](./images/delete-confirm.png)
+<div style="text-align: center;">ROSAクラスターの削除</div>　　
 
-![ROSAクラスターの設定](./images/rosa-settings.png)
-<div style="text-align: center;">ROSAクラスターの設定画面</div>　　
 
-アップグレードするバージョンを選択して、「Next」をクリックします。
-
-![バージョンの選択](./images/version-select.png)
-<div style="text-align: center;">バージョンの選択</div>　　
-
-クラスターのアップグレードをスケジュールします。 1時間以内にアップグレードするには、「Update now」を選択し、「Next」をクリックします。
-指定した時間にアップグレードするには、「Schedule a different time」を選択し、アップグレードの日時を設定します。「Next」をクリックして確認ダイアログに進みます。
-
-![アップグレードのスケジュール](./images/schedule.png)
-<div style="text-align: center;">アップグレードのスケジュール</div>　　
-
-アップグレードするバージョンとスケジュールを確認したら、「Confirm Update」をクリックして、アップグレードをスケジュールします。
-
-![アップグレードの確認](./images/confirm.png)
-<div style="text-align: center;">アップグレードの確認</div>　
-
-アップグレードのステータスが「Update status」ペインに表示されます。
-
-![アップグレードのステータス](./images/status.png)
-<div style="text-align: center;">アップグレードのステータス</div>　　
-
-アップグレードをキャンセルしたい場合、「Cancel this update」を選択します。
-
-![アップグレードのキャンセル](./images/cancel.png)
-<div style="text-align: center;">アップグレードのキャンセル</div>　　
-
-### ROSA CLIを使用したアップグレード
-
-OCMのコンソールの他に、ROSA CLIを使用してROSAクラスターをアップグレードできます。次のコマンドを実行して、利用可能なアップグレードを確認します。
+または、ROSA CLIを使用して、ROSAクラスターを削除します。
 ```
-$ rosa list upgrade --cluster test-cluster01
-VERSION  NOTES
-4.10.15  recommended
+$ rosa delete cluster --cluster test-cluster01 --watch   
+? Are you sure you want to delete cluster test-cluster01? Yes
+I: Cluster 'test-cluster01' will start uninstalling now
+I: Your cluster 'test-cluster01' will be deleted but the following objects may remain
+I: Operator IAM Roles: - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-cloud-network-config-controller-cl
+ - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-machine-api-aws-cloud-credentials
+ - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-cloud-credential-operator-cloud-cr
+ - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-image-registry-installer-cloud-cre
+ - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-ingress-operator-cloud-credentials
+ - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-cluster-csi-drivers-ebs-cloud-cred
+
+I: OIDC Provider : https://rh-oidc.s3.us-east-1.amazonaws.com/XXXXXXXX
+
+I: Once the cluster is uninstalled use the following commands to remove the above aws resources.
+
+	rosa delete operator-roles -c XXXXXXXX
+	rosa delete oidc-provider -c XXXXXXXX
+W: Logs for cluster 'test-cluster01' are not available
+/ time="2022-06-07T05:59:28Z" level=debug msg="Couldn't find install logs provider environment variable. Skipping."
+time="2022-06-07T05:59:28Z" level=debug msg="search for matching resources by tag in ap-northeast-1 matching aws.Filter{\"kubernetes.io/cluster/test-cluster01-xxxxxxx\":\"owned\"}"
+time="2022-06-07T05:59:28Z" level=info msg="running file observer" files="[/etc/aws-creds/..2022_06_07_05_59_25.1832513202/aws_config]"
+...<省略>...
+\ I: Cluster 'test-cluster01' completed uninstallation
 ```
 
-ここで確認したアップグレードを適用します。「Node draining」では、アップグレードのために、コンピュートノードからPodを停止させる猶予時間を指定できます。デフォルトは1時間です。
+ROSAクラスターが削除完了したあとに、ROSAクラスターが認証に利用するIAMロールとOIDCプロバイダーを削除します。このとき、「rosa delete cluster」コマンドを実行したときに表示された、「rosa delete operator-roles」, 「rosa delete oidc-provider」コマンドを実行します。
 ```
-$ rosa upgrade cluster --cluster test-cluster01
-? Version:  [Use arrows to move, type to filter, ? for more help]
-> 4.10.15
-I: Ensuring account and operator role policies for cluster 'XXXXXXX' are compatible with upgrade.
-I: Account and operator roles for cluster 'test-cluster01' are compatible with upgrade
-? Please input desired date in format yyyy-mm-dd: 2022-06-07
-? Please input desired UTC time in format HH:mm: 08:00
-? Node draining:  [Use arrows to move, type to filter, ? for more help]
-  15 minutes
-  30 minutes
-  45 minutes
-> 1 hour
-  2 hours
-  4 hours
-  8 hours
-I: Upgrade successfully scheduled for cluster 'test-cluster01'
+$ rosa delete operator-roles -c XXXXXXXX --mode auto -y
+I: Fetching operator roles for the cluster: XXXXXXXX
+I: Successfully deleted the operator roles
+$ rosa delete oidc-provider -c XXXXXXXX --mode auto -y
+I: Successfully deleted the OIDC provider arn:aws:iam::XXXXXXXX:oidc-provider/rh-oidc.s3.us-east-1.amazonaws.com/XXXXXXXX
 ```
 
-指定したアップグレードのスケジュールを確認できます。
+ROSAクラスター作成の前準備で作成した、AWSアカウントのIAMロール(ManagedOpenShift-XXX-Role)を削除します。
 ```
-$ rosa list upgrade cluster --cluster test-cluster01
-VERSION  NOTES
-4.10.15  scheduled for 2022-06-07 08:00 UTC
-```
-
-現時点で、ROSA CLIによるアップグレードのキャンセルはできませんので、アップグレードのキャンセルをしたい場合、OCMのコンソールから実施してください。アップグレードを指定またはキャンセルすると、Red Hat SREチームからメールの通知がきます。
-
-- アップグレードの指定をした場合の通知メールの例
-
-```
-Hello Hiforumi,
-
-This notification is for your test-cluster01 cluster.
-Your Cluster is scheduled for upgrade maintenance to version '4.10.15' on 2022-06-07 at 08:00 UTC.
-
-Please contact Red Hat support if you have any questions.
-Thank you for choosing Red Hat OpenShift Service on AWS,
-OpenShift SRE
+$ rosa delete account-roles --mode auto -y
+? Role prefix: ManagedOpenShift
+? Account role deletion mode: auto
+I: Successfully deleted the account roles
 ```
 
-- アップグレードのキャンセルをした場合の通知メールの例
-
-```
-Hello Hiforumi,
-
-This notification is for your test-cluster01 cluster.
-Your Cluster upgrade maintenance to version '4.10.15' on 2022-06-07 at 06:00 UTC has been cancelled.
-
-If you have any questions, please contact us. Review the support process for guidance on working with Red Hat support.
-Thank you for choosing Red Hat OpenShift Service on AWS,
-OpenShift SRE
-```
+ManagedOpenShift-XXX-Roleに紐づけられていたManagedOpenShift-XXXXXポリシーは削除されませんので、必要に応じてAWS CLIやIAMコンソールから、手動で削除します。これで、ROSAクラスターの削除とAWSアカウントのクリーンアップが完了します。
