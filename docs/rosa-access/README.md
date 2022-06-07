@@ -1,52 +1,129 @@
 ## ROSAクラスターへのアクセス
 
-予めインストラクターが作成しておいたROSAクラスターにアクセスします。
+### ROSA/OpenShift CLIを実行するRHELインスタンスへのアクセス
 
-ROSAkur
+予めインストラクターが作成しておいたROSAクラスターにアクセスします。そのために、ROSAクラスターにアクセスするための認証情報を、ROSA CLIを使用して作成します。  
+ROSA CLIを実行するためのRHELインスタンスにSSHアクセスするために、受講者はSSH公開鍵を作成して、インストラクターに共有してください。  
+インストラクターにより、RHELインスタンスのパブリックIPアドレスが共有されます。
 
-
-または、ROSA CLIを使用して、ROSAクラスターを削除します。
+SSH公開鍵を利用して、RHELインスタンスにアクセスします。
 ```
-$ rosa delete cluster --cluster test-cluster01 --watch   
-? Are you sure you want to delete cluster test-cluster01? Yes
-I: Cluster 'test-cluster01' will start uninstalling now
-I: Your cluster 'test-cluster01' will be deleted but the following objects may remain
-I: Operator IAM Roles: - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-cloud-network-config-controller-cl
- - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-machine-api-aws-cloud-credentials
- - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-cloud-credential-operator-cloud-cr
- - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-image-registry-installer-cloud-cre
- - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-ingress-operator-cloud-credentials
- - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-cluster-csi-drivers-ebs-cloud-cred
-
-I: OIDC Provider : https://rh-oidc.s3.us-east-1.amazonaws.com/XXXXXXXX
-
-I: Once the cluster is uninstalled use the following commands to remove the above aws resources.
-
-	rosa delete operator-roles -c XXXXXXXX
-	rosa delete oidc-provider -c XXXXXXXX
-W: Logs for cluster 'test-cluster01' are not available
-/ time="2022-06-07T05:59:28Z" level=debug msg="Couldn't find install logs provider environment variable. Skipping."
-time="2022-06-07T05:59:28Z" level=debug msg="search for matching resources by tag in ap-northeast-1 matching aws.Filter{\"kubernetes.io/cluster/test-cluster01-xxxxxxx\":\"owned\"}"
-time="2022-06-07T05:59:28Z" level=info msg="running file observer" files="[/etc/aws-creds/..2022_06_07_05_59_25.1832513202/aws_config]"
-...<省略>...
-\ I: Cluster 'test-cluster01' completed uninstallation
+$ ssh -i .ssh/id_rsa.pub testuserXX@XXX.XXX.XXX.XXX
 ```
 
-ROSAクラスターが削除完了したあとに、ROSAクラスターが認証に利用するIAMロールとOIDCプロバイダーを削除します。このとき、「rosa delete cluster」コマンドを実行したときに表示された、「rosa delete operator-roles」, 「rosa delete oidc-provider」コマンドを実行します。
+このRHELインスタンスは、ROSA CLIとOpenShift CLI (oc)が利用できるようになっています。  
+次のコマンドを実行して、rosa, ocコマンドが実行可能か確認してみてください。
 ```
-$ rosa delete operator-roles -c XXXXXXXX --mode auto -y
-I: Fetching operator roles for the cluster: XXXXXXXX
-I: Successfully deleted the operator roles
-$ rosa delete oidc-provider -c XXXXXXXX --mode auto -y
-I: Successfully deleted the OIDC provider arn:aws:iam::XXXXXXXX:oidc-provider/rh-oidc.s3.us-east-1.amazonaws.com/XXXXXXXX
-```
-
-ROSAクラスター作成の前準備で作成した、AWSアカウントのIAMロール(ManagedOpenShift-XXX-Role)を削除します。
-```
-$ rosa delete account-roles --mode auto -y
-? Role prefix: ManagedOpenShift
-? Account role deletion mode: auto
-I: Successfully deleted the account roles
+$ rosa list clusters
+ID                                NAME        STATE
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  rosa-XXXXX  ready
+$ oc version
+Client Version: 4.10.15
 ```
 
-ManagedOpenShift-XXX-Roleに紐づけられていたManagedOpenShift-XXXXXポリシーは削除されませんので、必要に応じてAWS CLIやIAMコンソールから、手動で削除します。これで、ROSAクラスターの削除とAWSアカウントのクリーンアップが完了します。
+### GitHub Organizationの作成
+
+ROSA CLIを利用して、GitHub認証情報を追加します。GitHubのアカウントを持っていない場合、[こちら](https://github.com/)から作成してください。
+
+GitHubアカウントの作成が完了したら、GitHub organizationを作成します。OpenShiftにGitHubとの認証連携を利用する場合、[GitHub Organization](https://docs.github.com/ja/organizations/collaborating-with-groups-in-organizations/about-organizations)か[GitHub teams](https://docs.github.com/ja/organizations/organizing-members-into-teams/about-teams)を認証に利用します。ここでは、GitHub organizationを利用した、認証連携を設定します。
+
+右上のアイコンをクリックして、「Your organizations」を選択して、「New organization」をクリックします。
+
+![GitHub organizationの新規作成](./images/new-org.png)
+<div style="text-align: center;">GitHub organizationの新規作成</div>
+
+プランが数種類表示されますので、Freeプランを選択します。
+
+![Freeプランの選択](./images/org-plan.png)
+<div style="text-align: center;">Freeプランの選択</div>
+
+Organizationの名前とメールアドレスを入力して、「Next」　-> 「Skip this setup」をクリックします。
+
+![GitHub organizationの名前とメールアドレスの入力](./images/org-inputs.png)
+<div style="text-align: center;">GitHub organizationの名前とメールアドレスの入力</div>
+
+Welcome画面が表示されますので、右上のアイコンを再度クリックして、「Your organizations」を選択すると、先ほど作成したGitHub organizationの名前が追加されていることを確認できます。
+
+![GitHub organizationの作成完了](./images/org-created.png)
+<div style="text-align: center;">GitHub organizationの作成完了</div>
+
+### ROSA CLIを利用したアイデンティティープロバイダーの追加
+
+先ほどの手順で作成したGitHub organizationを利用して、アイデンティティープロバイダーを追加します。
+
+次のコマンドを実行して、現時点でのROSAクラスターが利用できるアイデンティティープロバイダーを確認します。ROSAクラスターの名前である「rosa-XXXXX」は、「rosa list clusters」コマンドの実行で表示されたクラスター名に適宜置換してください。
+```
+$ rosa list idp -c rosa-XXXXX
+NAME          TYPE
+htpasswd-1    HTPasswd
+```
+
+現時点では、HTPasswdを利用したクラスター管理者用のアイデンティティープロバイダーしかありません。そのため、ROSAクラスターのアイデンティティープロバイダーを追加していきます。
+
+次のコマンドを実行して、GitHubを利用した認証プロバイダーを追加します。「GitHub organizations」の項目には、先ほど作成したorganizationの名前を入力してください。
+```
+$ rosa create idp -c rosa-XXXXX
+I: Interactive mode enabled.
+Any optional fields can be left empty and a default will be selected.
+? Type of identity provider:  [Use arrows to move, type to filter]
+> github
+  gitlab
+  google
+  htpasswd
+  ldap
+  openid
+? Identity provider name: github-hkojima
+? Restrict to members of:  [Use arrows to move, type to filter, ? for more help]
+> organizations
+  teams
+? Restrict to members of: organizations
+? GitHub organizations: test-organization000020
+? To use GitHub as an identity provider, you must first register the application:
+  - Open the following URL:
+    https://github.com/organizations/test-organization000020/settings/applications/new?oauth_application%5Bcallback_url%5D=https%3A%2F%2Foauth-openshift.apps.rosa-XXXXX.9job.p1.openshiftapps.com%2Foauth2callback%2Fgithub-hkojima&oauth_application%5Bname%5D=rosa-XXXXX&oauth_application%5Burl%5D=https%3A%2F%2Fconsole-openshift-console.apps.rosa-XXXXX.9job.p1.openshiftapps.com
+  - Click on 'Register application'
+? Client ID: [? for help] 
+```
+
+ここで「Open the following URL」のURLにアクセスすると、次の画面が表示されますので、「Register Application」をクリックします。
+
+![GitHub OAuth Appsの作成](./images/oauth-apps.png)
+<div style="text-align: center;">GitHub OAuth Appsの作成</div>
+
+「rosa-XXXXX」という名前のGitHub OAuth Appsが作成されましたので、「Generate a new client secret」をクリックしてClient secretsを作成して、下部にある「Update application」をクリックして、作成したシークレットを保存します。
+
+![シークレットの作成](./images/create-secrets.png)
+<div style="text-align: center;">シークレットの作成</div>
+
+「rosa create idp」コマンドの実行画面に戻り、上の画像にあるClient IDとClient Secretの値を入力します。Mapping methodは「claim」を選択します。
+
+```
+? Client ID: XXXXXXXXXXXX
+? Client Secret: [? for help] ****************************************
+? GitHub Enterprise Hostname (optional): 
+? Mapping method: claim
+I: Configuring IDP for cluster 'rosa-XXXXX'
+I: Identity Provider 'github-hkojima' has been created.
+   It will take up to 1 minute for this configuration to be enabled.
+   To add cluster administrators, see 'rosa grant user --help'.
+   To login into the console, open https://console-openshift-console.apps.rosa-XXXXX.9job.p1.openshiftapps.com and click on github-hkojima.
+$ rosa list idp -c rosa-XXXXX
+NAME              TYPE        AUTH URL
+htpasswd-1        HTPasswd    
+github-hkojima    GitHub      https://oauth-openshift.apps.rosa-XXXXX.9job.p1.openshiftapps.com/oauth2callback/github-hkojima
+```
+
+ここで提示されたURLにアクセスすると、次のような画面が表示されますので、「rosa create idp」コマンドで指定した認証プロバイダーの名前(ここでは「github-hkojima」)を選択します。
+
+![ROSAのログイン画面](./images/rosa-login.png)
+<div style="text-align: center;">ROSAのログイン画面</div>
+
+GitHubをOAuthの認可サーバーとして利用しているため、ROSAから認可リクエストがGitHubに送信されて、認可の確認画面が表示されます。「Authorize XXXXX」をクリックして認可します。
+
+![GitHubの認可画面](./images/authorize.png)
+<div style="text-align: center;">GitHubの認可画面</div>
+
+GitHubから認可レスポンスが返されて、ROSAにリダイレクトされてログインが完了します。初回ログインした時に、「スタート」をクリックすると、開発者用コンソールの使い方ガイドを確認できます。
+
+![ROSAの初回ログイン](./images/rosa-first-login.png)
+<div style="text-align: center;">ROSAの初回ログイン</div>
