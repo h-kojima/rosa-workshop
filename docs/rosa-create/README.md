@@ -47,7 +47,7 @@ IAMロールが作成されると、次のような画面を確認できます�
 
 ```
 $ chmod +x rosa
-$ mv rosa /usr/local/bin/
+$ sudo mv rosa /usr/local/bin/
 $ rosa version
 1.2.2
 ```
