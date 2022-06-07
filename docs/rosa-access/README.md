@@ -1,12 +1,8 @@
-## ROSAクラスターの削除
+## ROSAクラスターへのアクセス
 
-OpenShift Cluster Manager (OCM) のコンソールか、ROSA CLIを使用してROSAクラスターを削除します。
+予めインストラクターが作成しておいたROSAクラスターにアクセスします。
 
-OCMを利用する場合は、削除対象のROSAクラスターを選択して、Settingsタブの「Actions」から「Delete cluster」をクリックします。そして、削除対象のクラスター名を入力して「Delete」をクリックすると、ROSAクラスターが削除されます。
-
-![ROSAクラスターの削除](./images/delete.png)
-![ROSAクラスターの削除確認](./images/delete-confirm.png)
-<div style="text-align: center;">ROSAクラスターの削除</div>　　
+ROSAkur
 
 
 または、ROSA CLIを使用して、ROSAクラスターを削除します。
