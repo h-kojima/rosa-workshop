@@ -1,56 +1,39 @@
-## ROSAクラスターの削除
+## アプリケーションのデプロイのクイックスタート
 
-OpenShift Cluster Manager (OCM) のコンソールか、ROSA CLIを使用してROSAクラスターを削除します。
+ROSAのWebコンソールを使用して、Node.jsのサンプルアプリケーションをデプロイします。
 
-OCMを利用する場合は、削除対象のROSAクラスターを選択して、Settingsタブの「Actions」から「Delete cluster」をクリックします。そして、削除対象のクラスター名を入力して「Delete」をクリックすると、ROSAクラスターが削除されます。
+アプリケーションの作成場所となる「プロジェクト」を作成します。この例では、「test-project20」を入力しています。同じ名前を持つプロジェクトを複数作成できませんので、プロジェクト名は適宜変更してください。
 
-![ROSAクラスターの削除](./images/delete.png)
-![ROSAクラスターの削除確認](./images/delete-confirm.png)
-<div style="text-align: center;">ROSAクラスターの削除</div>　　
+![プロジェクトの作成](./images/project-create1.png)
+![プロジェクトの作成](./images/project-create2.png)
+<div style="text-align: center;">プロジェクトの作成</div>　　
 
+プロジェクトの作成が完了したら、「+追加」からサンプルアプリケーションを作成します。「すべてのサービス」を選択して、「Node.js + PostgreSQL」を選択します。「Node.js + PostgreSQL (Ephemeral)」ではありませんので、注意してください。「テンプレートのインスタンス化」を選択して、最後に「作成」をクリックします。入力パラメータはデフォルトのままにします。
 
-または、ROSA CLIを使用して、ROSAクラスターを削除します。
-```
-$ rosa delete cluster --cluster test-cluster01 --watch   
-? Are you sure you want to delete cluster test-cluster01? Yes
-I: Cluster 'test-cluster01' will start uninstalling now
-I: Your cluster 'test-cluster01' will be deleted but the following objects may remain
-I: Operator IAM Roles: - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-cloud-network-config-controller-cl
- - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-machine-api-aws-cloud-credentials
- - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-cloud-credential-operator-cloud-cr
- - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-image-registry-installer-cloud-cre
- - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-ingress-operator-cloud-credentials
- - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-cluster-csi-drivers-ebs-cloud-cred
+![アプリの作成](./images/add-console.png)
+![アプリの作成](./images/nodejs-select.png)
+![アプリの作成](./images/nodejs-create1.png)
+![アプリの作成](./images/nodejs-create2.png)
+<div style="text-align: center;">Node.js + PostgreSQLアプリの作成</div>　　
 
-I: OIDC Provider : https://rh-oidc.s3.us-east-1.amazonaws.com/XXXXXXXX
+Node.jsとPostgreSQLアプリの作成が完了すると、「トポロジー」メニューからデプロイしたアプリのトポロジーを確認できます。トポロジーにある、Node.jsアイコンの右上部にある「矢印」アイコンをクリックすると、デプロイしたNode.jsアプリにアクセスできます。
 
-I: Once the cluster is uninstalled use the following commands to remove the above aws resources.
+![アプリにアクセス](./images/nodejs-route.png)
+![アプリにアクセス](./images/nodejs-app.png)
+<div style="text-align: center;">Node.jsアプリへのアクセス</div>　　
 
-	rosa delete operator-roles -c XXXXXXXX
-	rosa delete oidc-provider -c XXXXXXXX
-W: Logs for cluster 'test-cluster01' are not available
-/ time="2022-06-07T05:59:28Z" level=debug msg="Couldn't find install logs provider environment variable. Skipping."
-time="2022-06-07T05:59:28Z" level=debug msg="search for matching resources by tag in ap-northeast-1 matching aws.Filter{\"kubernetes.io/cluster/test-cluster01-xxxxxxx\":\"owned\"}"
-time="2022-06-07T05:59:28Z" level=info msg="running file observer" files="[/etc/aws-creds/..2022_06_07_05_59_25.1832513202/aws_config]"
-...<省略>...
-\ I: Cluster 'test-cluster01' completed uninstallation
-```
+このサンプルアプリは、バックエンドのデータベースとしてPostgreSQLを使用しており、Webブラウザで入力したデータを保存します。例えば、Nameに「banana」、数字に「15」を入力して、「SAVE」をクリックすると、入力値が保存されていることを確認できます。
 
-ROSAクラスターが削除完了したあとに、ROSAクラスターが認証に利用するIAMロールとOIDCプロバイダーを削除します。このとき、「rosa delete cluster」コマンドを実行したときに表示された、「rosa delete operator-roles」, 「rosa delete oidc-provider」コマンドを実行します。
-```
-$ rosa delete operator-roles -c XXXXXXXX --mode auto -y
-I: Fetching operator roles for the cluster: XXXXXXXX
-I: Successfully deleted the operator roles
-$ rosa delete oidc-provider -c XXXXXXXX --mode auto -y
-I: Successfully deleted the OIDC provider arn:aws:iam::XXXXXXXX:oidc-provider/rh-oidc.s3.us-east-1.amazonaws.com/XXXXXXXX
-```
+![データの保存](./images/data-create.png)
+<div style="text-align: center;">データの保存</div>　
 
-ROSAクラスター作成の前準備で作成した、AWSアカウントのIAMロール(ManagedOpenShift-XXX-Role)を削除します。
-```
-$ rosa delete account-roles --mode auto -y
-? Role prefix: ManagedOpenShift
-? Account role deletion mode: auto
-I: Successfully deleted the account roles
-```
+保存したデータは、コンテナアプリであるPostgreSQL Podに接続された永続ボリュームに保存されます。これは、サンプルアプリを作成するテンプレートにより、「Administrator」パースペクティブの「永続ボリューム要求(Persistent Volume Claim, PVC)」で、「postgresql」という名前の要求に応じて、外部ストレージにデータを保存する永続ボリューム(Persistent Volume, PV)が作成されていることによります。PVC, PVの利用方法の詳細は、「永続ボリュームとしての AWS EBS/EFS の利用設定」ハンズオンで扱います。
 
-ManagedOpenShift-XXX-Roleに紐づけられていたManagedOpenShift-XXXXXポリシーは削除されませんので、必要に応じてAWS CLIやIAMコンソールから、手動で削除します。これで、ROSAクラスターの削除とAWSアカウントのクリーンアップが完了します。
+![PostgreSQLが利用する永続ボリューム](./images/postgresql-pvc.png)
+<div style="text-align: center;">PostgreSQLが利用する永続ボリューム</div>
+
+コンテナアプリであるPostgreSQL Podを再起動してみます。「Developer」パースペクティブの「トポロジー」から、Podの数を設定できます。「↓矢印」をクリックしてPodの数を0にし、「^」をクリックしてPodの数を1にします。永続ボリュームを利用していない場合は、コンテナを再起動すると、コンテナ起動元となるコンテナイメージに保存されていないデータは失われますが、先ほど入力したデータが永続ボリュームとして外部ストレージに保存されているため、Podの再起動でもユーザが入力したデータが失われません。これは、Node.jsアプリに再度アクセスすることで確認できます。
+
+![Pod数の設定](./images/pod-num.png)
+<div style="text-align: center;">Pod数の設定</div>
+
