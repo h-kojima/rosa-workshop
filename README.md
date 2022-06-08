@@ -12,6 +12,7 @@ PDFの資料は[こちら](docs/pdf/2022-rosa-workshop-lecture.pdf)からダウ�
 
 - \[デモ\]: インストラクターによるデモ紹介です。受講者は、コマンド実行やGUIの操作をする必要はありません。
 - \[ハンズオン\]: セルフペースの演習です。受講者は、コマンド実行やGUIの操作をしてワークショップを進めます。
+- \[デモとハンズオン\]: 上記の両方を含みます。
 
 ### Contents
 
@@ -19,7 +20,7 @@ PDFの資料は[こちら](docs/pdf/2022-rosa-workshop-lecture.pdf)からダウ�
 - [\[ハンズオン\] ROSAクラスターへのアクセス](docs/rosa-access)
 - [\[ハンズオン\] アプリケーションのデプロイのクイックスタート](docs/rosa-app-deploy-quickstart)
 - [\[ハンズオン\] 永続ボリュームとしての AWS EBS の利用設定](docs/rosa-volume)
-- [\[ハンズオン\] AWS Controllers for Kubernetes (ACK) による AWS S3の利用](docs/rosa-ack-s3)
+- [\[デモとハンズオン\] AWS Controllers for Kubernetes (ACK) による AWS S3の利用](docs/rosa-ack-s3)
 - \[ハンズオン\] コンピュートノードの追加/削除とオートスケールの設定
 - [\[デモ\] ROSAクラスターのアップグレード](docs/rosa-upgrade)
 - [\[デモ\] ROSAクラスターの削除](docs/rosa-delete)
