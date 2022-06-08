@@ -1,6 +1,6 @@
-## 永続ボリュームとしてのAWS EBSの利用設定
+## 永続ボリュームとしてのAmazon EBSの利用設定
 
-ROSAには、AWS Elastic Block Store (EBS) ボリュームを使用するストレージクラスが事前に構築されています。これにより、[AWS EBSのgp2, gp3ボリュームタイプ](https://aws.amazon.com/jp/ebs/general-purpose/)がすぐに使えるように設定されています。
+ROSAには、AWS Elastic Block Store (EBS) ボリュームを使用するストレージクラスが事前に構築されています。これにより、[Amazon EBSのgp2, gp3ボリュームタイプ](https://aws.amazon.com/jp/ebs/general-purpose/)がすぐに使えるように設定されています。
 
 ![ROSAですぐに利用可能なストレージクラス](./images/storage-class.png)
 <div style="text-align: center;">ROSAですぐに利用可能なストレージクラス</div>　　
@@ -10,7 +10,7 @@ ROSAには、AWS Elastic Block Store (EBS) ボリュームを使用するスト�
 ![gp2ストレージクラス](./images/gp2.png)
 <div style="text-align: center;">gp2ストレージクラス</div>　　
 
-また、前の演習で作成しました、PostgreSQLサンプルアプリでも、gp2ストレージクラスを利用して、gp2ボリュームタイプのAWS EBSにデータを保存するように設定されています。
+また、前の演習で作成しました、PostgreSQLサンプルアプリでも、gp2ストレージクラスを利用して、gp2ボリュームタイプのAmazon EBSにデータを保存するように設定されています。
 
 ![PostgreSQLが利用する永続ボリューム (Persistent Volume, PV)](./images/postgresql-pvc.png)
 <div style="text-align: center;">PostgreSQLが利用する永続ボリューム (Persistent Volume, PV)</div>　
