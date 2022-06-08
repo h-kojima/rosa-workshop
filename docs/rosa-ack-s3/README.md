@@ -1,8 +1,8 @@
-## AWS Controllers for Kubernetes (ACK) による AWS S3の利用
+## AWS Controllers for Kubernetes (ACK) による Amazon S3の利用
 
 ### \[デモ\] AWS Controllers for Kubernetes (ACK) - Amazon S3 Operatorのインストール
 
-ROSAに含まれるRed Hat OpenShiftのOperatorHubでは、Kubernetes/OpenShiftからAWSのリソースを簡単に利用できるようになっている、[AWS Controllers for Kubernetes (ACK)](https://aws-controllers-k8s.github.io/community/docs/user-docs/openshift/)というOperatorを用意しています。ACKを利用して、AWS S3を利用するための設定を行います。
+ROSAに含まれるRed Hat OpenShiftのOperatorHubでは、Kubernetes/OpenShiftからAWSのリソースを簡単に利用できるようになっている、[AWS Controllers for Kubernetes (ACK)](https://aws-controllers-k8s.github.io/community/docs/user-docs/openshift/)というOperatorを用意しています。ACKを利用して、Amazon S3を利用するための設定を行います。
 
 ACKはAWSが提供しているOperatorです。詳細は下記をご参照ください。
 
@@ -63,9 +63,9 @@ secret/ack-user-secrets created
 
 この状態が表示されれば、インストールが完了しています。ROSAのローカルユーザがインストールされたOperatorを利用して、S3のバケットをAWS上に作成できるようになります。
 
-### \[ハンズオン\] AWS S3のバケット作成
+### \[ハンズオン\] Amazon S3のバケット作成
 
-ROSAクラスターにローカルユーザでログインしなおして、「インストールされたOperator」から ACK Amazon S3 Operatorを利用してバケットを作成します。このOperatorを選択して、「インスタンスの作成」をクリックすると、パラメータ入力画面に移動します。「名前」は任意の名前(ここではexample20)を入力し、「Name」には作成するAWS S3バケット名を入力します。AWS S3バケットは、グローバル名前空間が共通しているため、名前の重複が許可されていません。そのため、重複しないような名前を指定する必要があります。最後に一番下にある「作成」ボタンをクリックすれば、S3バケットの作成が完了します。
+ROSAクラスターにローカルユーザでログインしなおして、「インストールされたOperator」から ACK Amazon S3 Operatorを利用してバケットを作成します。このOperatorを選択して、「インスタンスの作成」をクリックすると、パラメータ入力画面に移動します。「名前」は任意の名前(ここではexample20)を入力し、「Name」には作成するAmazon S3バケット名を入力します。Amazon S3バケットは、グローバル名前空間が共通しているため、名前の重複が許可されていません。そのため、重複しないような名前を指定する必要があります。最後に一番下にある「作成」ボタンをクリックすれば、S3バケットの作成が完了します。
 
 ![Amazon S3バケットの作成](./images/s3-bucket-create1.png)
 ![Amazon S3バケットの作成](./images/s3-bucket-create2.png)
