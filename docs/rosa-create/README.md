@@ -219,6 +219,11 @@ $ rosa create operator-roles --cluster test-cluster01 --mode auto -y
 $ rosa create oidc-provider --cluster test-cluster01　--mode auto -y
 ```
 
+\[Tips\]: デフォルトで設定しているAWSリージョンに、最新版のOpenShiftを利用したシングルAZの最小構成(Control x3, Infra x2, Compute x2 の7台構成)のROSAクラスターを全自動で作成するには、次のコマンドを実行します。
+```
+$ rosa create cluster --cluster-name test-cluster01 --sts --mode auto -y
+```
+
 クラスターのデプロイ状態を次のコマンドで確認できます。
 ```
 $ rosa list clusters
