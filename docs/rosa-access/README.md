@@ -128,9 +128,9 @@ GitHubから認可レスポンスが返されて、ROSAにリダイレクトさ�
 ![ROSAの初回ログイン](./images/rosa-first-login.png)
 <div style="text-align: center;">ROSAの初回ログイン</div>
 
-### トラブルシューティング
+### ログインができない場合のトラブルシューティング
 
-GitHub OAuth AppsのクライアントIDとクライアントシークレットのコピペミスが考えられますので、一旦「rosa delete idp」コマンドでIDPを削除して、再設定してみてください。
+ROSAクラスターのIDP作成時の、GitHub OAuth AppsのクライアントIDとクライアントシークレットのコピペミスが考えられますので、一旦「rosa delete idp」コマンドでIDPを削除して、再作成してみてください。
 次のコマンドでは、「github-hkojima」IDPを削除しています。
 ```
 ＄　rosa delete idp github-hkojima --cluster rosa-XXXXX
