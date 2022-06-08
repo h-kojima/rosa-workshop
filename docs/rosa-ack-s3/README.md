@@ -4,6 +4,10 @@
 
 ROSAに含まれるRed Hat OpenShiftのOperatorHubでは、Kubernetes/OpenShiftからAWSのリソースを簡単に利用できるようになっている、[AWS Controllers for Kubernetes (ACK)](https://aws-controllers-k8s.github.io/community/docs/user-docs/openshift/)というOperatorを用意しています。ACKを利用して、AWS S3を利用するための設定を行います。
 
+ACKはAWSが提供しているOperatorです。詳細は下記をご参照ください。
+
+- [AWS Controllers for Kubernetes プレビューの発表](https://aws.amazon.com/jp/about-aws/whats-new/2020/08/announcing-the-aws-controllers-for-kubernetes-preview/)
+
 ROSAクラスターの管理者権限を持つ cluster-admin ユーザでログインして、OperatorHubを選択すると、利用可能なACKのリストを確認できます。
 
 ![OperatorHubにあるACKのリスト](./images/ack-s3-install1.png)
