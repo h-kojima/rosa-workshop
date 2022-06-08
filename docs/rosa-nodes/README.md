@@ -1,56 +1,84 @@
-## ROSAクラスターの削除
+## コンピュートノードの追加/削除とオートスケールの設定
 
-OpenShift Cluster Manager (OCM) のコンソールか、ROSA CLIを使用してROSAクラスターを削除します。
+実行するアプリケーションの数が多くなり、コンピュートノードのリソース(CPUやメモリ)使用率が逼迫した場合、ROSA CLIを使用して、コンピュートノードを簡単に追加・削除できます。
+ROSAに含まれるOpenShiftのコンピュートノードは、machinepoolというリソース単位で管理されており、新規にコンピュートノードを追加・削除する場合、このmachinepoolを作成・編集・削除します。
 
-OCMを利用する場合は、削除対象のROSAクラスターを選択して、Settingsタブの「Actions」から「Delete cluster」をクリックします。そして、削除対象のクラスター名を入力して「Delete」をクリックすると、ROSAクラスターが削除されます。
+デフォルトで利用されているmachinepoolは、次のコマンドで確認します。
 
-![ROSAクラスターの削除](./images/delete.png)
-![ROSAクラスターの削除確認](./images/delete-confirm.png)
-<div style="text-align: center;">ROSAクラスターの削除</div>　　
-
-
-または、ROSA CLIを使用して、ROSAクラスターを削除します。
 ```
-$ rosa delete cluster --cluster test-cluster01 --watch   
-? Are you sure you want to delete cluster test-cluster01? Yes
-I: Cluster 'test-cluster01' will start uninstalling now
-I: Your cluster 'test-cluster01' will be deleted but the following objects may remain
-I: Operator IAM Roles: - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-cloud-network-config-controller-cl
- - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-machine-api-aws-cloud-credentials
- - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-cloud-credential-operator-cloud-cr
- - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-image-registry-installer-cloud-cre
- - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-ingress-operator-cloud-credentials
- - arn:aws:iam::XXXXXXXX:role/test-cluster01-b0e6-openshift-cluster-csi-drivers-ebs-cloud-cred
-
-I: OIDC Provider : https://rh-oidc.s3.us-east-1.amazonaws.com/XXXXXXXX
-
-I: Once the cluster is uninstalled use the following commands to remove the above aws resources.
-
-	rosa delete operator-roles -c XXXXXXXX
-	rosa delete oidc-provider -c XXXXXXXX
-W: Logs for cluster 'test-cluster01' are not available
-/ time="2022-06-07T05:59:28Z" level=debug msg="Couldn't find install logs provider environment variable. Skipping."
-time="2022-06-07T05:59:28Z" level=debug msg="search for matching resources by tag in ap-northeast-1 matching aws.Filter{\"kubernetes.io/cluster/test-cluster01-xxxxxxx\":\"owned\"}"
-time="2022-06-07T05:59:28Z" level=info msg="running file observer" files="[/etc/aws-creds/..2022_06_07_05_59_25.1832513202/aws_config]"
-...<省略>...
-\ I: Cluster 'test-cluster01' completed uninstallation
+$ rosa list machinepool -c rosa-XXXXX
+ID       AUTOSCALING  REPLICAS  INSTANCE TYPE  LABELS    TAINTS    AVAILABILITY ZONES    SPOT INSTANCES
+Default  No           2         m5.xlarge                          ap-southeast-1a       N/A
 ```
 
-ROSAクラスターが削除完了したあとに、ROSAクラスターが認証に利用するIAMロールとOIDCプロバイダーを削除します。このとき、「rosa delete cluster」コマンドを実行したときに表示された、「rosa delete operator-roles」, 「rosa delete oidc-provider」コマンドを実行します。
+コンピュートノードを、AWS EC2インスタンス(m5.xlarge)2台起動しているという、ROSAデフォルトの設定を確認できます。ここにmachinepoolを新しく作成して、コンピュートノードを1台追加します。「rosa create machinepool」コマンドを実行します。
+
 ```
-$ rosa delete operator-roles -c XXXXXXXX --mode auto -y
-I: Fetching operator roles for the cluster: XXXXXXXX
-I: Successfully deleted the operator roles
-$ rosa delete oidc-provider -c XXXXXXXX --mode auto -y
-I: Successfully deleted the OIDC provider arn:aws:iam::XXXXXXXX:oidc-provider/rh-oidc.s3.us-east-1.amazonaws.com/XXXXXXXX
+$ rosa create machinepool -c rosa-XXXXX -i
+? Machine pool name: mp20
+? Enable autoscaling (optional): No
+? Replicas: 1
+? Instance type:  [Use arrows to move, type to filter, ? for more help]
+  i3en.xlarge
+  r5.xlarge
+  c5.xlarge
+> m5.xlarge
+  r6i.xlarge
+  z1d.xlarge
+  i3.xlarge
+? Instance type: m5.xlarge
+? Labels (optional): 
+? Taints (optional): 
+? Use spot instances (optional): Yes
+? Spot instance max price: on-demand
+I: Machine pool 'mp20' created successfully on cluster 'rosa-XXXXX'
+I: To view all machine pools, run 'rosa list machinepools -c rosa-XXXXX'
 ```
 
-ROSAクラスター作成の前準備で作成した、AWSアカウントのIAMロール(ManagedOpenShift-XXX-Role)を削除します。
+Replicasで、作成するコンピュートノードの台数(ここでは1台)を指定します。オプションで[Amazon EC2スポットインスタンス](https://aws.amazon.com/jp/ec2/spot/)の利用を指定できます。
+
+再度「rosa list machinepool」コマンドを実行して、machinepoolが正常に作成されたかを確認します。
 ```
-$ rosa delete account-roles --mode auto -y
-? Role prefix: ManagedOpenShift
-? Account role deletion mode: auto
-I: Successfully deleted the account roles
+$ rosa list machinepool -c rosa-XXXXX
+ID       AUTOSCALING  REPLICAS  INSTANCE TYPE  LABELS    TAINTS    AVAILABILITY ZONES    SPOT INSTANCES
+Default  No           2         m5.xlarge                          ap-southeast-1a       N/A
+mp20     No           1         m5.xlarge 
 ```
 
-ManagedOpenShift-XXX-Roleに紐づけられていたManagedOpenShift-XXXXXポリシーは削除されませんので、必要に応じてAWS CLIやIAMコンソールから、手動で削除します。これで、ROSAクラスターの削除とAWSアカウントのクリーンアップが完了します。
+mp20に紐づけられているコンピュートノードの台数を修正したい場合、「rosa edit machinepool」コマンドを実行します。下記では、「--replicas 0」を指定して、コンピュートノードの台数を0台にしています。
+```
+$ rosa edit machinepool mp20 -c rosa-XXXXX --replicas 0
+I: Updated machine pool 'mp20' on cluster 'rosa-XXXXX'
+$ rosa list machinepool -c rosa-XXXXX
+ID       AUTOSCALING  REPLICAS  INSTANCE TYPE  LABELS    TAINTS    AVAILABILITY ZONES    SPOT INSTANCES
+Default  No           2         m5.xlarge                          ap-southeast-1a       N/A
+mp20     No           0         m5.xlarge 
+```
+
+machinepoolは作成時、または作成後にオートスケールの設定をすることができます。利用者がPodをデプロイしようとした時に、リソース(CPUやメモリ)の使用量が逼迫していて、いずれのコンピュートノードにもデプロイできないPodがある場合、自動的にコンピュートノードを追加します。また、その逆に、一部のノードが長期間にわたって、リソースがあまり使われていない状態が続く場合、コンピュートノードを削除してROSAクラスターのサイズを縮小します。
+
+上記で作成したmp20のオートスケールの設定は、「rosa edit machinepool」コマンドで実行します。
+```
+$ rosa edit machinepool mp20 -c rosa-XXXXX --enable-autoscaling
+? Min replicas: 1
+? Max replicas: 2
+I: Updated machine pool 'mp20' on cluster 'rosa-XXXXX'
+$ rosa list machinepool -c rosa-XXXXX
+ID       AUTOSCALING  REPLICAS  INSTANCE TYPE  LABELS    TAINTS    AVAILABILITY ZONES    SPOT INSTANCES
+Default  No           2         m5.xlarge                          ap-southeast-1a       N/A
+mp20     Yes          1-2       m5.xlarge                          ap-southeast-1a       Yes (on-demand)
+```
+
+\[Tips\]: オートスケール設定の無効化は、[OCMコンソール](https://cloud.redhat.com/openshift)から実施します。「Enable autoscaling」のチェックボックスのチェックを外すと、machinepoolのオートスケールが無効化されます。(この演習では、受講者はOCMコンソールへのアクセス権限を持たないことを想定します。)
+
+![OCMコンソールでのオートスケール設定画面](./images/ocm-autoscale.png)
+<div style="text-align: center;">OCMコンソールでのオートスケール設定画面</div>
+
+作成したmachinepoolを削除する場合、「rosa delete machinepool」コマンドを実行します。これにより、コンピュートノードが削除され、その上で実行されているPodも削除されます。
+
+```
+$ rosa delete machinepool mp20 -c rosa-XXXXX
+? Are you sure you want to delete machine pool 'mp20' on cluster 'rosa-XXXXX'? Yes
+I: Successfully deleted machine pool 'mp20' from cluster 'rosa-XXXXX'
+```
+
