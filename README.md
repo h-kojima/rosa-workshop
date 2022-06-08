@@ -16,7 +16,7 @@ PDFの資料は[こちら](docs/pdf/2022-rosa-workshop-lecture.pdf)からダウ�
 
 ### 前提要件
 
-- AWSにアクセス可能なネットワーク環境
+- AWS/GitHubにアクセス可能なネットワーク環境
 - RHELサーバにSSHログインして、コマンドが実行可能
    - ROSA/OpenShift CLIがインストールされているRHELサーバを利用するために、SSHログインが必要です。
 - GitHubアカウント(個人アカウントも可)が利用可能
