@@ -37,3 +37,4 @@ Node.jsとPostgreSQLアプリの作成が完了すると、「トポロジー」
 ![Pod数の設定](./images/pod-num.png)
 <div style="text-align: center;">Pod数の設定</div>
 
+これでROSAクラスターでの、サンプルアプリケーションのデプロイが完了しました。次の演習の[永続ボリュームとしての Amazon EBS の利用設定](../rosa-volume)に進んでください。
