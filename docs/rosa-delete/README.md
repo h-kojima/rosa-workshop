@@ -55,4 +55,4 @@ I: Successfully deleted the account roles
 
 ManagedOpenShift-XXX-Roleに紐づけられていたManagedOpenShift-XXXXXポリシーは削除されませんので、必要に応じてAWS CLIやIAMコンソールから、手動で削除します。これで、ROSAクラスターの削除とAWSアカウントのクリーンアップが完了します。
 
-これで、ROSAクラスターの基本的な利用方法を学習する演習とデモ紹介は終了しました。時間に余裕がありましたら、[ROSAクラスターでのJavaアプリケーション開発 スターターラボ](../rosa-sample-app-deploy)に進んでください。
+これで、ROSAクラスターの基本的な利用方法を学習する演習とデモ紹介は終了しました。時間に余裕がありましたら、[ROSAクラスターでのJavaアプリケーション開発 スターターラボ](../rosa-sample-app-develop)に進んでください。
