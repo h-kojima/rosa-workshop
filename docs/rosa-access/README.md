@@ -1,4 +1,4 @@
-## ROSAクラスターへのアクセス
+## GitHubを利用したROSAクラスターへのアクセス
 
 ### ROSA/OpenShift CLIを実行するRHELインスタンスへのアクセス
 

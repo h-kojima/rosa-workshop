@@ -28,7 +28,7 @@ PDFの資料は[こちら](docs/pdf/2022-rosa-workshop-lecture.pdf)からダウ�
 ### Contents
 
 - [\[デモ\] ROSAクラスターの作成](docs/rosa-create)
-- [\[ハンズオン\] ROSAクラスターへのアクセス](docs/rosa-access)
+- [\[ハンズオン\] GitHubを利用したROSAクラスターへのアクセス](docs/rosa-access)
 - [\[ハンズオン\] アプリケーションのデプロイのクイックスタート](docs/rosa-app-deploy-quickstart)
 - [\[ハンズオン\] 永続ボリュームとしての Amazon EBS の利用設定](docs/rosa-volume)
 - [\[デモとハンズオン\] AWS Controllers for Kubernetes (ACK) による Amazon S3の利用](docs/rosa-ack-s3)
