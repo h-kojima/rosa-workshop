@@ -113,7 +113,7 @@ htpasswd-1        HTPasswd
 github-hkojima    GitHub      https://oauth-openshift.apps.rosa-XXXXX.9job.p1.openshiftapps.com/oauth2callback/github-hkojima
 ```
 
-「To login into the console」のURL(上記の例だと、https://console-openshift-console.apps.rosa-XXXXX.9job.p1.openshiftapps.com)にアクセスすると、次のような画面が表示されますので、「rosa create idp」コマンドで指定した認証プロバイダーの名前(ここでは「github-hkojima」)を選択します。
+「To login into the console」のURL(上記の例だと、`https://console-openshift-console.apps.rosa-XXXXX.9job.p1.openshiftapps.com`)にアクセスすると、次のような画面が表示されますので、「rosa create idp」コマンドで指定した認証プロバイダーの名前(ここでは「github-hkojima」)を選択します。
 
 ![ROSAのログイン画面](./images/rosa-login.png)
 <div style="text-align: center;">ROSAのログイン画面</div>
