@@ -98,3 +98,5 @@ If you have any questions, please contact us. Review the support process for gui
 Thank you for choosing Red Hat OpenShift Service on AWS,
 OpenShift SRE
 ```
+
+これで、ROSAクラスターアップグレードスケジューリングのデモ紹介は終了です。次は、インストラクターによる、[ROSAクラスター削除](../rosa-delete)のデモ紹介です。
