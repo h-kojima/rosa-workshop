@@ -123,7 +123,7 @@ GitHubをOAuthの認可サーバーとして利用しているため、ROSAか�
 ![GitHubの認可画面](./images/authorize.png)
 <div style="text-align: center;">GitHubの認可画面</div>
 
-GitHubから認可レスポンスが返されて、ROSAにリダイレクトされてログインが完了します。初回ログインした時に、「スタート」をクリックすると、開発者用コンソールの使い方ガイドを確認できます。
+GitHubから認可レスポンスが返されて、ROSAにリダイレクトされてログインが完了します。初回ログインした時に、「スタート」をクリックすると、開発者用コンソールの使い方ガイドを確認できます。これでROSAクラスター上でアプリケーションを開発・デプロイできるようになります。次の演習の[アプリケーションのデプロイのクイックスタート](../rosa-app-deploy-quickstart)に進んでください。
 
 ![ROSAの初回ログイン](./images/rosa-first-login.png)
 <div style="text-align: center;">ROSAの初回ログイン</div>
