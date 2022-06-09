@@ -3,12 +3,12 @@
 ### ROSA/OpenShift CLIを実行するRHELインスタンスへのアクセス
 
 予めインストラクターが作成しておいたROSAクラスターにアクセスします。そのために、ROSAクラスターにアクセスするための認証情報を、ROSA CLIを使用して作成します。  
-ROSA CLIを実行するためのRHELインスタンスにSSHアクセスするために、受講者はSSH公開鍵を作成して、インストラクターに共有してください。  
-インストラクターにより、RHELインスタンスのパブリックIPアドレスが共有されます。
+ROSA CLIを実行するためのRHELインスタンスにSSHアクセスして、本演習を実施します。 
+インストラクターにより、RHELインスタンスのパブリックIPアドレスとSSHログインの情報が共有されます。
 
-SSH公開鍵を利用して、RHELインスタンスにアクセスします。
+SSHを利用して、RHELインスタンスにアクセスします。
 ```
-$ ssh -i .ssh/id_rsa.pub testuserXX@XXX.XXX.XXX.XXX
+$ ssh testuserXX@XXX.XXX.XXX.XXX
 ```
 
 このRHELインスタンスは、ROSA CLIとOpenShift CLI (oc)が利用できるようになっています。  
