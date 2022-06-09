@@ -73,7 +73,7 @@ ROSAクラスターにローカルユーザでログインしなおして、「�
 ![Amazon S3バケットの作成](./images/s3-bucket-create4.png)
 <div style="text-align: center;">Amazon S3バケットの作成</div>　
 
-S3バケットの作成が完了すると、ROSAやAWSコンソールで、バケットが作成されていることを確認できます。
+S3バケットの作成が完了すると、ROSAやAWSコンソールで、バケットが作成されていることを確認できます。AWSコンソールにアクセスするためのアカウントは、インストラクターにより共有されます。
 
 ![Amazon S3バケットの確認](./images/s3-bucket-confirm1.png)
 ![Amazon S3バケットの確認](./images/s3-bucket-confirm2.png)
