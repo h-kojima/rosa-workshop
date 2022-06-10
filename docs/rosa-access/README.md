@@ -60,7 +60,7 @@ htpasswd-1    HTPasswd
 
 現時点では、HTPasswdを利用したクラスター管理者用のアイデンティティープロバイダーしかありません。そのため、ROSAクラスターのアイデンティティープロバイダーを追加していきます。
 
-次のコマンドを実行して、GitHubを利用した認証プロバイダーを追加します。「GitHub organizations」の項目には、先ほど作成したorganizationの名前を入力してください。
+次のコマンドを実行して、GitHubを利用したアイデンティティープロバイダーを追加します。「Identity provider name」の項目には、この例では「github-hkojima」と入力していますが、ご自身のものであると分かる名前を入力してください。ROSAクラスター内では、アイデンティティープロバイダー名の重複はできません。「GitHub organizations」の項目には、先ほど作成したorganizationの名前を入力してください。
 ```
 $ rosa create idp -c rosa-XXXXX
 I: Interactive mode enabled.
