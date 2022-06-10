@@ -23,7 +23,9 @@ Client Version: 4.10.15
 
 ### GitHub Organizationの作成
 
-ROSA CLIを利用して、GitHub認証情報を追加します。GitHubのアカウントを持っていない場合、[こちら](https://github.com/)から作成してください。
+ROSA CLIを利用して、GitHub認証情報を追加します。[ROSAのアイデンティティープロバイダー](https://docs.openshift.com/rosa/rosa_install_access_delete_clusters/rosa-sts-config-identity-providers.html#understanding-idp-supported_rosa-sts-config-identity-providers)ではHTPasswdを利用できますが、これはROSAクラスターの、1つの管理者アカウント用に利用することしか現時点ではサポートされていません。そのため、本演習では、GitHubを利用してROSAクラスターへのアクセス設定を実施します。
+
+GitHubのアカウントを持っていない場合、[こちら](https://github.com/)から作成してください。
 
 GitHubアカウントの作成が完了したら、GitHub organizationを作成します。OpenShiftにGitHubとの認証連携を利用する場合、[GitHub Organization](https://docs.github.com/ja/organizations/collaborating-with-groups-in-organizations/about-organizations)か[GitHub teams](https://docs.github.com/ja/organizations/organizing-members-into-teams/about-teams)を認証に利用します。ここでは、GitHub organizationを利用した、認証連携を設定します。
 
