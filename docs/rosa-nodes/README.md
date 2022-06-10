@@ -85,3 +85,5 @@ I: Successfully deleted machine pool 'mp20' from cluster 'rosa-XXXXX'
 これでROSAの基本的な演習は終了です。この後は、インストラクターによる、[ROSAクラスターのアップグレード](../rosa-upgrade)と[ROSAクラスターの削除](../rosa-delete)のデモ紹介があります。
 
 デモ紹介を待っている間、時間に余裕があれば、アドバンスドな演習の[ROSAクラスターでのJavaアプリケーション開発 スターターラボ](../rosa-sample-app-develop)に進んでください。
+
+[HOME](../../README.md)

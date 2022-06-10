@@ -65,3 +65,5 @@ test-ebsという名前でPodが作成されて、Podにより「test-pvc-20」P
 ここで上記画像にあるように、ターミナルから、echoコマンドなどで永続ボリュームのマウントポイントである「/mnt/ebs-data」ディレクトリに、適当なファイルを作成します。Podを削除(該当Podを選択して、「アクション」->「Podの削除」を選択)した後に、再度「test-pvc-20」PVCを指定してPodを作成すると、作成したテストファイルが残っていることを確認できます。
 
 これでROSAクラスターでの、永続ボリュームとしてのAmazon EBSを利用する設定と確認が完了しました。次の演習の[AWS Controllers for Kubernetes (ACK) による Amazon S3の利用](../rosa-ack-s3)に進んでください。
+
+[HOME](../../README.md)

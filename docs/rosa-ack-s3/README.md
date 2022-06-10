@@ -85,3 +85,5 @@ ACKによって作成したS3バケットを削除したい場合、当該バケ
 <div style="text-align: center;">Amazon S3バケットの削除</div>　
 
 これでROSAクラスターからの、ACKを利用したAmazon S3バケットの作成と削除が完了しました。次の演習の[コンピュートノードの追加/削除とオートスケールの設定](../rosa-nodes)に進んでください。
+
+[HOME](../../README.md)
