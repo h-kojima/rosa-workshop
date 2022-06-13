@@ -63,6 +63,35 @@ secret/ack-user-secrets created
 
 この状態が表示されれば、インストールが完了しています。ROSAのローカルユーザがインストールされたOperatorを利用して、S3のバケットをAWS上に作成できるようになります。
 
+#### \[Tips\]: ROSAクラスター管理者権限の付与
+
+現時点で、受講者はGitHub認証を利用してROSAクラスターに一般ユーザ(プロジェクトの作成やプロジェクト上でのアプリデプロイ権限を持つユーザ)として、ROSAクラスターにログインしています。この一般ユーザには、rosaコマンドを利用して、管理者権限を付与できます。下記コマンドで指定している「h-kojima」は、GitHubアカウントのIDです。ご利用のGitHubアカウントIDに応じて、「h-kojima」のIDを適宜修正してください。
+
+```
+$ rosa list clusters
+ID                                NAME        STATE
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  rosa-XXXXX  ready
+$ rosa list user --cluster rosa-XXXXX
+W: There are no users configured for cluster 'rosa-XXXXX'
+$ rosa grant user cluster-admin --user=h-kojima --cluster rosa-XXXXX
+I: Granted role 'cluster-admins' to user 'h-kojima' on cluster 'rosa-XXXXX'
+$ rosa list user --cluster rosa-XXXXX
+ID          GROUPS
+h-kojima    cluster-admins
+```
+
+これで、ROSAクラスターの管理者権限が付与されましたので、受講者も上記で紹介しているOperatorのインストール作業が実施できるようになります。ログアウトして再ログインすると、ROSAクラスターのリソース全てを参照できるようになります。
+
+付与した管理者権限を削除したい場合は、「rosa revoke user」コマンドを実行します。
+
+```
+$ rosa revoke user cluster-admin --user=h-kojima --cluster rosa-XXXXX
+? Are you sure you want to revoke role cluster-admins from user h-kojima in cluster rosa-XXXXX? Yes
+I: Revoked role 'cluster-admins' from user 'h-kojima' on cluster 'rosa-XXXXX'
+$ rosa list user --cluster rosa-XXXXX
+W: There are no users configured for cluster 'rosa-XXXXX'
+```
+
 ### \[ハンズオン\] Amazon S3のバケット作成と削除
 
 ROSAクラスターにローカルユーザでログインしなおして、「インストールされたOperator」から ACK Amazon S3 Operatorを利用してバケットを作成します。このOperatorを選択して、「インスタンスの作成」をクリックすると、パラメータ入力画面に移動します。「名前」は任意の名前(ここではexample20)を入力し、「Name」には作成するAmazon S3バケット名を入力します。Amazon S3バケットは、グローバル名前空間が共通しているため、名前の重複が許可されていません。そのため、重複しないような名前を指定する必要があります。最後に一番下にある「作成」ボタンをクリックすれば、S3バケットの作成が完了します。
