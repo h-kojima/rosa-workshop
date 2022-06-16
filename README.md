@@ -14,7 +14,7 @@ PDFの資料は[こちら](docs/pdf/2022-rosa-workshop-lecture.pdf)からダウ�
 - \[ハンズオン\]: セルフペースの演習です。受講者は、コマンド実行やGUIの操作をしてワークショップを進めます。
 - \[デモとハンズオン\]: 上記の両方を含みます。
 
-### 前提要件
+### 演習の前提要件
 
 - AWS/GitHubにアクセス可能なネットワーク環境
 - RHELサーバにSSHログインして、コマンドが実行可能
@@ -25,14 +25,14 @@ PDFの資料は[こちら](docs/pdf/2022-rosa-workshop-lecture.pdf)からダウ�
    - [「Browsers and Client Tools」表](https://access.redhat.com/articles/4763741)にある、最新版のOpenShiftに対応したWebブラウザ(Firefox/MS Edge/Chrome/Safari)のいずれかを利用します。
 
 
-### Contents
+### コンテンツ
 
-- [\[デモ\] ROSAクラスターの作成](docs/rosa-create)
-- [\[ハンズオン\] GitHubを利用したROSAクラスターへのアクセス](docs/rosa-access)
-- [\[ハンズオン\] アプリケーションのデプロイのクイックスタート](docs/rosa-app-deploy-quickstart)
-- [\[ハンズオン\] 永続ボリュームとしての Amazon EBS の利用設定](docs/rosa-volume)
-- [\[デモとハンズオン\] AWS Controllers for Kubernetes (ACK) による Amazon S3の利用](docs/rosa-ack-s3)
-- [\[ハンズオン\] コンピュートノードの追加/削除とオートスケールの設定](docs/rosa-nodes)
-- [\[デモ\] ROSAクラスターのアップグレード](docs/rosa-upgrade)
-- [\[デモ\] ROSAクラスターの削除](docs/rosa-delete)
-- [\[ハンズオン\] ROSAクラスターでのJavaアプリケーション開発 スターターラボ](docs/rosa-sample-app-develop)
+1. [\[デモ\] ROSAクラスターの作成](docs/rosa-create)
+1. [\[ハンズオン\] GitHubを利用したROSAクラスターへのアクセス](docs/rosa-access)
+1. [\[ハンズオン\] アプリケーションのデプロイのクイックスタート](docs/rosa-app-deploy-quickstart)
+1. [\[ハンズオン\] 永続ボリュームとしての Amazon EBS の利用設定](docs/rosa-volume)
+1. [\[デモとハンズオン\] AWS Controllers for Kubernetes (ACK) による Amazon S3の利用](docs/rosa-ack-s3)
+1. [\[ハンズオン\] コンピュートノードの追加/削除とオートスケールの設定](docs/rosa-nodes)
+1. [\[デモ\] ROSAクラスターのアップグレード](docs/rosa-upgrade)
+1. [\[デモ\] ROSAクラスターの削除](docs/rosa-delete)
+2. [\[ハンズオン\] ROSAクラスターでのJavaアプリケーション開発 スターターラボ](docs/rosa-sample-app-develop)
