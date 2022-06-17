@@ -6,7 +6,9 @@ Red Hat OpenShift Service on AWS (ROSA) Workshops プロジェクトは、イン
 
 <embed src="docs/pdf/2022-rosa-workshop-lecture.pdf#&scrollbar=0&view=Fit&viewrect=0,0,570,0" width="640" height="360" hspace="0" vspace="0">
 
-PDFの資料は[こちら](docs/pdf/2022-rosa-workshop-lecture.pdf)からダウンロードできます。
+資料のPDFは[こちら](docs/pdf/2022-rosa-workshop-lecture.pdf)からダウンロードできます。
+
+下記は、この資料の説明動画です。
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/DlrDb-hK2Vo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
