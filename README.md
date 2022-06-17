@@ -4,7 +4,7 @@ Red Hat OpenShift Service on AWS (ROSA) Workshops プロジェクトは、イン
 
 最初に受講者は、コンテナ/Kubernetes/OpenShift/ROSAの概要を学習します。
 
-<embed src="https://h-kojima.github.io/rosa-workshop/docs/pdf/2022-rosa-workshop-lecture.pdf#&scrollbar=0&view=Fit&viewrect=0,0,570,0" width="640" height="360" hspace="0" vspace="0">
+<embed src="docs/pdf/2022-rosa-workshop-lecture.pdf#&scrollbar=0&view=Fit&viewrect=0,0,570,0" width="640" height="360" hspace="0" vspace="0">
 
 PDFの資料は[こちら](docs/pdf/2022-rosa-workshop-lecture.pdf)からダウンロードできます。
 
