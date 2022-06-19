@@ -10,7 +10,7 @@ Red Hat OpenShift Service on AWS (ROSA) Workshops プロジェクトは、イン
 
 下記は、この資料の説明動画です。
 
-<iframe width="640" height="360" src="https://www.youtube.com/embed/DlrDb-hK2Vo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="640" height="360" src="https://www.youtube.com/embed/R-AXqk3KF4Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 次に下記のデモ紹介及び演習を実施します。コンテンツは以下の種類に分かれます。
 
