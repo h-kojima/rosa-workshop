@@ -1,0 +1,3 @@
+The talk scripts of this page are as follows:
+
+AWSが提供する、OpenShiftのマネージドサービス、ROSAの概要をご紹介します。

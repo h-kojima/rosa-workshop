@@ -1,0 +1,4 @@
+The talk scripts of this page are as follows:
+
+ここまでコンテナの必要性や利用シーンについて、ご紹介してきました。
+ここからは、コンテナオーケストレータである、Kubernetesの必要性をご紹介します。

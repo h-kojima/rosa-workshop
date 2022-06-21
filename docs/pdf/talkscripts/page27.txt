@@ -1,0 +1,3 @@
+The talk scripts of this page are as follows:
+
+Red Hat OpenShiftの主な機能をご紹介していきます。

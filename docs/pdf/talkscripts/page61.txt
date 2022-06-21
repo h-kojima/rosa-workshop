@@ -1,0 +1,9 @@
+The talk scripts of this page are as follows:
+
+以上で、コンテナ、Kubernetes、OpenShift、そして、
+OpenShiftマネージドサービスの1つであるROSAの概要のご紹介を終わります。
+
+ROSAは、すぐに使えるAWSのクラウドサービスの1つですので、
+ぜひとも試してみてください。
+
+ご清聴ありがとうございました。

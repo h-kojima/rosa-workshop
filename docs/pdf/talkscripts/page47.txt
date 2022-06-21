@@ -1,0 +1,21 @@
+The talk scripts of this page are as follows:
+
+
+10年以上も前から、AWSとレッドハットは一緒に連携してきました。
+
+この連携は2008年からはじまり、エンタープライズのお客様向けに、
+AWSクラウド上でのレッドハット製品活用を促進してきました。
+
+2012年には、東京リージョンにおいて、従量課金でのRHELの提供開始。
+
+そして2015年には RHEL for SAP HANA の従量課金を開始しました。
+
+同年にはJBossミドルウェアの持ち込み、
+いわゆるBYOS (Bring Your Own Subscription) が利用開始になりました。
+
+最近では、2020年に、レッドハットは AWS Outposts Ready Partner に参加いたしました。
+また、のちほど触れますが、Red Hat OpenShift Service on AWS (通称ROSA) が発表されました。
+
+これはOpenShiftのマネージドサービスを、
+AWSのサービスとして従量課金で提供するものです。
+

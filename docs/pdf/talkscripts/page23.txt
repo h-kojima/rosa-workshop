@@ -1,0 +1,9 @@
+The talk scripts of this page are as follows:
+
+Kubernetesでは、Podのオートスケーリングにも対応しています。
+
+実行中の各PodのCPUやメモリの利用量が一時的に増加した場合、
+Podのコピーを自動的に追加・実行できるようになっています。
+
+Podをデプロイするユーザが予め設定した、CPUとメモリ利用量の閾値、レプリカ数の範囲をもとに、
+Kubernetesが該当Podをオートスケール(スケールアウト/スケールダウン)します。

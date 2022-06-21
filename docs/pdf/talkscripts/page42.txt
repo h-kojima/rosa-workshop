@@ -1,0 +1,3 @@
+The talk scripts of this page are as follows:
+
+こうしたOpenShiftをベースとした、OpenShiftのマネージドサービスの概要をご紹介します。

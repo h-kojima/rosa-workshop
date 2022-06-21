@@ -1,0 +1,11 @@
+The talk scripts of this page are as follows:
+
+本資料では、コンテナ利用の主な理由から、
+コンテナ利用に必要なもの、利用シーン。
+
+現時点での主なコンテナオーケストレータである、Kubernetesの必要性。
+
+そしてKubernetesのディストリビューションの1つである、OpenShiftの主な機能。
+
+OpenShiftのマネージドサービスと、そのサービスの1つである
+ROSAの主な特徴をご紹介します。

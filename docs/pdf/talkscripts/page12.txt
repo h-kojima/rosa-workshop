@@ -1,0 +1,3 @@
+The talk scripts of this page are as follows:
+
+ここからは、コンテナを使うために必要なものについて見ていきましょう。
