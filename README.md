@@ -28,6 +28,10 @@ Red Hat OpenShift Service on AWS (ROSA) Workshops プロジェクトは、イン
 - ROSAクラスターにアクセス可能なWebブラウザ
    - [「Browsers and Client Tools」表](https://access.redhat.com/articles/4763741)にある、最新版のOpenShiftに対応したWebブラウザ(Firefox/MS Edge/Chrome/Safari)のいずれかを利用します。
 
+補足事項: 次のものを用意することで、下記コンテンツの自習も可能です。
+
+- 有償サービスを利用可能なAWSアカウント
+- 無料で作成可能な[Red Hatアカウント](https://cloud.redhat.com/) (「Create an account」から作成)
 
 ### コンテンツ
 
