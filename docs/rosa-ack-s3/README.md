@@ -29,7 +29,7 @@ ACK_LOG_LEVEL=debug
 ACK_WATCH_NAMESPACE=
 AWS_REGION=ap-northeast-1
 AWS_ENDPOINT_URL=
-ACK_RESOURCE_TAGS=hellofromocp
+ACK_RESOURCE_TAGS=rosa-ack
 EOF
 $ oc create configmap --from-env-file=config.txt ack-s3-user-config
 configmap/ack-s3-user-config created
