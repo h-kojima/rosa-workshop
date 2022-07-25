@@ -47,10 +47,10 @@ secret/ack-s3-user-secrets created
 
 作成した　configmapとsecretsは、ROSAのWebコンソールで確認できます。
 
-![ack-systemプロジェクトに作成したack-s3-user-config](./images/ack-user-config.png)
+![ack-systemプロジェクトに作成したack-s3-user-config](./images/ack-s3-user-config.png)
 <div style="text-align: center;">ack-systemプロジェクトに作成したack-s3-user-config</div>　　
 
-![ack-systemプロジェクトに作成したack-s3-user-secrets](./images/ack-user-secrets.png)
+![ack-systemプロジェクトに作成したack-s3-user-secrets](./images/ack-s3-user-secrets.png)
 <div style="text-align: center;">ack-systemプロジェクトに作成したack-s3-user-secrets</div>　　
 
 あとは、管理者権限を持つユーザで、OperatorHubから「ACK - Amazon S3」Operatorをインストールします。全てデフォルトの値を利用して、インストールを進めていきます。
