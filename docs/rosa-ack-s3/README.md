@@ -115,6 +115,8 @@ ACKによって作成したS3バケットを削除したい場合、当該バケ
 
 これでROSAクラスターからの、ACKを利用したAmazon S3バケットの作成と削除が完了しました。次の演習の[コンピュートノードの追加/削除とオートスケールの設定](../rosa-nodes)に進んでください。
 
-### \[参考情報\] [Configuration for ACK controllers in an OpenShift cluster](https://aws-controllers-k8s.github.io/community/docs/user-docs/openshift/)
+#### \[参考情報\]
+- [Configuration for ACK controllers in an OpenShift cluster](https://aws-controllers-k8s.github.io/community/docs/user-docs/openshift/)
+- [第1章 管理ロールおよびユーザーの管理](https://access.redhat.com/documentation/ja-jp/openshift_dedicated/4/html/cluster_administration/osd-admin-roles#understanding-admin-roles_osd-admin-roles)
 
 [HOME](../../README.md)
