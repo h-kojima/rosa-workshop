@@ -186,7 +186,7 @@ Details Page:               https://console.redhat.com/openshift/details/s/XXXXX
 OIDC Endpoint URL:          https://rh-oidc.s3.us-east-1.amazonaws.com/XXXXXXXXX
 
 I: Preparing to create operator roles.
-I: Creating roles using 'arn:aws:iam::XXXXXXXXX:user/hkojima@redhat.com-h8cxh-admin'
+I: Creating roles using 'arn:aws:iam::XXXXXXXXX:user/hkojima@redhat.com-XXXXXX-admin'
 I: Created role 'test-cluster01-t1e5-openshift-cluster-csi-drivers-ebs-cloud-cred' with ARN 'arn:aws:iam::XXXXXXXXX:role/test-cluster01-t1e5-openshift-cluster-csi-drivers-ebs-cloud-cred'
 I: Created role 'test-cluster01-t1e5-openshift-cloud-network-config-controller-cl' with ARN 'arn:aws:iam::XXXXXXXXX:role/test-cluster01-t1e5-openshift-cloud-network-config-controller-cl'
 I: Created role 'test-cluster01-t1e5-openshift-machine-api-aws-cloud-credentials' with ARN 'arn:aws:iam::XXXXXXXXX:role/test-cluster01-t1e5-openshift-machine-api-aws-cloud-credentials'
