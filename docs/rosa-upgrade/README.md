@@ -140,6 +140,8 @@ Thank you for choosing Red Hat OpenShift Service on AWS,
 OpenShift SRE
 ```
 
+参考情報ですが、ROSAクラスターの最小構成(Controller x3, Infra x2, Compute x2, Single-Avialability zone)のアップグレードの場合、アップグレード開始メールを受け取ってからアップグレード完了メールを受け取るまで、100分でした。こちらを目安の1つにしてください。
+
 これで、ROSAクラスターアップグレードスケジューリングのデモ紹介は終了です。次は、インストラクターによる、[ROSAクラスター削除](../rosa-delete)のデモ紹介です。
 
 [HOME](../../README.md)
