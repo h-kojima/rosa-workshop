@@ -134,8 +134,76 @@ AWSコンソールから、必要なIAMロールとポリシーが作成され�
 どのようなAWSのアクションを許可するポリシーが作成されているかは、[こちらのドキュメント](https://docs.openshift.com/rosa/rosa_architecture/rosa-sts-about-iam-resources.html#rosa-sts-account-wide-roles-and-policies-creation-methods_rosa-sts-about-iam-resources)から確認することもできます。
 
 ROSAクラスターの作成コマンドを実行します。
+
+デフォルトで設定しているAWSリージョンに、OpenShift 4.10.14を利用した、シングルAZの最小構成(Control x3, Infra x2, Compute x2 の7台構成)のROSAクラスターを全自動で作成するには、次のコマンドを実行します。「--version」オプションを指定しない場合、自動的に最新版のOpenShiftが利用されます。「--dry-run」オプションを付けると、正常に実行可能かどうかを事前確認できます。
+```
+$ rosa create cluster -c test-cluster01 --version 4.10.14 --sts --mode auto -y 
+
+I: Using arn:aws:iam::XXXXXXXXX:role/ManagedOpenShift-Installer-Role for the Installer role
+I: Using arn:aws:iam::XXXXXXXXX:role/ManagedOpenShift-ControlPlane-Role for the ControlPlane role
+I: Using arn:aws:iam::XXXXXXXXX:role/ManagedOpenShift-Worker-Role for the Worker role
+I: Using arn:aws:iam::XXXXXXXXX:role/ManagedOpenShift-Support-Role for the Support role
+I: Creating cluster 'test-cluster01'
+I: To view a list of clusters and their status, run 'rosa list clusters'
+I: Cluster 'test-cluster01' has been created.
+I: Once the cluster is installed you will need to add an Identity Provider before you can login into the cluster. See 'rosa create idp --help' for more information.
+Name:                       test-cluster01
+ID:                         XXXXXXXXX
+External ID:                
+OpenShift Version:          
+Channel Group:              stable
+DNS:                        test-cluster01.9job.p1.openshiftapps.com
+AWS Account:                XXXXXXXXX
+API URL:                    
+Console URL:                
+Region:                     ap-northeast-1
+Multi-AZ:                   false
+Nodes:
+ - Control plane:           3
+ - Infra:                   2
+ - Compute:                 2
+Network:
+ - Service CIDR:            172.30.0.0/16
+ - Machine CIDR:            10.0.0.0/16
+ - Pod CIDR:                10.128.0.0/14
+ - Host Prefix:             /23
+STS Role ARN:               arn:aws:iam::XXXXXXXXX:role/ManagedOpenShift-Installer-Role
+Support Role ARN:           arn:aws:iam::XXXXXXXXX:role/ManagedOpenShift-Support-Role
+Instance IAM Roles:
+ - Control plane:           arn:aws:iam::XXXXXXXXX:role/ManagedOpenShift-ControlPlane-Role
+ - Worker:                  arn:aws:iam::XXXXXXXXX:role/ManagedOpenShift-Worker-Role
+Operator IAM Roles:
+ - arn:aws:iam::XXXXXXXXX:role/test-cluster01-t1e5-openshift-machine-api-aws-cloud-credentials
+ - arn:aws:iam::XXXXXXXXX:role/test-cluster01-t1e5-openshift-cloud-credential-operator-cloud-cr
+ - arn:aws:iam::XXXXXXXXX:role/test-cluster01-t1e5-openshift-image-registry-installer-cloud-cre
+ - arn:aws:iam::XXXXXXXXX:role/test-cluster01-t1e5-openshift-ingress-operator-cloud-credentials
+ - arn:aws:iam::XXXXXXXXX:role/test-cluster01-t1e5-openshift-cluster-csi-drivers-ebs-cloud-cred
+ - arn:aws:iam::XXXXXXXXX:role/test-cluster01-t1e5-openshift-cloud-network-config-controller-cl
+State:                      waiting (Waiting for OIDC configuration)
+Private:                    No
+Created:                    Aug 24 2022 11:32:29 UTC
+Details Page:               https://console.redhat.com/openshift/details/s/XXXXXXXXX
+OIDC Endpoint URL:          https://rh-oidc.s3.us-east-1.amazonaws.com/XXXXXXXXX
+
+I: Preparing to create operator roles.
+I: Creating roles using 'arn:aws:iam::XXXXXXXXX:user/hkojima@redhat.com-h8cxh-admin'
+I: Created role 'test-cluster01-t1e5-openshift-cluster-csi-drivers-ebs-cloud-cred' with ARN 'arn:aws:iam::XXXXXXXXX:role/test-cluster01-t1e5-openshift-cluster-csi-drivers-ebs-cloud-cred'
+I: Created role 'test-cluster01-t1e5-openshift-cloud-network-config-controller-cl' with ARN 'arn:aws:iam::XXXXXXXXX:role/test-cluster01-t1e5-openshift-cloud-network-config-controller-cl'
+I: Created role 'test-cluster01-t1e5-openshift-machine-api-aws-cloud-credentials' with ARN 'arn:aws:iam::XXXXXXXXX:role/test-cluster01-t1e5-openshift-machine-api-aws-cloud-credentials'
+I: Created role 'test-cluster01-t1e5-openshift-cloud-credential-operator-cloud-cr' with ARN 'arn:aws:iam::XXXXXXXXX:role/test-cluster01-t1e5-openshift-cloud-credential-operator-cloud-cr'
+I: Created role 'test-cluster01-t1e5-openshift-image-registry-installer-cloud-cre' with ARN 'arn:aws:iam::XXXXXXXXX:role/test-cluster01-t1e5-openshift-image-registry-installer-cloud-cre'
+I: Created role 'test-cluster01-t1e5-openshift-ingress-operator-cloud-credentials' with ARN 'arn:aws:iam::XXXXXXXXX:role/test-cluster01-t1e5-openshift-ingress-operator-cloud-credentials'
+I: Preparing to create OIDC Provider.
+I: Creating OIDC provider using 'arn:aws:iam::XXXXXXXXX:user/hkojima@redhat.com-XXXXXX-admin'
+I: Created OIDC provider with ARN 'arn:aws:iam::XXXXXXXXX:oidc-provider/rh-oidc.s3.us-east-1.amazonaws.com/XXXXXXXXX'
+I: To determine when your cluster is Ready, run 'rosa describe cluster -c test-cluster01'.
+I: To watch your cluster installation logs, run 'rosa logs install -c test-cluster01 --watch'.
+```
+
+なお、対話モードによりオプションを指定しながらインストールすることもできます。
 ```
 $ rosa create cluster --sts
+
 I: Enabling interactive mode
 ? Cluster name: test-cluster01
 ? OpenShift version: 4.10.14
@@ -211,20 +279,16 @@ I: Run the following commands to continue the cluster creation:
 
 I: To determine when your cluster is Ready, run 'rosa describe cluster -c test-cluster01'.
 I: To watch your cluster installation logs, run 'rosa logs install -c test-cluster01 --watch'.
-```
 
-ここで作成するROSAクラスター専用IAMロールと、OpenID Connect (OIDC) プロバイダーを作成します。これらを作成しないと、ROSAクラスター作成状態が「Waiting」のままで、デプロイが完了しません。
-```
+
 $ rosa create operator-roles --cluster test-cluster01 --mode auto -y
 $ rosa create oidc-provider --cluster test-cluster01 --mode auto -y
 ```
 
-\[Tips\]: デフォルトで設定しているAWSリージョンに、最新版のOpenShiftを利用したシングルAZの最小構成(Control x3, Infra x2, Compute x2 の7台構成)のROSAクラスターを全自動で作成するには、次のコマンドを実行します。
-```
-$ rosa create cluster --cluster-name test-cluster01 --sts --mode auto -y
-```
+最後の2行のコマンドで、ROSAクラスター専用IAMロール(ROSAクラスターのOperatorが必要なAWSリソースを作成するために必要)と、認証するためにクラスターOperatorによって使用されるOpenID Connect (OIDC) プロバイダーを作成します。対話モードでROSAクラスター作成コマンド実行した場合、これらを作成しないと、ROSAクラスター作成状態が「Waiting」のままで、デプロイが完了しません。
 
-クラスターのデプロイ状態を次のコマンドで確認できます。
+
+クラスターのデプロイ状態は、次のコマンドで確認できます。
 ```
 $ rosa list clusters
 ID                                NAME            STATE
