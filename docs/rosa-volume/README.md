@@ -7,15 +7,15 @@ ROSAには、AWS Elastic Block Store (EBS) ボリュームを使用するスト�
 
 このうち、デフォルトのストレージクラスがgp3(ROSA 4.11+)として設定されており、外部ストレージを永続ボリュームとして利用する際のデフォルトとして利用されます。
 
-![gp2ストレージクラス](./images/gp3.png)
+![gp3ストレージクラス](./images/gp3.png)
 <div style="text-align: center;">gp3ストレージクラス</div>　　
 
-また、前の演習で作成しました、PostgreSQLサンプルアプリでも、gp2ストレージクラスを利用して、gp2ボリュームタイプのAmazon EBSにデータを保存するように設定されています。
+また、前の演習で作成しました、PostgreSQLサンプルアプリでも、gp3ストレージクラスを利用して、gp3ボリュームタイプのAmazon EBSにデータを保存するように設定されています。
 
 ![PostgreSQLが利用する永続ボリューム (Persistent Volume, PV)](./images/postgresql-pvc.png)
 <div style="text-align: center;">PostgreSQLが利用する永続ボリューム (Persistent Volume, PV)</div>　
 
-ここでgp2ストレージクラスを利用するために、新しく永続ボリューム要求(Persistent Volume Claim, PVC)を作成します。永続ボリューム要求の名前は、任意の名前(ここではtest-pvc-20)を入力し、要求するサイズは1GiBと指定します。
+ここでgp3ストレージクラスを利用するために、新しく永続ボリューム要求(Persistent Volume Claim, PVC)を作成します。永続ボリューム要求の名前は、任意の名前(ここではtest-pvc-20)を入力し、要求するサイズは1GiBと指定します。
 
 ![PVCの作成](./images/pvc-create1.png)
 ![PVCの作成](./images/pvc-create2.png)
