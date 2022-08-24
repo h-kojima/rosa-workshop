@@ -5,10 +5,10 @@ ROSAには、AWS Elastic Block Store (EBS) ボリュームを使用するスト�
 ![ROSAですぐに利用可能なストレージクラス](./images/storage-class.png)
 <div style="text-align: center;">ROSAですぐに利用可能なストレージクラス</div>　　
 
-このうち、デフォルトのストレージクラスがgp2として設定されており、外部ストレージを永続ボリュームとして利用する際のデフォルトとして利用されます。
+このうち、デフォルトのストレージクラスがgp3(ROSA 4.11+)として設定されており、外部ストレージを永続ボリュームとして利用する際のデフォルトとして利用されます。
 
-![gp2ストレージクラス](./images/gp2.png)
-<div style="text-align: center;">gp2ストレージクラス</div>　　
+![gp2ストレージクラス](./images/gp3.png)
+<div style="text-align: center;">gp3ストレージクラス</div>　　
 
 また、前の演習で作成しました、PostgreSQLサンプルアプリでも、gp2ストレージクラスを利用して、gp2ボリュームタイプのAmazon EBSにデータを保存するように設定されています。
 
