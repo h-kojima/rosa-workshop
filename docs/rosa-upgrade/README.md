@@ -99,6 +99,43 @@ Thank you for choosing Red Hat OpenShift Service on AWS,
 OpenShift SRE
 ```
 
+なお、実際にアップグレードが開始されると、次のような通知メールが届きます。
+```
+Hello Hiforumi,
+
+This notification is for your test-cluster01 cluster.
+Your Cluster is currently being upgraded to version '4.10.15'.
+
+Please contact Red Hat support if you have any questions.
+
+
+What can you expect?
+Your cluster capacity may increase briefly during the course of the upgrade but will never decrease. Your cluster will remain operational during the upgrade.
+If your applications are not designed as highly available, they may experience brief outages as we roll through the upgrade.
+We will send reminders as we get closer to the upgrade date. The maintenance window for the upgrade is variable and should take approximately 90 minutes for the control plane nodes and 10 minutes for each worker node.
+What should you do to minimize impact?
+You can minimize the impact on your applications by scaling your services to more than one pod. In general, for applications to be able to continue to service clients, they should be scaled.
+Some pod workloads are not appropriate for scaling, such as a single-instance, non-replicated database using a persistent volume claim. In this situation, a deployment strategy of 'recreate' will ensure the pod is restarted after migration, although a brief outage will be experienced.
+For more information, refer to our highly available deployment guide.
+
+If you have any questions, please contact us. Review the support process for guidance on working with Red Hat suppor
+Thank you for choosing Red Hat OpenShift Service on AWS,
+OpenShift SRE
+```
+
+アップグレードが正常に完了すると、次の通知メールが届きます。
+```
+Hello Hiforumi,
+
+This notification is for your test-cluster01 cluster.
+Your Cluster has been successfully upgraded to version '4.10.15'.
+
+If you have any questions, please contact us. Review the support process for guidance on working with Red Hat support.
+
+Thank you for choosing Red Hat OpenShift Service on AWS,
+OpenShift SRE
+```
+
 これで、ROSAクラスターアップグレードスケジューリングのデモ紹介は終了です。次は、インストラクターによる、[ROSAクラスター削除](../rosa-delete)のデモ紹介です。
 
 [HOME](../../README.md)
