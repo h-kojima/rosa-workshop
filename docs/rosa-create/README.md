@@ -5,7 +5,7 @@
 ROSAは、Red Hatによるお客様の既存AWSアカウントへのデプロイを可能にするモデルを提供します。Red Hatはセキュリティを考慮して、[AWS Secrity Token Service (STS)](https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/id_credentials_temp.html) を利用したROSAのデプロイを推奨しています。STSを使用したROSAデプロイの前提条件は、次のドキュメントをご参照ください。
 
 - [第1章 STS を使用した ROSA の AWS 前提条件](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/prepare_your_environment/rosa-sts-aws-prereqs)
-- [第4章 必要な AWS サービスクォータ](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/prepare_your_environment/rosa-sts-required-aws-service-quotas)
+- [第5章 必要な AWS サービスクォータ](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/prepare_your_environment/rosa-sts-required-aws-service-quotas)
 
 ROSAクラスターをデプロイするには、AWSアカウントと[Red Hatアカウント](https://cloud.redhat.com/)を利用します。アカウントがない場合は、アカウントを作成する必要があります。ROSAをデプロイ・実行するには、専用のAWSアカウントの使用を推奨しています。
 
