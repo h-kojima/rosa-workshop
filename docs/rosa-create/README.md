@@ -216,7 +216,7 @@ I: To watch your cluster installation logs, run 'rosa logs install -c test-clust
 ここで作成するROSAクラスター専用IAMロールと、OpenID Connect (OIDC) プロバイダーを作成します。これらを作成しないと、ROSAクラスター作成状態が「Waiting」のままで、デプロイが完了しません。
 ```
 $ rosa create operator-roles --cluster test-cluster01 --mode auto -y
-$ rosa create oidc-provider --cluster test-cluster01　--mode auto -y
+$ rosa create oidc-provider --cluster test-cluster01 --mode auto -y
 ```
 
 \[Tips\]: デフォルトで設定しているAWSリージョンに、最新版のOpenShiftを利用したシングルAZの最小構成(Control x3, Infra x2, Compute x2 の7台構成)のROSAクラスターを全自動で作成するには、次のコマンドを実行します。
