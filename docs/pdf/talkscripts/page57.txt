@@ -1,5 +1,6 @@
 The talk scripts of this page are as follows:
 
+STSクラスターの場合を除いた、
 障害復旧を想定した、ROSAのバックアップポリシーをご紹介します。
 
 OpenShiftクラスタ内の、全てのKubernetesオブジェクトと永続ストレージは、
