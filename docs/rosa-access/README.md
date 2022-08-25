@@ -29,7 +29,7 @@ GitHubのアカウントを持っていない場合、[こちら](https://github
 
 GitHubアカウントの作成が完了したら、GitHub organizationを作成します。OpenShiftにGitHubとの認証連携を利用する場合、[GitHub Organization](https://docs.github.com/ja/organizations/collaborating-with-groups-in-organizations/about-organizations)か[GitHub teams](https://docs.github.com/ja/organizations/organizing-members-into-teams/about-teams)を認証に利用します。ここでは、GitHub organizationを利用した、認証連携を設定します。
 
-右上のアイコンをクリックして、「Your organizations」を選択して、「New organization」をクリックします。
+右上のアイコンをクリックして、「Your organizations」を選択して、「New organization」をクリックします。「Your organization」がメニューにない場合は、画面右上の「+」アイコンから、「New Organization」を選択してください。
 
 ![GitHub organizationの新規作成](./images/new-org.png)
 <div style="text-align: center;">GitHub organizationの新規作成</div>
