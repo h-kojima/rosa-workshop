@@ -43,4 +43,4 @@ Red Hat OpenShift Service on AWS (ROSA) Workshops プロジェクトは、イン
 1. [\[ハンズオン\] コンピュートノードの追加/削除とオートスケールの設定](docs/rosa-nodes)
 1. [\[デモ\] ROSAクラスターのアップグレード](docs/rosa-upgrade)
 1. [\[デモ\] ROSAクラスターの削除](docs/rosa-delete)
-2. [\[ハンズオン\] (オプション) ROSAクラスターでのJavaアプリケーション開発 スターターラボ](docs/rosa-sample-app-develop)
+2. [\[ハンズオン\] (オプション)ROSAクラスターでのJavaアプリケーション開発 スターターラボ](docs/rosa-sample-app-develop)
