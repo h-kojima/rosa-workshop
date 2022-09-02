@@ -53,8 +53,8 @@ spec:
 
 test-ebsという名前でPodが作成されて、Podにより「test-pvc-20」PVCが利用されて、永続ボリュームとして外部ストレージの利用が開始されます。
 
-![Podの作成](./images/pod-pvc.png)
-<div style="text-align: center;">Pod (test-ebs) の作成</div>　　
+![PVCの利用](./images/pod-pvc.png)
+<div style="text-align: center;">PVC (test-pvc-20) の利用</div>　　
 
 このPodのターミナルやログから、マウント状況や動作状況を確認できます。
 
