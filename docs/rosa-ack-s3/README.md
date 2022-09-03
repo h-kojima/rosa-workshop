@@ -2,6 +2,8 @@
 
 ### \[デモ\] AWS Controllers for Kubernetes (ACK) - Amazon S3 Operatorのインストール
 
+※ここで紹介している内容は、インストラクターによって紹介されるデモ手順であり、受講者はコマンド/GUI操作を実施する必要はありません。次の「[ハンズオン] Amazon S3のバケット作成と削除」まで読み進めて下さい。
+
 ROSAに含まれるRed Hat OpenShiftのOperatorHubでは、Kubernetes/OpenShiftからAWSのリソースを簡単に利用できるようになっている、[AWS Controllers for Kubernetes (ACK)](https://aws-controllers-k8s.github.io/community/docs/user-docs/openshift/)というOperatorを用意しています。ACKを利用して、Amazon S3を利用するための設定を行います。
 
 ACKはAWSが提供しているOperatorです。詳細は下記をご参照ください。
