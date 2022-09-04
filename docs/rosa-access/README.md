@@ -39,7 +39,7 @@ GitHubアカウントの作成が完了したら、GitHub organizationを作成�
 ![Freeプランの選択](./images/org-plan.png)
 <div style="text-align: center;">Freeプランの選択</div>
 
-Organizationの名前とメールアドレスを入力して、「Next」　-> 「Skip this setup」をクリックします。
+Organizationの名前とメールアドレスを入力して、「Next」　-> 「Skip this setup」をクリックします。入力するOrganizationは、GitHubのグローバルネームスペースに存在するので、名前の重複はできません。重複しないような名前を入力してください。
 
 ![GitHub organizationの名前とメールアドレスの入力](./images/org-inputs.png)
 <div style="text-align: center;">GitHub organizationの名前とメールアドレスの入力</div>
