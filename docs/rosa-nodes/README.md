@@ -72,7 +72,7 @@ mp20     Yes          1-2       m5.xlarge                          ap-southeast-
 \[Tips\]: オートスケール設定の無効化は、[OCMコンソール](https://cloud.redhat.com/openshift)から実施します。「Enable autoscaling」のチェックボックスのチェックを外すと、machinepoolのオートスケールが無効化されます。(この演習では、受講者はOCMコンソールへのアクセス権限を持たないことを想定します。)
 
 ![OCMコンソールでのオートスケール設定画面](./images/ocm-autoscale.png)
-<div style="text-align: center;">OCMコンソールでのオートスケール設定画面</div>
+<div style="text-align: center;">OCMコンソールでのオートスケール設定画面</div>　
 
 追加されたマシンセットに対応するコンピュートノードは、OpenShiftのコンソールで確認できます。ローカルユーザだと、参照権限がありませんので、「AWS Controllers for Kubernetes (ACK) による Amazon S3の利用」ハンズオンの中の、「[Tips]: ROSAクラスター管理者権限の付与」で紹介したように、受講者が利用しているユーザに「rosa grant user」コマンドで管理者権限を付与することで、確認できるようになります。確認する際は、Administratorパースペクティブのメニューの「コンピュート」→「ノード」「マシン」「マシンセット」のリソースを見ることで、コンピュートノードの追加・削除の状況を確認できます。およそ10分ほどで、コンピュートノードの追加・削除が完了します。
 
