@@ -85,7 +85,7 @@ mp20     No           1         m5.xlarge                          ap-southeast-
 ![OCMコンソールでのオートスケール設定画面](./images/ocm-autoscale.png)
 <div style="text-align: center;">OCMコンソールでのオートスケール設定画面</div>　
 
-追加されたマシンセットに対応するコンピュートノードは、OpenShiftのコンソールで確認できます。ローカルユーザだと、参照権限がありませんので、「AWS Controllers for Kubernetes (ACK) による Amazon S3の利用」ハンズオンコンテンツの中の、「[Tips]: ROSAクラスター管理者権限の付与」で紹介したように、受講者が利用しているユーザに「rosa grant user」コマンドで管理者権限を付与してOpenShiftコンソールに再ログインすることで、確認できるようになります。確認する際は、Administratorパースペクティブのメニューの「コンピュート」→「ノード」「マシン」「マシンセット」のリソースを見ることで、コンピュートノードの追加・削除の状況を確認できます。machinepoolの作成/削除コマンドを実施してから、およそ15分~20ほどで、コンピュートノードの追加・削除が完了します。
+追加されたマシンセットに対応するコンピュートノードは、OpenShiftのコンソールで確認できます。ローカルユーザだと、参照権限がありませんので、「AWS Controllers for Kubernetes (ACK) による Amazon S3の利用」ハンズオンコンテンツの中の、「[Tips]: ROSAクラスター管理者権限の付与」で紹介したように、受講者が利用しているユーザに「rosa grant user」コマンドで管理者権限を付与してOpenShiftコンソールに再ログインすることで、確認できるようになります。確認する際は、Administratorパースペクティブのメニューの「コンピュート」→「ノード」「マシン」「マシンセット」のリソースを見ることで、コンピュートノードの追加/削除の状況を確認できます。machinepoolの作成/削除コマンド(削除コマンドは後述)を実施してから、およそ15分~20ほどで、コンピュートノードの追加/削除が完了します。
 
 ```
 $ rosa grant user dedicated-admin --user=<受講者が利用しているROSAのユーザID(GitHubのアカウントID)> --cluster rosa-XXXXX
