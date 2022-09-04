@@ -92,10 +92,10 @@ $ rosa grant user dedicated-admin --user=<受講者が利用しているROSAの�
 I: Granted role 'dedicated-admins' to user '<受講者が利用しているROSAのユーザID(GitHubのアカウントID)>' on cluster 'rosa-XXXXX'
 ```
 
-![machinepool(mp20)に対応したコンピュートノードの作成を確認](./images/mp20-nodes1.png)
-![machinepool(mp20)に対応したコンピュートノードの作成を確認](./images/mp20-nodes2.png)
-![machinepool(mp20)に対応したコンピュートノードの作成を確認](./images/mp20-nodes3.png)
-<div style="text-align: center;">machinepool(mp20)に対応したコンピュートノードの作成を確認</div>　
+![machinepool「mp20」に対応したコンピュートノードの作成を確認](./images/mp20-nodes1.png)
+![machinepool「mp20」に対応したコンピュートノードの作成を確認](./images/mp20-nodes2.png)
+![machinepool「mp20」に対応したコンピュートノードの作成を確認](./images/mp20-nodes3.png)
+<div style="text-align: center;">machinepool「mp20」に対応したコンピュートノードの作成を確認</div>　
 
 
 作成したmachinepoolを削除する場合、「rosa delete machinepool」コマンドを実行します。これにより、コンピュートノードが削除され、その上で実行されているPodも削除されます。
