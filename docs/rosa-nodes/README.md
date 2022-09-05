@@ -114,7 +114,7 @@ I: Successfully deleted machine pool 'mp20' from cluster 'rosa-XXXXX'
 
 ここまでの手順でmachinepoolを削除していた場合は、オートスケールが有効化されたmachinepoolを作成します。下記のようなパラメータを指定することで、「mp20」という名前が付いたmachinepoolを非対話モードで作成しています。この例では、作成するmachinepool「mp20」に対して、最小1台/最大2台でのオートスケールの有効化と、ラベルとして「type=hkojima-mp-nodes」を指定します。
 ```
-$ rosa create machinepool --name=mp20 --cluster rosa-XXXXX --instance-type=m5.xlarge --labels=type=hkojima-mp-nodes --enable-autoscaling --min-replicas=1 --max-replicas=2
+$ rosa create machinepool --name=mp20 --cluster rosa-XXXXX --instance-type=m5.xlarge --labels=type=hkojima-mp-nodes --enable-autoscaling --min-replicas=1 --max-replicas=2 --use-spot-instances=true
 I: Machine pool 'mp20' created successfully on cluster 'rosa-XXXXX'
 I: To view all machine pools, run 'rosa list machinepools -c rosa-XXXXX'
 ```
