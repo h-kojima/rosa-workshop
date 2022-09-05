@@ -106,6 +106,86 @@ $ rosa delete machinepool mp20 -c rosa-XXXXX
 I: Successfully deleted machine pool 'mp20' from cluster 'rosa-XXXXX'
 ```
 
+### [オプションハンズオン]オートスケールの確認
+
+※以降で紹介する手順は、時間に余裕がありましたらトライしてみて下さい。
+
+オートスケールが正常に動作するかを実際に確認してみます。ここでは受講者が指定した任意のラベルを付けたコンピュートノード上で並列なジョブを実行することで、コンピュートノードの台数の増減を確認します。
+
+ここまでの手順でmachinepoolを削除していた場合は、オートスケールが有効化されたmachinepoolを作成します。下記のようなパラメータを指定することで、「mp20」という名前が付いたmachinepoolを非対話モードで作成しています。この例では、作成するmachinepool「mp20」に対して、最小1台/最大2台でのオートスケールの有効化と、ラベルとして「type=hkojima-mp-nodes」を指定します。
+```
+$ rosa create machinepool --name=mp20 --cluster rosa-XXXXX --instance-type=m5.xlarge --labels=type=hkojima-mp-nodes --enable-autoscaling --min-replicas=1 --max-replicas=2
+I: Machine pool 'mp20' created successfully on cluster 'rosa-XXXXX'
+I: To view all machine pools, run 'rosa list machinepools -c rosa-XXXXX'
+```
+
+machinepoolに紐づくコンピュートノードに付与するラベルについては、「--labels=key1=value1,key2=value2,...」の形式で指定します。「key」と「value」については、任意の文字列を指定できます。この演習では、他の受講者と重複しないようなラベルを付けて下さい。
+
+
+既存のmachinepoolがある場合は、machinepoolを「rosa edit machinepool」コマンドで編集して、オートスケールの有効化とラベルの付与を行います。なお、machinepoolのラベルを編集する場合、machinepoolに紐づくコンピュートノードが自動的に削除/作成されますので、ROSAクラスターにコマンド実行結果が反映されるまで、10分ほど時間がかかります。
+```
+$ rosa edit machinepool mp20 -c rosa-XXXXX --enable-autoscaling --min-replicas=1 --max-replicas=2 --labels=type=hkojima-mp-nodes
+I: Updated machine pool 'mp20' on cluster 'rosa-XXXXX' 
+```
+
+実行結果が反映されると、次のようにOCMコンソール(この演習では、受講者はOCMコンソールへのアクセス権限を持たないことを想定します)のmachinepoolや、マシン/ノードの各画面で確認できます。マシンセットに紐づくノードのラベル一覧の右下に、上記コマンドで指定した「type=hkojima-...」というラベルが付与されていることが分かります。
+
+![OCMコンソールでの確認画面](./images/ocm-console.png)
+<div style="text-align: center;">OCMコンソールでの確認画面</div>　
+
+
+![マシン/ノードの確認画面](./images/machine-nodes1.png)
+![マシン/ノードの確認画面](./images/machine-nodes2.png)
+<div style="text-align: center;">マシン/ノードの確認画面</div>　
+
+
+これでラベルが付いたコンピュートノードでのオートスケール実行準備が完了しました。実際にサンプルジョブを投入して確認してみましょう。適当なプロジェクト(この例では、autoscale-ex20)を作成し、次のYAMLファイルでbusybox Podを30個並列に実行するジョブを投入します。このとき、先ほどmachinepoolを作成する時に指定したラベルを利用して、このジョブによって作成されるPodが、受講者が作成したmachinepool内だけで実行されるように、「nodeSelector」を指定します。ラベルの「key: value」の「value」に相当する文字列(この例では、hkojima-mp-nodes)は、ダブルクォーテーションで囲む必要があります。これを忘れると、「value」の値が文字列として認識されないため、ラベルの指定ができず、CPU/メモリのリソースが空いている任意のコンピュートノードでPodが実行されるようになるため、注意してください。
+
+```
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: work-queue-
+spec:
+  template:
+    spec:
+      nodeSelector:
+        type: "hkojima-mp-nodes"
+      containers:
+      - name: work
+        image: busybox
+        command: ["sleep", "360"]
+        resources:
+          requests:
+            memory: 500Mi
+            cpu: 500m
+      restartPolicy: Never
+  backoffLimit: 4
+  completions: 15
+  parallelism: 15
+```
+
+OpenShiftでのジョブは、「ワークロード」メニューの「ジョブ」から「Jobの作成」をクリックして、上記YAMLファイルをコピペして「作成」をクリックすることで作成できます。
+
+![ジョブの作成](./images/job-create1.png)
+![ジョブの作成](./images/job-create2.png)
+<div style="text-align: center;">ジョブの作成</div>　
+
+ジョブを実行して数分待つと、ジョブの「Pod」から次のような実行状況の画面を確認できます。この画像の例では、最初にコンピュートノード「ip-10-0-150-69.ap-southeast-1.compute.internal」で一部のPodがジョブによって実行され、machinepoolのオートスケールの設定により、コンピュートノード「ip-10-0-202-78.ap-southeast-1.compute.internal」が自動的に追加され、そこでもPodが自動的に実行されている状況を示しています。
+
+![ジョブの実行状況](./images/job-status.png)
+<div style="text-align: center;">ジョブの実行状況</div>　
+
+この他にも、OpenShiftコンソールのAdministratorパースペクティブにある、「コンピュート」メニューの中の「ノード」「マシン」「マシンセット」といったメニューを見ることで、自動的にコンピュートノードが追加されている状況を確認できます。
+
+
+前述のコマンドで作成したm5.xlargeインスタンスのmachinepoolを利用して、このオートスケールのテストを実行した場合、ジョブ実行が完了し、不要になったコンピュートノード1台がオートスケールダウンによって自動的に削除されるまで、25分ほどかかります。途中でジョブの実行を中止したい場合、当該ジョブを選択して、右上の「アクション」メニューから、「Jobの削除」を選択して「削除」を実行することで、ジョブを削除できます。これによりジョブによって起動されたPodが全て削除され、10分ほど経つと、自動的にコンピュートノードが1台削除されます。
+
+![ジョブの削除](./images/job-delete1.png)
+![ジョブの削除](./images/job-delete2.png)
+<div style="text-align: center;">ジョブの削除</div>　
+
+
 これでROSAの基本的な演習は終了です。この後は、インストラクターによる、[ROSAクラスターのアップグレード](../rosa-upgrade)と[ROSAクラスターの削除](../rosa-delete)のデモ紹介があります。
 
 デモ紹介を待っている間、時間に余裕があれば、オプション演習の[ROSAクラスターでのJavaアプリケーション開発 スターターラボ](../rosa-sample-app-develop)に進んでください。
