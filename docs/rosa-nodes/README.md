@@ -117,6 +117,13 @@ I: Successfully deleted machine pool 'mp20' from cluster 'rosa-XXXXX'
 $ rosa create machinepool --name=mp20 --cluster rosa-XXXXX --instance-type=m5.xlarge --labels=type=hkojima-mp-nodes --enable-autoscaling --min-replicas=1 --max-replicas=2 --use-spot-instances=true
 I: Machine pool 'mp20' created successfully on cluster 'rosa-XXXXX'
 I: To view all machine pools, run 'rosa list machinepools -c rosa-XXXXX'
+
+
+$ : ↓作成したmachinepool「mp20」の確認
+$ rosa list machinepools -c rosa-XXXXX
+ID       AUTOSCALING  REPLICAS  INSTANCE TYPE  LABELS                   TAINTS    AVAILABILITY ZONES    SUBNETS    SPOT INSTANCES
+Default  No           2         m5.xlarge                                         ap-southeast-1a                  N/A
+mp20     Yes          1-2       m5.xlarge      type=hkojima-mp-nodes              ap-southeast-1a                  Yes (on-demand)
 ```
 
 machinepoolに紐づくコンピュートノードに付与するラベルについては、「--labels=key1=value1,key2=value2,...」の形式で指定します。「key」と「value」については、任意の文字列を指定できます。この演習では、他の受講者と重複しないようなラベルを付けて下さい。
@@ -128,7 +135,7 @@ $ rosa edit machinepool mp20 -c rosa-XXXXX --enable-autoscaling --min-replicas=1
 I: Updated machine pool 'mp20' on cluster 'rosa-XXXXX' 
 ```
 
-実行結果が反映されると、次のようにOCMコンソール(この演習では、受講者はOCMコンソールへのアクセス権限を持たないことを想定します)のmachinepoolや、マシン/ノードの各画面で確認できます。マシンセットに紐づくノードのラベル一覧の右下に、上記コマンドで指定した「type=hkojima-...」というラベルが付与されていることが分かります。
+実行結果が反映されると、rosaコマンドによる確認の他に、次のようにOCMコンソール(この演習では、受講者はOCMコンソールへのアクセス権限を持たないことを想定します)のmachinepoolや、マシン/ノードの各画面で確認できます。マシンセットに紐づくノードのラベル一覧の右下に、上記コマンドで指定した「type=hkojima-...」というラベルが付与されていることが分かります。
 
 ![OCMコンソールでの確認画面](./images/ocm-console.png)
 <div style="text-align: center;">OCMコンソールでの確認画面</div>　
