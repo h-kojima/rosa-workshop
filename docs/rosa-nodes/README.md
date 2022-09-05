@@ -196,6 +196,10 @@ OpenShiftでのジョブは、「ワークロード」メニューの「ジョ�
 ![ジョブの削除](./images/job-delete2.png)
 <div style="text-align: center;">ジョブの削除</div>　
 
+最後に、受講者が作成したmachinepoolを削除します。前述したように、「rosa delete machinepool」コマンドを実行します。
+```
+$ rosa delete machinepool mp20 -c rosa-XXXXX
+```
 
 これでROSAの基本的な演習は終了です。この後は、インストラクターによる、[ROSAクラスターのアップグレード](../rosa-upgrade)と[ROSAクラスターの削除](../rosa-delete)のデモ紹介があります。
 
