@@ -127,6 +127,11 @@ Thank you for choosing Red Hat OpenShift Service on AWS,
 OpenShift SRE
 ```
 
+この通知メールにもあるように、アップグレードについては、コントローラノード 90分、コンピュートノード 10分/1台 が目安となります。コンピュートノード上のユーザーPodの動作状況や、「Node draining」の時間指定次第で、アップグレード時間はこれより多くかかることもあります。
+```
+The maintenance window for the upgrade is variable and should take approximately 90 minutes for the control plane nodes and 10 minutes for each worker node.
+```
+
 アップグレードが正常に完了すると、次の通知メールが届きます。
 ```
 Hello Hiforumi,
@@ -140,7 +145,7 @@ Thank you for choosing Red Hat OpenShift Service on AWS,
 OpenShift SRE
 ```
 
-参考情報ですが、ROSAクラスターの最小構成(Controller x3, Infra x2, Compute x2, Single-Avialability zone)で、ユーザーアプリを動かしていない構成のアップグレードの場合、アップグレード開始メールを受け取ってからアップグレード完了メールを受け取るまで、100分でした。こちらを目安の1つにしてください。
+参考情報ですが、実際にROSAクラスターの最小構成(Controller x3, Infra x2, Compute x2, Single-Avialability zone)で、ユーザーアプリを動かしていない構成をアップグレードした場合、アップグレード開始メールを受け取ってからアップグレード完了メールを受け取るまで、100分でした。概ね前述した目安の時間に沿ったものとなっています。
 
 これで、ROSAクラスターアップグレードスケジューリングのデモ紹介は終了です。次は、インストラクターによる、[ROSAクラスター削除](../rosa-delete)のデモ紹介です。
 
