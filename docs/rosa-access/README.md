@@ -97,7 +97,7 @@ Any optional fields can be left empty and a default will be selected.
 ![シークレットの作成](./images/create-secrets.png)
 <div style="text-align: center;">シークレットの作成</div>
 
-「rosa create idp」コマンドの実行画面に戻り、上の画像にあるClient IDとClient Secretの値を入力します。Mapping methodは「claim」を選択します。
+「rosa create idp」コマンドの実行画面に戻り、上の画像にあるClient IDとClient Secretの値を入力します。GitHub Enterprise Hostname については何も入力せずにEnterキーを押し、Mapping methodは「claim」を選択します。
 
 ```
 ? Client ID: XXXXXXXXXXXX
