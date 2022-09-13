@@ -43,6 +43,7 @@ AWS認証情報を作成します。OpenShiftでの認証情報は、プロジ�
 $ cat <<EOF > secrets.txt 
 AWS_ACCESS_KEY_ID=XXXXXXX
 AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXX
+EOF
 $ oc create secret generic --from-env-file=secrets.txt ack-s3-user-secrets
 secret/ack-s3-user-secrets created
 ```
