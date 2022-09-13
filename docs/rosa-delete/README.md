@@ -36,7 +36,7 @@ time="2022-06-07T05:59:28Z" level=info msg="running file observer" files="[/etc/
 \ I: Cluster 'test-cluster01' completed uninstallation
 ```
 
-ROSAクラスターが削除完了したあとに、ROSAクラスターが認証に利用するIAMロールとOIDCプロバイダーを削除します。このとき、「rosa delete cluster」コマンドを実行したときに表示された、「rosa delete operator-roles」, 「rosa delete oidc-provider」コマンドを実行します。
+ROSAクラスターが削除完了したあとに、ROSAクラスターが認証に利用するIAMロールとOIDCプロバイダーを削除します。このとき、「rosa delete cluster」コマンドを実行したときに表示された、「rosa delete operator-roles」, 「rosa delete oidc-provider」コマンドを実行します。ちなみに、OCMのコンソールからROSAクラスターを削除した時にも、IAMロールとOIDCプロバイダーは自動削除されないため、この削除コマンドを実施する必要があります。その場合、「rosa list clusters」コマンドで確認したROSAクラスターのID(NAMEではありません)を、「-c XXXXXXXX」の「XXXXXXXX」として指定します。
 ```
 $ rosa delete operator-roles -c XXXXXXXX --mode auto -y
 I: Fetching operator roles for the cluster: XXXXXXXX
