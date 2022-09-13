@@ -135,7 +135,7 @@ AWSコンソールから、必要なIAMロールとポリシーが作成され�
 
 ROSAクラスターの作成コマンドを実行します。
 
-デフォルトで設定しているAWSリージョンに、OpenShift 4.10.14を利用した、シングルAZの最小構成(Control x3, Infra x2, Compute x2 の7台構成)のROSAクラスターを全自動で作成するには、次のコマンドを実行します。「--version」オプションを指定しない場合、自動的に最新版のOpenShiftが利用されます。「--dry-run」オプションを付けると、正常に実行可能かどうかを事前確認できます。
+デフォルトで設定しているAWSリージョンに、OpenShift 4.10.14を利用した、シングルAZの最小構成(Control x3, Infra x2, Compute x2 の7台構成)のROSAクラスターを全自動で作成するには、次のコマンドを実行します。`--version`オプションを指定しない場合、自動的に最新版のOpenShiftが利用されます。`--dry-run`オプションを付けると、正常に実行可能かどうかを事前確認できます。
 ```
 $ rosa create cluster -c test-cluster01 --version 4.10.14 --sts --mode auto -y 
 
