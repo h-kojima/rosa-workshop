@@ -110,7 +110,7 @@ $ rosa delete machinepool mp20 -c rosa-XXXXX
 I: Successfully deleted machine pool 'mp20' from cluster 'rosa-XXXXX'
 ```
 
-\[Tips\]: マルチAZ構成のROSAクラスターの場合、3の倍数単位でmachinepoolのレプリカ数を指定します。オートスケールの場合も同様で、アプリケーションデプロイのリソースが足りない場合、3の倍数単位でmachinepoolに対応したコンピュートノードの台数が自動的に増減されます。(この演習では、シングルAZ構成のROSAクラスターの利用を想定するため、受講者は実際にマルチAZ構成を確認することはできません。)
+\[Tips\]: マルチAZ構成のROSAクラスターの場合、3の倍数単位でmachinepoolのレプリカ数を指定します。オートスケールの場合も同様で、アプリケーションデプロイのリソースが足りない場合、3の倍数単位でmachinepoolに対応したコンピュートノードの台数が自動的に増減されます。(この演習では、シングルAZ構成のROSAクラスターを想定するため、受講者は実際にマルチAZ構成を確認することはできません。)
 
 ![マルチAZ構成でのmachinepoolの設定](./images/maz1.png)
 ![マルチAZ構成でのmachinepoolの設定](./images/maz2.png)
