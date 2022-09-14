@@ -19,7 +19,7 @@ AWS CLIを[インストール](https://docs.aws.amazon.com/cli/latest/userguide/
 - aws_access_key_id
 - aws_secret_key
 
-「~/.aws/configure」で、デフォルトのAWSのリージョンを設定します。そして、次のコマンドを実行して、AWS APIをクエリーし、AWS CLIがインストールされて正しく設定されていることを確認します。次のような出力が表示されれば、AWS CLIの設定が完了しています。
+「~/.aws/configure」で、デフォルトのAWSのリージョンを設定します。このリージョンが、後述のROSAクラスター作成コマンド実行時のデフォルトのリージョンとして扱われます。そして、次のコマンドを実行して、AWS APIをクエリーし、AWS CLIがインストールされて正しく設定されていることを確認します。次のような出力が表示されれば、AWS CLIの設定が完了しています。
 
 ```
 $ aws sts get-caller-identity
@@ -198,6 +198,11 @@ I: Creating OIDC provider using 'arn:aws:iam::XXXXXXXXX:user/hkojima@redhat.com-
 I: Created OIDC provider with ARN 'arn:aws:iam::XXXXXXXXX:oidc-provider/rh-oidc.s3.us-east-1.amazonaws.com/XXXXXXXXX'
 I: To determine when your cluster is Ready, run 'rosa describe cluster -c test-cluster01'.
 I: To watch your cluster installation logs, run 'rosa logs install -c test-cluster01 --watch'.
+```
+
+マルチAZの最小構成(Control x3, Infra x3, Compute x3 の9台構成)のROSAクラスターを作成する場合、`--multi-az`オプションを指定します。このオプションにより、3つのAZに跨ったROSAクラスターが作成されます。
+```
+$ rosa create cluster -c test-cluster01 --version 4.10.14 --sts --mode auto -y --multi-az
 ```
 
 なお、対話モードによりオプションを指定しながらインストールすることもできます。
