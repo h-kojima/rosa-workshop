@@ -338,4 +338,7 @@ I: Cluster 'test-cluster01' is now ready
 
 ROSAクラスターの作成完了を待っている間、予め作成済みである別のROSAクラスターを利用して、受講者は演習を進めます。[GitHubを利用したROSAクラスターへのアクセス](../rosa-access)に進んでください。
 
+#### \[参考情報\]
+- [Creating a ROSA cluster in STS mode](https://mobb.ninja/docs/rosa/sts/)
+
 [HOME](../../README.md)
