@@ -110,7 +110,20 @@ $ rosa delete machinepool mp20 -c rosa-XXXXX
 I: Successfully deleted machine pool 'mp20' from cluster 'rosa-XXXXX'
 ```
 
-\[Tips\]: マルチAZ構成のROSAクラスターの場合、3の倍数単位でmachinepoolのレプリカ数を指定します。オートスケールの場合も同様で、アプリケーションデプロイのリソースが足りない場合、3の倍数単位でmachinepoolに対応したコンピュートノードの台数が自動的に増減されます。(この演習では、シングルAZ構成のROSAクラスターを想定するため、受講者は実際にマルチAZ構成を確認することはできません。)
+\[Tips\]: マルチAZ構成のROSAクラスターの場合、3の倍数単位でmachinepoolのレプリカ数を指定します。rosaコマンドでmachinepoolのレプリカ数を設定する場合、３の倍数を指定しないとエラーになります。オートスケールの場合も同様で、アプリケーションデプロイのリソースが足りない場合、3の倍数単位でmachinepoolに対応したコンピュートノードの台数が自動的に増減されます。(この演習では、シングルAZ構成のROSAクラスターを想定するため、受講者は実際にマルチAZ構成を確認することはできません。)
+
+```
+$ rosa list machinepools -c maz01
+ID       AUTOSCALING  REPLICAS  INSTANCE TYPE  LABELS    TAINTS    AVAILABILITY ZONES                                   SUBNETS    SPOT INSTANCES
+Default  No           3         m5.xlarge                          ap-northeast-1a, ap-northeast-1c, ap-northeast-1d               N/A
+$ rosa edit machinepools Default -c maz01
+? Replicas: 4
+E: Multi AZ clusters require that the number of compute nodes be a multiple of 3
+$ rosa edit machinepools Default -c maz01 --enable-autoscaling
+? Min replicas: 3
+? Max replicas: 5
+E: Multi AZ clusters require that the number of compute nodes be a multiple of 3
+```
 
 ![マルチAZ構成でのmachinepoolの設定](./images/maz1.png)
 ![マルチAZ構成でのmachinepoolの設定](./images/maz2.png)
