@@ -201,6 +201,20 @@ Podの作成が完了したら、当該Podの「ターミナル」タブから�
 デフォルトのストレージクラス(gp3タイプのEBS)を利用して作成したPVCは、アクセスモードが「ReadWriteOnce(RWO. 1台のコンピュートノードからのみ利用可能)」となります。EFSによって利用可能になる、RWXのアクセスモードに対応したPVCを利用することで、複数ノード上でレプリケーション構成を取るアプリケーション(Amazon EFSに保存したデータを共有)をROSAクラスター上で実行できるようになります。
 
 
+ちなみに、Podを削除するなどによって、不要になったPVCを削除したい場合は、次の作業を実施します。
+
+- EBSを利用していた場合: 該当するPVCを選択して、「永続ボリューム要求の削除」から削除します。
+
+![PVCの削除](./images/pvc-delete.png)
+<div style="text-align: center;">PVCの削除</div>　
+
+- EFSを利用していた場合: AWS EFS Operatorによって作成した、SharedVolumeを削除します。これによりSharedVolumeに対応したPVCが自動削除されます。
+
+![SharedVolumeの削除](./images/sv-delete.png)
+<div style="text-align: center;">SharedVolumeの削除</div>　
+
+
+
 これでROSAクラスターでの、永続ボリュームとしてのAmazon EBS/EFS を利用する設定と確認が完了しました。次の演習の[AWS Controllers for Kubernetes (ACK) による Amazon S3の利用](../rosa-ack-s3)に進んでください。
 
 [HOME](../../README.md)
