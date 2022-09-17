@@ -190,7 +190,13 @@ Podの作成が完了したら、当該Podの「ターミナル」タブから�
 ここで作成したPodとは別のPodを新しく作成して、複数のPodから同じPVCを利用することで、1つのファイルシステムを共有できることを確認します。前述のPod作成に利用したYAMLファイルで、「name: test-efs1」を、「name: test-efs2」などに変更することで、変更したPod名で新規Podを実行してみます。すると、「test-efs1」Podで作成したファイルが、「test-efs2」Podでも表示されることを、当該Podの「ターミナル」タブから確認してみてください。
 
 
-なお、EFS Operatorによって作成された「pvc-sv20」は、アクセスモードが「ReadWriteMany(RWX. 複数台のコンピュートノードから利用可能)」となっています。デフォルトのストレージクラス(gp3タイプのEBS)を利用して作成したPVCは、アクセスモードが「ReadWriteOnce(RWO. 1台のコンピュートノードからのみ利用可能)」となります。EFSによって利用可能になる、RWXのアクセスモードに対応したPVCを利用することで、複数ノード上でレプリケーション構成を取るアプリケーション(Amazon EFSに保存したデータを共有)をROSAクラスター上で実行できるようになります。
+なお、EFS Operatorによって作成された「pvc-sv20」は、アクセスモードが「ReadWriteMany(RWX. 複数台のコンピュートノードから利用可能)」となっています。
+
+![EFSを利用するPVCの情報確認](./images/pvc-sv-info.png)
+<div style="text-align: center;">EFSを利用するPVCの情報確認</div>　
+
+
+デフォルトのストレージクラス(gp3タイプのEBS)を利用して作成したPVCは、アクセスモードが「ReadWriteOnce(RWO. 1台のコンピュートノードからのみ利用可能)」となります。EFSによって利用可能になる、RWXのアクセスモードに対応したPVCを利用することで、複数ノード上でレプリケーション構成を取るアプリケーション(Amazon EFSに保存したデータを共有)をROSAクラスター上で実行できるようになります。
 
 
 これでROSAクラスターでの、永続ボリュームとしてのAmazon EBS/EFS を利用する設定と確認が完了しました。次の演習の[AWS Controllers for Kubernetes (ACK) による Amazon S3の利用](../rosa-ack-s3)に進んでください。
