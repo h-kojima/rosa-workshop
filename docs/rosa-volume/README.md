@@ -1,5 +1,7 @@
 ## 永続ボリュームとしてのAmazon EBS/EFS の利用設定
 
+### [ハンズオン]Amazon EBSの利用
+
 ROSAには、Amazon Elastic Block Store (EBS) ボリュームを使用するストレージクラスが事前に設定されています。これにより、[Amazon EBSのgp2, gp3ボリュームタイプ](https://aws.amazon.com/jp/ebs/general-purpose/)がすぐに使えるようになっています。
 
 ![ROSAですぐに利用可能なストレージクラス](./images/storage-class.png)
