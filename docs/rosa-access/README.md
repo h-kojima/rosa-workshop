@@ -134,8 +134,8 @@ GitHubから認可レスポンスが返されて、ROSAにリダイレクトさ�
 
 ### ログインができない場合のトラブルシューティング
 
-ROSAクラスターのIDP作成時の、GitHub OAuth AppsのクライアントIDとクライアントシークレットのコピペミスが考えられますので、一旦「rosa delete idp」コマンドでIDPを削除して、再作成してみてください。
-次のコマンドでは、「github-hkojima」IDPを削除しています。
+ROSAクラスターのIDP作成時の、GitHub OAuth AppsのクライアントIDとクライアントシークレットのコピペミスが考えられますので、一旦「rosa delete idp」コマンドで、前述の手順で作成したIDPを削除して、再作成してみてください。
+次のコマンドは、「github-hkojima」IDPを削除する例となります。
 ```
 ＄　rosa delete idp github-hkojima --cluster rosa-XXXXX
 ```
