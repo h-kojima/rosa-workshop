@@ -7,20 +7,19 @@
 
 ROSAのロギングについては、ROSAのアドオンとして提供しているAmazon CloudWatchをベースとするログ転送ソリューション(Cluster Logging Operator)の利用を推奨しています。このアドオンは、[ROSAクラスター作成後に追加でインストール](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html-single/cluster_administration/index#rosa-install-logging)することで利用できるようになります。
 
-Cluster Logging Operatorは、OpenShiftのテレメトリ情報などを管理する[OCMコンソール](https://console.redhat.com/openshift)から簡単にインストールできます。(この演習では、受講者はOCMコンソールへのアクセス権限を持たないことを想定します。)最初に、該当のROSAクラスターを選択して、「Add-ons」タブから「Cluster Logging Operator」を選択して、「Install」をクリックします。
+Cluster Logging Operatorは、Red HatのSaaSの1つである、OpenShiftクラスターのテレメトリ情報などを管理する[OpenShift Cluster Manager (OCM) のコンソール](https://console.redhat.com/openshift)から簡単にインストールできます。(この演習では、受講者はOCMコンソールへのアクセス権限を持たないことを想定します。)最初に、該当のROSAクラスターを選択して、「Add-ons」タブから「Cluster Logging Operator」を選択して、「Install」をクリックします。
 
 ![Cluster Logging Operatorのインストール](./images/clo-install.png)
 <div style="text-align: center;">Cluster Logging Operatorのインストール</div>　　
 
 次に、Cluster Logging Operatorの設定画面が表示されます。各設定項目の意味は次のとおりです。
 
-- Use AWS CloudWatch: CloudWatchの利用有無。CloudWatchでログ確認する際は必須の項目。チェックを入れなくても、Cluster Logging Operatorインストール後でも設定変更はできますが、その場合は、fluentdによるログ収集だけが行われます。
-- Collect Applications logs: アプリケーションログの収集。「openshift-*」,「kube-*」,「default」以外のプロジェクトにデプロイされるアプリケーションのログ(STDOUTに送信されるログ)を収集します。
-- Collect Infrastructure logs: インフラストラクチャーログの収集。ROSAクラスター作成時にデフォルトで作成される「openshift-*」,「kube-*」プロジェクトにある、インフラストラクチャー関連のログを収集します。
-- Collect Audit logs: セキュリティ監査に関連するノードのログ収集。通常、ROSクラスターの監査ログはRed HatのSREチームにより、Cluster Logging Operatorとは別の仕組みを使ってROSAクラスターの外に保存され、問題調査の際に、ROSAの利用者のサポートケースを使用したリクエストに伴って提供されます。そのため、ROSAの利用者はこれらのデータを保存する必要は必ずしもありませんが、CloudWatchでログを保存/確認したい場合はチェックを入れます。
-- CloudWatch region: CloudWatchを利用するリージョン。何も指定しなければ、ROSAクラスターがあるリージョンが利用されます。
+- <b>Use AWS CloudWatch:</b> CloudWatchの利用有無。CloudWatchでログ確認する際は必須の項目。チェックを入れなくても、Cluster Logging Operatorインストール後でも設定変更はできますが、その場合は、fluentdによるログ収集だけが行われます。
+- <b>Collect Applications logs:</b> アプリケーションログの収集。「openshift-*」,「kube-*」,「default」以外のプロジェクトにデプロイされるアプリケーションのログ(STDOUTに送信されるログ)を収集します。
+- <b>Collect Infrastructure logs:</b> インフラストラクチャーログの収集。ROSAクラスター作成時にデフォルトで作成される「openshift-*」,「kube-*」プロジェクトにある、インフラストラクチャー関連のログを収集します。
+- <b>Collect Audit logs:</b> セキュリティ監査に関連するノードのログ収集。通常、ROSクラスターの監査ログはRed HatのSREチームにより、Cluster Logging Operatorとは別の仕組みを使ってROSAクラスターの外に保存され、[問題調査の際に、ROSAの利用者のサポートケースを使用したリクエストに伴って提供](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/introduction_to_rosa/rosa-policy-change-management_rosa-policy-responsibility-matrix)されます。そのため、ROSAの利用者はこれらのデータを保存する必要は必ずしもありませんが、CloudWatchで監査ログを保存/確認したい場合はチェックを入れます。
+- <b>CloudWatch region:</b> CloudWatchを利用するリージョン。何も指定しなければ、ROSAクラスターがあるリージョンが利用されます。
 
-[参考情報] [ROSAについての責任マトリクス 3.2.2.2. 変更管理 ロギング](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html-single/introduction_to_rosa/index#rosa-policy-change-management_rosa-policy-responsibility-matrix)
 
 ここでは全てにチェックを入れて、「Install」をクリックします。およそ、10分ほど待つと、「installed」という表示に変わり、インストールが完了します。
 
@@ -45,7 +44,7 @@ I: Granted role 'dedicated-admins' to user '<受講者が利用しているROSA�
 
 STSを利用してROSAクラスターを作成している場合、CloudWatchを利用する権限(AWS IAMポリシー/ロール)を持ったAWS IAMユーザを作成し、そのユーザの認証情報をROSAクラスターの「openshift-logging」プロジェクトのシークレットリソースとして保存しておく必要があります。これにより、ロギングアドオンインストール後に、そのユーザ権限を持ってCloudWatchへのログ転送が可能になります。具体的な手順は、下記を参考にしてください。
 
-[STSを利用したROSAクラスターへのロギングアドオンインストール](https://www.rosaworkshop.io/ostoy/9-logging/#installing-the-cluster-logging-add-on-service)
+[参考情報] [STSを利用したROSAクラスターへのロギングアドオンインストール](https://www.rosaworkshop.io/ostoy/9-logging/#installing-the-cluster-logging-add-on-service)
 
 
 
@@ -91,7 +90,7 @@ I: Granted role 'dedicated-admins' to user '<受講者が利用しているROSA�
 <div style="text-align: center;">モニタリングプロジェクトの一覧</div>　　
 
 
-「openshift-monitoring」プロジェクトの中で、比較的大きなサイズのメモリを使用するPodは、「prometheus-k8s」Podです。ただし、このPodは、Red HatのSREチームが管理するインフラストラクチャーノード上で実行し(ノードセレクターが、「node-role.kubernetes.io/infra」となります)、SREチームが管理するため、ROSAの利用者がアプリケーションの開発やデプロイ用に利用するコンピュートノードのメモリ利用に影響を与えません。
+「openshift-monitoring」プロジェクトの中で、比較的大きなサイズのメモリを使用するPodは、「prometheus-k8s」Podです。ただし、このPodは、Red HatのSREチームが管理するインフラストラクチャーノード上で実行/管理されるため(ノードセレクターが、「node-role.kubernetes.io/infra」となります)、ROSAの利用者がアプリケーションの開発やデプロイ用に利用するコンピュートノードのメモリ利用に影響を与えません。
 
 ![「openshift-monitoring」プロジェクトのPod](./images/openshift-monitoring-pods1.png)
 ![「openshift-monitoring」プロジェクトのPod](./images/openshift-monitoring-pods2.png)
@@ -146,20 +145,20 @@ data:
 
 PodのCPUとメモリ使用については、「リミット(制限)」と「リクエスト(要求)」という値があり、Pod実行時には、予め定義された「リミット」の中で、「リクエスト」された量を確保しようとします。各コンピュートノードに、「リクエスト」に満たないCPU/メモリリソースしかない場合、ROSAに内包されるKubernetesのスケジューラによるPod配置は行われません。
 
-「リミット」がない場合、リクエストされた値以上のリソースが使用される可能性があります。また、「リミット」のみある場合は、リミットに一致する値がリソースとして、スケジューラによってPodに自動的に割り当てられます。
+「リミット」がない場合、リクエストされた値以上のリソースが使用される可能性があります。また、「リミット」のみ定義されている場合は、リミットに一致する値がリソースとして、スケジューラによってPodに自動的に割り当てられます。
 
 [参考情報] [コンテナのリソース管理の「要求と制限」](https://kubernetes.io/ja/docs/concepts/configuration/manage-resources-containers/)を参照
 
 このダッシュボードにある、CPUやメモリの活用率は、これらの「リミット」と「リクエスト」の値に対してどのくらい使用されているか、という情報となります。上記画像の例では、活用率は7.60%となっているため、まだまだリソースに余裕があるということを示しています。
 
-「メトリクス」タブでは、Prometheusのクエリ(PromQL)によるグラフ表示が可能です。予め用意されたクエリ(メモリー使用量など)を用いて、データを確認してみてください。本演習では取り扱いませんが、カスタムクエリを実施したい場合、[こちらのドキュメント](https://prometheus.io/docs/prometheus/latest/querying/basics/)を参考にできます。
+「メトリクス」タブでは、Prometheusのクエリ(PromQL)によるグラフ表示が可能です。予め用意されたクエリ(メモリー使用量など)を用いて、データを確認してみてください。本演習では扱いませんが、カスタムクエリを実施したい場合、[こちらのドキュメント](https://prometheus.io/docs/prometheus/latest/querying/basics/)を参考にできます。
 
 ![Prometheusのクエリ](./images/promql1.png)
 ![Prometheusのクエリ](./images/promql2.png)
 <div style="text-align: center;">Prometheusのクエリ</div>　　
 
 
-なお、2022年9月時点で、ROSAクラスターの利用者がモニタリングのアラート機能を利用することはできません。利用者は、リソース利用に関するアラート発行をSREチームに任せたり、CloudWatchによるアプリケーションログ監視をする、といった前提でROSAクラスターをご利用いただくことになります。
+なお、2022年9月時点で、[ROSAクラスターの利用者がモニタリングのアラート機能を利用することはできません。](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/cluster_administration/rosa-managing-alerts)利用者は、リソース利用に関するアラート発行をSREチームに任せたり、CloudWatchによるアプリケーションログ監視をする、といった前提でROSAクラスターをご利用いただくことになります。
 
 
 

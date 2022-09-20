@@ -84,7 +84,7 @@ Default  No           2         m5.xlarge                          ap-southeast-
 mp20     No           1         m5.xlarge                          ap-southeast-1a                  Yes (on-demand)
 ```
 
-\[Tips\]: オートスケールの設定は、[OCMコンソール](https://cloud.redhat.com/openshift)からも実施できます。「Enable autoscaling」のチェックボックスのチェックを付けたり外したりすることで、machinepoolのオートスケールの有効化/無効化ができます。(この演習では、受講者はOCMコンソールへのアクセス権限を持たないことを想定します。)
+\[Tips\]: オートスケールの設定は、Red HatのSaaSの1つである、OpenShiftクラスターのテレメトリ情報などを管理する[OpenShift Cluster Manager (OCM) のコンソール](https://cloud.redhat.com/openshift)からも実施できます。「Enable autoscaling」のチェックボックスのチェックを付けたり外したりすることで、machinepoolのオートスケールの有効化/無効化ができます。(この演習では、受講者はOCMコンソールへのアクセス権限を持たないことを想定します。)
 
 ![OCMコンソールでのオートスケール設定画面](./images/ocm-autoscale.png)
 <div style="text-align: center;">OCMコンソールでのオートスケール設定画面</div>　
@@ -110,7 +110,7 @@ $ rosa delete machinepool mp20 -c rosa-XXXXX
 I: Successfully deleted machine pool 'mp20' from cluster 'rosa-XXXXX'
 ```
 
-\[Tips\]: マルチAZ構成のROSAクラスターの場合、3の倍数単位でmachinepoolのレプリカ数を指定します。rosaコマンドでmachinepoolのレプリカ数を設定する場合、３の倍数を指定しないとエラーになります。オートスケールの場合も同様で、アプリケーションデプロイのリソースが足りない場合、3の倍数単位でmachinepoolに対応したコンピュートノードの台数が自動的に増減されます。(この演習では、シングルAZ構成のROSAクラスターを想定するため、受講者は実際にマルチAZ構成を確認することはできません。)
+\[Tips\]: マルチAZ構成のROSAクラスターの場合、3の倍数単位でmachinepoolのレプリカ数を指定します。rosaコマンドでmachinepoolのレプリカ数を設定する場合、３の倍数を指定しないとエラーになります。オートスケールの場合も同様で、アプリケーションデプロイのリソースが足りない場合、3の倍数単位でmachinepoolに対応したコンピュートノードの台数が自動的に増減されます。(この演習では、シングルAZ構成のROSAクラスターの利用を想定するため、受講者は実際にマルチAZ構成を確認することはできません。)
 
 ```
 $ rosa list machinepools -c maz01
