@@ -154,6 +154,10 @@ PodのCPUとメモリ使用については、「リミット(制限)」と「リ
 
 「メトリクス」タブでは、Prometheusのクエリ(PromQL)によるグラフ表示が可能です。予め用意されたクエリ(メモリー使用量など)を用いて、データを確認してみてください。本演習では取り扱いませんが、カスタムクエリを実施したい場合、[こちらのドキュメント](https://prometheus.io/docs/prometheus/latest/querying/basics/)を参考にできます。
 
+![Prometheusのクエリ](./images/promql1.png)
+![Prometheusのクエリ](./images/promql2.png)
+<div style="text-align: center;">Prometheusのクエリ</div>　　
+
 
 なお、2022年9月時点で、ROSAクラスターの利用者がモニタリングのアラート機能を利用することはできません。利用者は、リソース利用に関するアラート発行をSREチームに任せたり、CloudWatchによるアプリケーションログ監視をする、といった前提でROSAクラスターをご利用いただくことになります。
 
