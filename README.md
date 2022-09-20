@@ -40,6 +40,7 @@ Red Hat OpenShift Service on AWS (ROSA) Workshops プロジェクトは、イン
 1. [\[ハンズオン\] アプリケーションのデプロイのクイックスタート](docs/rosa-app-deploy-quickstart)
 1. [\[デモとハンズオン\] 永続ボリュームとしての Amazon EBS/EFS の利用設定](docs/rosa-volume)
 1. [\[デモとハンズオン\] AWS Controllers for Kubernetes (ACK) による Amazon S3の利用](docs/rosa-ack-s3)
+1. [\[デモとハンズオン\] [ROSAクラスターのロギングとモニタリング](docs/rosa-logs-and-monitor)
 1. [\[ハンズオン\] コンピュートノードの追加/削除とオートスケールの設定](docs/rosa-nodes)
 1. [\[デモ\] ROSAクラスターのアップグレード](docs/rosa-upgrade)
 1. [\[デモ\] ROSAクラスターの削除](docs/rosa-delete)

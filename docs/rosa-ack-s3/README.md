@@ -116,7 +116,7 @@ ACKによって作成したS3バケットを削除したい場合、当該バケ
 ![Amazon S3バケットの削除](./images/s3-bucket-delete.png)
 <div style="text-align: center;">Amazon S3バケットの削除</div>　
 
-これでROSAクラスターからの、ACKを利用したAmazon S3バケットの作成と削除が完了しました。次の演習の[コンピュートノードの追加/削除とオートスケールの設定](../rosa-nodes)に進んでください。
+これでROSAクラスターからの、ACKを利用したAmazon S3バケットの作成と削除が完了しました。次の演習の[ROSAクラスターのロギングとモニタリング](../rosa-logs-and-monitor)に進んでください。
 
 #### \[参考情報\]
 - [Configuration for ACK controllers in an OpenShift cluster](https://aws-controllers-k8s.github.io/community/docs/user-docs/openshift/)

@@ -15,7 +15,7 @@ ID       AUTOSCALING  REPLICAS  INSTANCE TYPE  LABELS    TAINTS    AVAILABILITY 
 Default  No           2         m5.xlarge                          ap-southeast-1a       N/A
 ```
 
-コンピュートノードを、AWS EC2インスタンス(m5.xlarge)2台起動しているという、ROSAデフォルトの設定を確認できます。ここにmachinepoolを新しく作成して、コンピュートノードを1台追加します。「rosa create machinepool」コマンドを実行します。
+コンピュートノードを、AWS EC2インスタンス(m5.xlarge)2台起動しているという、ROSAデフォルトの設定を確認できます。この2台というのは、ROSAのコンピュートノードの最小台数であり、これ以下には減らせません。そもそも、減らす選択肢を実行できないようになっています。ここにmachinepoolを新しく作成して、コンピュートノードを1台追加します。「rosa create machinepool」コマンドを実行します。
 
 ```
 $ rosa create machinepool -c rosa-XXXXX -i
