@@ -14,11 +14,11 @@ Cluster Logging Operatorは、Red HatのSaaSの1つである、OpenShiftクラ�
 
 次に、Cluster Logging Operatorの設定画面が表示されます。各設定項目の意味は次のとおりです。
 
-- <b>Use AWS CloudWatch:</b> CloudWatchの利用有無。CloudWatchでログ確認する際は必須の項目。チェックを入れなくても、Cluster Logging Operatorインストール後でも設定変更はできますが、その場合は、fluentdによるログ収集だけが行われます。
-- <b>Collect Applications logs:</b> アプリケーションログの収集。「openshift-*」,「kube-*」,「default」以外のプロジェクトにデプロイされるアプリケーションのログ(STDOUTに送信されるログ)を収集します。
-- <b>Collect Infrastructure logs:</b> インフラストラクチャーログの収集。ROSAクラスター作成時にデフォルトで作成される「openshift-*」,「kube-*」プロジェクトにある、インフラストラクチャー関連のログを収集します。
-- <b>Collect Audit logs:</b> セキュリティ監査に関連するノードのログ収集。通常、ROSクラスターの監査ログはRed HatのSREチームにより、Cluster Logging Operatorとは別の仕組みを使ってROSAクラスターの外に保存され、[問題調査の際に、ROSAの利用者のサポートケースを使用したリクエストに伴って提供](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/introduction_to_rosa/rosa-policy-change-management_rosa-policy-responsibility-matrix)されます。そのため、ROSAの利用者はこれらのデータを保存する必要は必ずしもありませんが、CloudWatchで監査ログを保存/確認したい場合はチェックを入れます。
-- <b>CloudWatch region:</b> CloudWatchを利用するリージョン。何も指定しなければ、ROSAクラスターがあるリージョンが利用されます。
+- [Use AWS CloudWatch]: CloudWatchの利用有無。CloudWatchでログ確認する際は必須の項目。チェックを入れなくても、Cluster Logging Operatorインストール後でも設定変更はできますが、その場合は、fluentdによるログ収集だけが行われます。
+- [Collect Applications logs]: アプリケーションログの収集。「openshift-*」,「kube-*」,「default」以外のプロジェクトにデプロイされるアプリケーションのログ(STDOUTに送信されるログ)を収集します。
+- [Collect Infrastructure logs]: インフラストラクチャーログの収集。ROSAクラスター作成時にデフォルトで作成される「openshift-*」,「kube-*」プロジェクトにある、インフラストラクチャー関連のログを収集します。
+- [Collect Audit logs]: セキュリティ監査に関連するノードのログ収集。通常、ROSクラスターの監査ログはRed HatのSREチームにより、Cluster Logging Operatorとは別の仕組みを使ってROSAクラスターの外に保存され、[問題調査の際に、ROSAの利用者のサポートケースを使用したリクエストに伴って提供](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/introduction_to_rosa/rosa-policy-change-management_rosa-policy-responsibility-matrix)されます。そのため、ROSAの利用者はこれらのデータを保存する必要は必ずしもありませんが、CloudWatchで監査ログを保存/確認したい場合はチェックを入れます。
+- [CloudWatch region]: CloudWatchを利用するリージョン。何も指定しなければ、ROSAクラスターがあるリージョンが利用されます。
 
 
 ここでは全てにチェックを入れて、「Install」をクリックします。およそ、10分ほど待つと、「installed」という表示に変わり、インストールが完了します。
@@ -158,7 +158,7 @@ PodのCPUとメモリ使用については、「リミット(制限)」と「リ
 <div style="text-align: center;">Prometheusのクエリ</div>　　
 
 
-なお、2022年9月時点で、[ROSAクラスターの利用者がモニタリングのアラート機能を利用することはできません。](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/cluster_administration/rosa-managing-alerts)利用者は、リソース利用に関するアラート発行をSREチームに任せたり、CloudWatchによるアプリケーションログ監視をする、といった前提でROSAクラスターをご利用いただくことになります。
+なお、2022年9月時点で、[ROSAクラスターの利用者がモニタリングのアラート機能を利用することはできません。](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/cluster_administration/rosa-managing-alerts)利用者は、クラスター全体のリソース利用に関するアラート発行をSREチームに任せたり、CloudWatchによるアプリケーションログ監視をする、といった前提でROSAクラスターをご利用いただくことになります。
 
 
 
