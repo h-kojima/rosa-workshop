@@ -1,6 +1,6 @@
 ## 永続ボリュームとしてのAmazon EBS/EFS の利用設定
 
-### [ハンズオン]Amazon EBSの利用
+### [ハンズオン] Amazon EBSの利用
 
 ROSAには、Amazon Elastic Block Store (EBS) ボリュームを使用するストレージクラスが事前に設定されています。これにより、[Amazon EBSのgp2, gp3ボリュームタイプ](https://aws.amazon.com/jp/ebs/general-purpose/)がすぐに使えるようになっています。
 
@@ -66,7 +66,7 @@ test-ebsという名前でPodが作成されて、Podにより「test-pvc-20」P
 
 ここで上記画像にあるように、ターミナルから、echoコマンドなどで永続ボリュームのマウントポイントである「/mnt/ebs-data」ディレクトリに、適当なファイルを作成します。Podを削除(該当Podを選択して、「アクション」->「Podの削除」を選択)した後に、再度「test-pvc-20」PVCを指定してPodを作成すると、作成したテストファイルが残っていることを確認できます。
 
-### [デモ]Amazon EFSの利用準備
+### [デモ] Amazon EFSの利用準備
 
 ※ここで紹介している内容は、インストラクターによって紹介されるデモ手順であり、受講者はコマンド/GUI操作を実施する必要はありません。次の「[ハンズオン]Amazon EFSの利用」まで読み進めて下さい。
 
@@ -142,7 +142,7 @@ Amazon EFSで利用可能なファイルシステムとアクセスポイント�
 これで、ROSAクラスターで、永続ボリュームとしてAmazon EFSを利用する設定が完了しました。
 
 
-### [ハンズオン]Amazon EFSの利用
+### [ハンズオン] Amazon EFSの利用
 
 ここまでの手順で用意したAmazon EFS上のファイルシステムを、Podが利用する永続ボリュームとして利用してみます。左サイドメニューのAdministratorパースペクティブにある「インストール済みのOperator」から「AWS EFS Operator」を選択して、「SharedVolume」タブから「SharedVolumeの作成」をクリックします。
 
