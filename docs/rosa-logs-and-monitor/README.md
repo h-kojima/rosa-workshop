@@ -14,7 +14,7 @@ Cluster Logging Operatorは、Red HatのSaaSの1つである、OpenShiftクラ�
 
 次に、Cluster Logging Operatorの設定画面が表示されます。各設定項目の意味は次のとおりです。
 
-- `Use AWS CloudWatch`: CloudWatchの利用有無。CloudWatchでログ確認する際は必須の項目。チェックを入れなくても、Cluster Logging Operatorインストール後でも設定変更はできますが、その場合は、fluentdによるログ収集だけが行われます。
+- `Use AWS CloudWatch`: CloudWatchの利用有無。CloudWatchでログ確認する際は必須の項目。チェックを入れなくても、Cluster Logging Operatorインストール後に設定変更はできます。チェックを入れない場合は、fluentdによるログ収集だけが行われます。
 - `Collect Applications logs`: アプリケーションログの収集。`openshift-*`,`kube-*`,`default`以外のプロジェクトにデプロイされるアプリケーションのログ(STDOUT(標準出力)に送信されるログ)を収集します。
 - `Collect Infrastructure logs`: インフラストラクチャーログの収集。ROSAクラスター作成時にデフォルトで作成される`openshift-*`,`kube-*`プロジェクトにある、インフラストラクチャー関連のログを収集します。
 - `Collect Audit logs`: セキュリティ監査に関連するログの収集。通常、ROSクラスターの監査ログはRed HatのSREチームにより、Cluster Logging Operatorとは別の仕組みを使ってROSAクラスターの外に保存され、[問題調査の際に、ROSAの利用者のサポートケースを使用したリクエストに伴って提供](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/introduction_to_rosa/rosa-policy-change-management_rosa-policy-responsibility-matrix)されます。そのため、ROSAの利用者はこれらのデータを保存する必要は必ずしもありませんが、CloudWatchで監査ログを保存/確認したい場合はチェックを入れます。
