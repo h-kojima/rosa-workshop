@@ -66,7 +66,7 @@ STSを利用してROSAクラスターを作成している場合、CloudWatchを
 ![ログの転送確認](./images/log-forward-confirm2.png)
 <div style="text-align: center;">ログの転送確認</div>　　
 
-また、こうしたログをもとに、ROSAの利用者は[CloudWatchのサブスクリプションを使用したログデータのリアルタイム処理](https://docs.aws.amazon.com/ja_jp/AmazonCloudWatch/latest/logs/Subscriptions.html)などを実行できるようになります。
+こうしたログをもとに、ROSAの利用者は[CloudWatchのサブスクリプションを使用したログデータのリアルタイム処理](https://docs.aws.amazon.com/ja_jp/AmazonCloudWatch/latest/logs/Subscriptions.html)などを実行できるようになります。
 
 
 
