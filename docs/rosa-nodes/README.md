@@ -132,7 +132,7 @@ E: Multi AZ clusters require that the number of compute nodes be a multiple of 3
 <div style="text-align: center;">マルチAZ構成でのmachinepoolの設定</div>　
 
 
-### [オプションハンズオン]オートスケールの確認
+### [オプションハンズオン] オートスケールの確認
 
 ※以降で紹介する手順は、時間に余裕がありましたらトライしてみて下さい。
 
