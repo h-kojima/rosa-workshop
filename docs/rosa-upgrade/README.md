@@ -14,7 +14,7 @@ OpenShift Cluster Manager (OCM)を使用して、AWS STSを使用するROSAク�
 ![バージョンの選択](./images/version-select.png)
 <div style="text-align: center;">バージョンの選択</div>　　
 
-クラスターのアップグレードをスケジュールします。 1時間以内にアップグレードするには、「Update now」を選択し、「Next」をクリックします。
+クラスターのアップグレードをスケジュールします。 現在の時刻から1時間以内にアップグレードを開始するには、「Update now」を選択し、「Next」をクリックします。
 指定した時間にアップグレードするには、「Schedule a different time」を選択し、アップグレードの日時を設定します。「Next」をクリックして確認ダイアログに進みます。
 
 ![アップグレードのスケジュール](./images/schedule.png)
