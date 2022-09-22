@@ -158,6 +158,13 @@ PodのCPUとメモリ使用については、「リミット(制限)」と「リ
 <div style="text-align: center;">Prometheusのクエリ</div>　　
 
 
+「イベント」タブでは、プロジェクト上の様々な記録を確認できます。PodやPVCなどを作成した際に実行される様々な操作記録(イベント)がストリーミングされていることを確認してみてください。これらのイベントは、ROSA/OpenShiftの様々なクラスター情報を保存する「etcd」データベースに保存されますが、保存期間は「3時間」となります。3時間を過ぎたらetcdデータベースから消去されます。この値は[ハードコーディング](https://github.com/openshift/cluster-kube-apiserver-operator/blob/master/bindata/assets/config/defaultconfig.yaml#L110)されており、ROSAの利用者が値を変更することはサポートしていません。
+
+![ストリーミングされたイベントの例](./images/events1.png)
+![ストリーミングされたイベントの例](./images/events2.png)
+<div style="text-align: center;">ストリーミングされたイベントの例</div>　　
+
+
 なお、2022年9月時点で、[ROSAクラスターの利用者がモニタリングのアラート機能を利用することはできません。](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/cluster_administration/rosa-managing-alerts)利用者は、クラスター全体のリソース利用に関するアラート発行をSREチームに任せたり、CloudWatchによるアプリケーションログ監視をする、といった前提でROSAクラスターをご利用いただくことになります。
 
 
