@@ -1,4 +1,4 @@
-## ROSAクラスターの作成
+## AWS Security Token Service (STS) を使用したROSAクラスターの作成
 
 ### 前準備
 

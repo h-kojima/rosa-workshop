@@ -35,7 +35,7 @@ Red Hat OpenShift Service on AWS (ROSA) Workshops プロジェクトは、イン
 
 ### コンテンツ
 
-1. [\[デモ\] ROSAクラスターの作成](docs/rosa-create)
+1. [\[デモ\] AWS Security Token Service (STS) を使用したROSAクラスターの作成](docs/rosa-create)
 1. [\[ハンズオン\] GitHubを利用したROSAクラスターへのアクセス](docs/rosa-access)
 1. [\[ハンズオン\] アプリケーションのデプロイのクイックスタート](docs/rosa-app-deploy-quickstart)
 1. [\[デモとハンズオン\] 永続ボリュームとしての Amazon EBS/EFS の利用設定](docs/rosa-volume)
