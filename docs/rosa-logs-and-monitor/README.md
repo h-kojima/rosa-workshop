@@ -40,11 +40,11 @@ I: Granted role 'dedicated-admins' to user '<受講者が利用しているROSA�
 <div style="text-align: center;">openshift-loggingプロジェクトに追加されたPod</div>　　
 
 
-#### [Tips]: STSを利用してROSAクラスターを作成している時の、ロギングアドオンインストール
+#### [Tips] STSを利用してROSAクラスターを作成している時の、ロギングアドオンインストール
 
 STSを利用してROSAクラスターを作成している場合、CloudWatchを利用する権限(AWS IAMポリシー/ロール)を持ったAWS IAMユーザを作成し、そのユーザの認証情報をROSAクラスターの「openshift-logging」プロジェクトのシークレットリソースとして保存しておく必要があります。これにより、ロギングアドオンインストール後に、そのユーザ権限を持ってCloudWatchへのログ転送が可能になります。具体的な手順は、下記を参考にしてください。
 
-[参考情報] [STSを利用したROSAクラスターへのロギングアドオンインストール](https://www.rosaworkshop.io/ostoy/9-logging/#installing-the-cluster-logging-add-on-service)
+**[参考情報]** [STSを利用したROSAクラスターへのロギングアドオンインストール](https://www.rosaworkshop.io/ostoy/9-logging/#installing-the-cluster-logging-add-on-service)
 
 
 
@@ -76,7 +76,7 @@ ROSAクラスターは、デフォルトでPrometheusをベースとしたモニ
 
 ROSAクラスター全体のリソース利用状況のモニタリング、いわゆるプラットフォームモニタリングとRed Hatの公式ドキュメントで定義しているものについては、Red HatのSREチームによって利用されています。ROSAの責任分担マトリクスによって、プラットフォームモニタリングについては、Red Hatに責任があると定義しているため、ROSAの利用者はこれらの情報を気にする必要はありません。後述するコンピュートノードのオートスケール設定が有効になっていない場合、プラットフォームモニタリングによって得られた情報をもとに、SREチームがROSAの利用者に、追加のコンピュートノードやストレージなどのクラスターリソースに必要な変更についてアラートを適宜送信します。
 
-[参考情報] [3.2.2.2 変更管理 の「容量の管理」 (ROSAのポリシーおよびサービス定義)](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/introduction_to_rosa/rosa-policy-change-management_rosa-policy-responsibility-matrix#doc-wrapper)
+**[参考情報]** [3.2.2.2 変更管理 の「容量の管理」 (ROSAのポリシーおよびサービス定義)](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/introduction_to_rosa/rosa-policy-change-management_rosa-policy-responsibility-matrix#doc-wrapper)
 
 
 ROSAクラスターでは、モニタリング機能を提供するPodが、「openshift-monitoring」と「openshift-user-workload-monitoring」という2つのプロジェクトで実行されています。プラットフォームモニタリング機能を提供するPodが「openshift-monitoring」プロジェクトで実行され、利用者のプロジェクトのモニタリングに関するカスタム設定を適用するためのPodが「openshift-user-workload-monitoring」プロジェクトで実行されます。これらは、ROSAクラスターの管理者権限「dedicated-admin」を持つユーザーでログインすることで確認できます。管理者権限を付与していない場合は、次のコマンドで付与します。
@@ -98,7 +98,7 @@ I: Granted role 'dedicated-admins' to user '<受講者が利用しているROSA�
 
 また、「openshift-monitoring」プロジェクトにあるPodは、全てのコントローラ/インフラストラクチャー/コンピュートノードで実行されるnode-exporter(メトリクス収集に利用)などの一部のPodを除き、大半がインフラストラクチャーノード上で実行されるようになっています。これらについては、各Podを選択して、「詳細タブ」のノードセレクターの表示や、ノード名をクリックして、「ノードの詳細」の「概要」タブの「ロール」が「infra, worker」(インフラストラクチャーノード)、または、「master」(コントローラノード)となっていることを確認してみてください。
 
-[参考情報] [1.2.1 デフォルトのモニタリングコンポーネント](https://access.redhat.com/documentation/ja-jp/openshift_container_platform/4.11/html/monitoring/understanding-the-monitoring-stack_monitoring-overview#default-monitoring-components_monitoring-overview)
+**[参考情報]** [1.2.1 デフォルトのモニタリングコンポーネント](https://access.redhat.com/documentation/ja-jp/openshift_container_platform/4.11/html/monitoring/understanding-the-monitoring-stack_monitoring-overview#default-monitoring-components_monitoring-overview)
 
 「openshift-user-workload-monitoring」プロジェクトでは、PrometheusのOperator Pod(コントローラノードで実行)を除いて、全てコンピュートノードで実行されます。なお、コンピュートノードを追加したとしても、これらのPodは追加されません。ちなみに、これらのPodは、[コントローラまたはインフラストラクチャーノードに移動することは許可されていません。](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/cluster_administration/moving-monitoring-components-to-different-nodes_rosa-configuring-the-monitoring-stack)
 
@@ -147,7 +147,7 @@ PodのCPUとメモリ使用については、「リミット(制限)」と「リ
 
 「リミット」がない場合、リクエストされた値以上のリソースが使用される可能性があります。また、「リミット」のみ定義されている場合は、リミットに一致する値がリソースとして、スケジューラによってPodに自動的に割り当てられます。
 
-[参考情報] [コンテナのリソース管理の「要求と制限」](https://kubernetes.io/ja/docs/concepts/configuration/manage-resources-containers/)を参照
+**[参考情報]** [コンテナのリソース管理の「要求と制限」](https://kubernetes.io/ja/docs/concepts/configuration/manage-resources-containers/)を参照
 
 このダッシュボードにある、CPUやメモリの使用率は、これらの「リミット」と「リクエスト」の値に対してどのくらい使用されているか、という情報となります。上記画像の例では、使用率は7.70%となっているため、まだまだリソースに余裕があるということを示しています。
 
