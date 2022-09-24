@@ -105,9 +105,9 @@ I: Granted role 'dedicated-admins' to user '<受講者が利用しているROSA�
 ![「openshift-user-workload-monitoring」プロジェクトのPod](./images/openshift-user-workload-monitoring-pods.png)
 <div style="text-align: center;">「openshift-user-workload-monitoring」プロジェクトのPod</div>　　
 
-ROSAクラスターのPrometheusでは、Red HatのSREチームによって、ROSAクラスター全体のメトリクスデータが一定期間保存されていますが、利用者のプロジェクトに関するメトリクスデータの保存期間を変更できるようになっています。例えば、メトリクスデータを、200GiBの永続ボリュームを利用して30日間保存するような設定例を考えてみましょう。
+ROSAクラスターのPrometheusでは、Red HatのSREチームによって、ROSAクラスターのコアコンポーネントのメトリクスデータが永続ボリュームに一定期間保存されるように設定されています。一方で、利用者のプロジェクトに関するメトリクスデータは、デフォルトでは永続ボリュームに保存される設定にはなっていません。このため、ROSAクラスターのアップグレードや障害発生に伴う再起動などにより、利用者のメトリクスデータが失われる可能性があります。
 
-この場合、「openshift-user-workload-monitoring」プロジェクトのPodが利用する設定情報(ConfigMapリソース)を編集します。「user-workload-monitoring-config」設定マップ(ConfigMap)の「YAML」タブを開いて、下記の「data: ...」以下の行を末尾に追加して「保存」をクリックして保存します。(これは本演習環境では設定済みなので、受講者は設定する必要はありません。)
+そこで、利用者のメトリクスデータを、200GiBの永続ボリュームを利用して30日間保存するような設定例を考えてみましょう。この場合、「openshift-user-workload-monitoring」プロジェクトのPodが利用する設定情報(ConfigMapリソース)を編集します。「user-workload-monitoring-config」設定マップ(ConfigMap)の「YAML」タブを開いて、下記の「data: ...」以下の行を末尾に追加して「保存」をクリックして保存します。(これは本演習環境では設定済みなので、受講者は設定する必要はありません。)
 
 ```
 kind: ConfigMap
