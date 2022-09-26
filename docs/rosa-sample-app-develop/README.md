@@ -1,6 +1,6 @@
 ## ROSAクラスターでのJavaアプリケーション開発 スターターラボ
 
-時間に余裕がありましたら、こちらのコンテンツを上から順に、「Webhooks with OpenShift」のコンテンツまでトライしてみてください。
+時間に余裕がありましたら、こちらのコンテンツを上から順に、「Webhooks with OpenShift」までトライしてみてください。
 
 ※「Webhooks with OpenShift」より下のコンテンツについては、最新版のROSAでは動かない所があります。
 
