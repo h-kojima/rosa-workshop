@@ -6,9 +6,10 @@ ROSAは、Red Hatによるお客様の既存AWSアカウントへのデプロイ
 
 - [第1章 STS を使用した ROSA の AWS 前提条件](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/prepare_your_environment/rosa-sts-aws-prereqs)
 - [第2章 OpenShift Cluster Manager IAM ロールリソース](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/prepare_your_environment/rosa-sts-ocm-role)
+- [第4章 STS を使用する ROSA クラスターの IAM リソースについて](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/introduction_to_rosa/rosa-sts-about-iam-resources)
 - [第5章 必要な AWS サービスクォータ](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/prepare_your_environment/rosa-sts-required-aws-service-quotas)
 
-ROSAクラスターをデプロイするには、AWSアカウントと[Red Hatアカウント](https://cloud.redhat.com/)を利用します。アカウントがない場合は、アカウントを作成する必要があります。ROSAをデプロイ・実行するには、専用のAWSアカウントの使用を推奨しています。
+ROSAクラスターをデプロイするには、AWSアカウントと[Red Hatアカウント](https://cloud.redhat.com/)を利用します。アカウントがない場合は、アカウントを作成する必要があります。
 
 [AWSコンソール](https://console.aws.amazon.com/rosa/)でROSAサービスを有効にします。AWSアカウントにログインして、「Enable OpenShift」をクリックします。次のような画面になれば、ROSAサービスが有効になっています。
 
@@ -58,7 +59,7 @@ $ rosa version
 $ rosa login
 To login to your Red Hat account, get an offline access token at https://console.redhat.com/openshift/token/rosa
 ? Copy the token and paste it here: ********************
-I: Logged in as 'h.kojima' on 'https://api.openshift.com'
+I: Logged in as '<Red Hatアカウントのユーザー名>' on 'https://api.openshift.com'
 ```
 
 AWSアカウントにROSAデプロイに必要なクォータがあることを確認します。次のような出力が表示されたら、クォータのチェックはパスしています。
@@ -81,7 +82,7 @@ AWS ARN:                      arn:aws:iam::XXXXXXXXXX:user/testuser01
 OCM API:                      https://api.openshift.com
 OCM Account ID:               XXXXXXXXXX
 OCM Account Name:             Hiforumi Kojima
-OCM Account Username:         h.kojima
+OCM Account Username:         <Red Hatアカウントのユーザー名>
 OCM Account Email:            hkojima@redhat.com
 OCM Organization ID:          XXXXXXXXXX
 OCM Organization Name:        Hiforumi Kojima
@@ -99,9 +100,30 @@ I: Current OpenShift Client Version: 4.10.3
 ### STSを使用したROSAクラスターの作成
 
 STSを使用してROSAクラスターを作成するために必要な、AWS IAMロールとポリシーを作成します。
+
+最初にROSAクラスターの管理に利用する[OpenShift Cluster Manager (OCM)](https://cloud.redhat.com/openshift)(OpenShiftのテレメトリ情報などを管理するRed HatのSaaS)とAWSアカウントをリンクするために必要なロール「ocm-role」と、Red Hatアカウントのユーザー情報を確認するために必要なロール「user-role」の2つを作成します。
+```
+$ rosa create ocm-role --mode auto -y
+I: Creating ocm role
+I: Creating role using 'arn:aws:iam::XXXXXXXXX:user/testuser01'
+I: Created role 'ManagedOpenShift-OCM-Role-XXXXXXXXX' with ARN 'arn:aws:iam::XXXXXXXXX:role/ManagedOpenShift-OCM-Role-XXXXXXXXX'
+I: Linking OCM role
+I: Successfully linked role-arn 'arn:aws:iam::XXXXXXXXX:role/ManagedOpenShift-OCM-Role-XXXXXXXXX' with organization account 'XXXXXXXXX'
+
+
+$ rosa create user-role --mode auto -y
+I: Creating User role
+I: Creating ocm user role using 'arn:aws:iam::XXXXXXXXX:user/testuser01'
+I: Created role 'ManagedOpenShift-User-<Red Hatアカウントのユーザー名>-Role' with ARN 'arn:aws:iam::XXXXXXXXX:role/ManagedOpenShift-User-<Red Hatアカウントのユーザー名>-Role'
+I: Linking User role
+I: Successfully linked role ARN 'arn:aws:iam::XXXXXXXXX:role/ManagedOpenShift-User-<Red Hatアカウントのユーザー名>-Role' with account 'XXXXXXXXX'
+```
+
+次に、実際にROSAクラスターを作成するために必要となる、AWS IAMロールとポリシーを作成します。
+
 ```
 $ rosa create account-roles --mode auto -y
-I: Logged in as 'h.kojima' on 'https://api.openshift.com'
+I: Logged in as '<Red Hatアカウントのユーザー名>' on 'https://api.openshift.com'
 I: Validating AWS credentials...
 I: AWS credentials are valid!
 I: Validating AWS quota...
@@ -124,7 +146,7 @@ I: To create a cluster with these roles, run the following command:
 rosa create cluster --sts
 ```
 
-AWSコンソールから、必要なIAMロールとポリシーが作成されていることを確認できます。
+AWSコンソールから、ROSAクラスター作成に必要なIAMロールとポリシーが作成されていることを確認できます。
 
 ![作成されたIAMロール](./images/managed-openshift-roles.png)
 <div style="text-align: center;">作成されたIAMロール</div>　　
