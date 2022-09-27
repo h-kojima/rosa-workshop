@@ -60,7 +60,7 @@ STSを利用してROSAクラスターを作成している場合、CloudWatchを
 ![「test-project20」プロジェクトのログストリーム](./images/logstream.png)
 <div style="text-align: center;">「test-project20」プロジェクトのログストリーム</div>　　
 
-ログストリームにある「message」と、Pod(この例では、nodejs-postgresql-persistent-1-build)の先頭のログを照らし合わせると、PodのログがCloudWatchに正しく転送されていることが確認できます。
+ログストリームにあるログイベントをロードしていき、タイムスタンプが一番古いログイベントの「message」と、Pod(この例では、nodejs-postgresql-persistent-1-build)の先頭のログを照らし合わせると、PodのログがCloudWatchに正しく転送されていることが確認できます。
 
 ![ログの転送確認](./images/log-forward-confirm1.png)
 ![ログの転送確認](./images/log-forward-confirm2.png)
