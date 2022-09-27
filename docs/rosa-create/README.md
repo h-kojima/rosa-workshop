@@ -313,7 +313,7 @@ $ rosa create operator-roles --cluster test-cluster01 --mode auto -y
 $ rosa create oidc-provider --cluster test-cluster01 --mode auto -y
 ```
 
-最後の2行のコマンドで、ROSAクラスター専用IAMロール(ROSAクラスターのOperatorが必要なAWSリソースを作成するために必要)と、認証するためにクラスターOperatorによって使用されるOpenID Connect (OIDC) プロバイダーを作成します。対話モードでROSAクラスター作成コマンドを実行した場合、これらを作成しないと、ROSAクラスター作成状態が「Waiting」のままで、デプロイが完了しません。
+最後の2行のコマンドで、各ROSAクラスター専用のIAMロール(ROSAクラスターのOperatorが必要なAWSリソースを作成するために必要)と、ROSAクラスターのOperatorがAWSリソースを作成する時の認証に利用されるOpenID Connect (OIDC) プロバイダーを作成します。対話モードでROSAクラスター作成コマンドを実行した場合、これらを作成しないと、ROSAクラスター作成状態が「Waiting」のままで、デプロイが完了しません。
 
 
 クラスターのデプロイ状態は、次のコマンドで確認できます。
