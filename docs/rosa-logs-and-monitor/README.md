@@ -34,7 +34,9 @@ $ rosa grant user dedicated-admin --user=<受講者が利用しているROSAの�
 I: Granted role 'dedicated-admins' to user '<受講者が利用しているROSAのユーザID(GitHubのアカウントID)>' on cluster 'rosa-XXXXX'
 ```
 
-このプロジェクトは、Cluster Logging Operatorのインストール前は何もない状態ですが、インストール後は、「cluster-logging-operator」と「fluetnd」Podが実行されていることが確認できます。メモリ使用量が多い、ログ収集とCloudWatchへのログ転送に利用されるfluentd Podについては、全てのコントローラ/コンピュートノードで実行されます。後にご紹介する手順で、ROSAの利用者がコンピュートノードを追加/削除した場合、その操作に伴って、「cluster-logging-operator」Operatorがfluentd podを自動的に追加/削除します。
+このプロジェクトは、Cluster Logging Operatorのインストール前は何もない状態ですが、インストール後は、「cluster-logging-operator」と「fluetnd」Podが実行されていることが確認できます。
+
+メモリ使用量が多い、ログ収集とCloudWatchへのログ転送に利用されるfluentd Podについては、全てのコントローラ/コンピュートノードで実行されます。後にご紹介する手順で、ROSAの利用者がコンピュートノードを追加/削除した場合、その操作に伴って、「cluster-logging-operator」Operatorがfluentd podを自動的に追加/削除します。
 
 ![openshift-loggingプロジェクトに追加されたPod](./images/openshift-logging-pods.png)
 <div style="text-align: center;">openshift-loggingプロジェクトに追加されたPod</div>　　
@@ -42,7 +44,9 @@ I: Granted role 'dedicated-admins' to user '<受講者が利用しているROSA�
 
 #### [Tips] STSを利用してROSAクラスターを作成している時の、ロギングアドオンインストール
 
-STSを利用してROSAクラスターを作成している場合、CloudWatchを利用する権限(AWS IAMポリシー/ロール)を持ったAWS IAMユーザを作成し、そのユーザの認証情報をROSAクラスターの「openshift-logging」プロジェクトのシークレットリソースとして保存しておく必要があります。これにより、ロギングアドオンインストール後に、そのユーザ権限を持ってCloudWatchへのログ転送が可能になります。具体的な手順は、下記を参考にしてください。
+STSを利用してROSAクラスターを作成している場合、CloudWatchを利用する権限(AWS IAMポリシー/ロール)を持ったAWS IAMユーザを作成し、そのユーザの認証情報をROSAクラスターの「openshift-logging」プロジェクトのシークレットリソースとして保存しておく必要があります。
+
+これにより、ロギングアドオンインストール後に、そのユーザ権限を持ってCloudWatchへのログ転送が可能になります。具体的な手順は、下記を参考にしてください。
 
 **[参考情報]** [STSを利用したROSAクラスターへのロギングアドオンインストール](https://www.rosaworkshop.io/ostoy/9-logging/#installing-the-cluster-logging-add-on-service)
 
@@ -74,12 +78,16 @@ STSを利用してROSAクラスターを作成している場合、CloudWatchを
 
 ROSAクラスターは、デフォルトでPrometheusをベースとしたモニタリング機能が有効になっています。このモニタリング機能のユースケースは、ROSAクラスター全体のリソース利用状況を見るものと、ROSAの利用者が作成したプロジェクト内のリソース利用状況を見るものの2つに別れます。
 
-ROSAクラスター全体のリソース利用状況のモニタリング、いわゆる「プラットフォームモニタリング」とRed Hatの公式ドキュメントで定義しているものについては、Red HatのSREチームによって利用されています。ROSAの責任分担マトリクスによって、プラットフォームモニタリングについては、Red Hatに責任があると定義しているため、ROSAの利用者はこれらの情報を気にする必要はありません。後述するコンピュートノードのオートスケール設定が有効になっていない場合、プラットフォームモニタリングによって得られた情報をもとに、SREチームがROSAの利用者に、追加のコンピュートノードやストレージなどのクラスターリソースに必要な変更についてアラートを適宜送信します。
+ROSAクラスター全体のリソース利用状況のモニタリング、いわゆる「プラットフォームモニタリング」とRed Hatの公式ドキュメントで定義しているものについては、Red HatのSREチームによって利用されています。ROSAの責任分担マトリクスによって、プラットフォームモニタリングについては、Red Hatに責任があると定義しているため、ROSAの利用者はこれらの情報を気にする必要はありません。
+
+後述するコンピュートノードのオートスケール設定が有効になっていない場合、プラットフォームモニタリングによって得られた情報をもとに、SREチームがROSAの利用者に、追加のコンピュートノードやストレージなどのクラスターリソースに必要な変更についてアラートを適宜送信します。
 
 **[参考情報]** [3.2.2.2 変更管理 の「容量の管理」 (ROSAのポリシーおよびサービス定義)](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/introduction_to_rosa/rosa-policy-change-management_rosa-policy-responsibility-matrix#doc-wrapper)
 
 
-ROSAクラスターでは、モニタリング機能を提供するPodが、「openshift-monitoring」と「openshift-user-workload-monitoring」という2つのプロジェクトで実行されています。プラットフォームモニタリング機能を提供するPodが「openshift-monitoring」プロジェクトで実行され、利用者のプロジェクトのモニタリングに関するカスタム設定を適用するためのPodが「openshift-user-workload-monitoring」プロジェクトで実行されます。これらは、ROSAクラスターの管理者権限「dedicated-admin」を持つユーザーでログインすることで確認できます。管理者権限を付与していない場合は、次のコマンドで付与します。
+ROSAクラスターでは、モニタリング機能を提供するPodが、「openshift-monitoring」と「openshift-user-workload-monitoring」という2つのプロジェクトで実行されています。プラットフォームモニタリング機能を提供するPodが「openshift-monitoring」プロジェクトで実行され、利用者のプロジェクトのモニタリングに関するカスタム設定を適用するためのPodが「openshift-user-workload-monitoring」プロジェクトで実行されます。
+
+これらは、ROSAクラスターの管理者権限「dedicated-admin」を持つユーザーでログインすることで確認できます。管理者権限を付与していない場合は、次のコマンドで付与します。
 
 ```
 $ rosa grant user dedicated-admin --user=<受講者が利用しているROSAのユーザID(GitHubのアカウントID)> --cluster rosa-XXXXX
@@ -96,7 +104,9 @@ I: Granted role 'dedicated-admins' to user '<受講者が利用しているROSA�
 ![「openshift-monitoring」プロジェクトのPod](./images/openshift-monitoring-pods2.png)
 <div style="text-align: center;">「openshift-monitoring」プロジェクトのPod</div>　　
 
-また、「openshift-monitoring」プロジェクトにあるPodは、全てのコントローラ/インフラストラクチャー/コンピュートノードで実行されるnode-exporter(メトリクス収集に利用)などの一部のPodを除き、大半がインフラストラクチャーノード上で実行されるようになっています。これらについては、各Podを選択して、「詳細タブ」のノードセレクターの表示や、ノード名をクリックして、「ノードの詳細」の「概要」タブの「ロール」が「infra, worker」(インフラストラクチャーノード)、または、「master」(コントローラノード)となっていることを確認してみてください。
+また、「openshift-monitoring」プロジェクトにあるPodは、全てのコントローラ/インフラストラクチャー/コンピュートノードで実行されるnode-exporter(メトリクス収集に利用)などの一部のPodを除き、大半がインフラストラクチャーノード上で実行されるようになっています。
+
+これらについては、各Podを選択して、「詳細タブ」のノードセレクターの表示や、ノード名をクリックして、「ノードの詳細」の「概要」タブの「ロール」が「infra, worker」(インフラストラクチャーノード)、または、「master」(コントローラノード)となっていることを確認してみてください。
 
 **[参考情報]** [1.2.1 デフォルトのモニタリングコンポーネント](https://access.redhat.com/documentation/ja-jp/openshift_container_platform/4.11/html/monitoring/understanding-the-monitoring-stack_monitoring-overview#default-monitoring-components_monitoring-overview)
 
@@ -105,9 +115,13 @@ I: Granted role 'dedicated-admins' to user '<受講者が利用しているROSA�
 ![「openshift-user-workload-monitoring」プロジェクトのPod](./images/openshift-user-workload-monitoring-pods.png)
 <div style="text-align: center;">「openshift-user-workload-monitoring」プロジェクトのPod</div>　　
 
-ROSAクラスターのPrometheusでは、Red HatのSREチームによって、ROSAクラスターのコアコンポーネントのメトリクスデータが永続ボリュームに一定期間保存されるように設定されています。一方で、利用者のプロジェクトに関するメトリクスデータは、デフォルトでは永続ボリュームに保存される設定にはなっていません。このため、ROSAクラスターのアップグレードや障害発生に伴う再起動などにより、利用者のメトリクスデータが失われる可能性があります。
+ROSAクラスターのPrometheusでは、Red HatのSREチームによって、ROSAクラスターのコアコンポーネントのメトリクスデータが永続ボリュームに一定期間保存されるように設定されています。
 
-そこで、利用者のメトリクスデータを、200GiBの永続ボリュームを利用して30日間保存するような設定例を考えてみましょう。この場合、「openshift-user-workload-monitoring」プロジェクトのPodが利用する設定情報(ConfigMapリソース)を編集します。「user-workload-monitoring-config」設定マップ(ConfigMap)の「YAML」タブを開いて、下記の「data: ...」以下の行を末尾に追加して「保存」をクリックして保存します。(これは本演習環境では設定済みなので、受講者は設定する必要はありません。)
+一方で、利用者のプロジェクトに関するメトリクスデータは、デフォルトでは永続ボリュームに保存される設定にはなっていません。このため、ROSAクラスターのアップグレードや障害発生に伴う再起動などにより、利用者のメトリクスデータが失われる可能性があります。
+
+そこで、利用者のメトリクスデータを、200GiBの永続ボリュームを利用して30日間保存するような設定例を考えてみましょう。この場合、「openshift-user-workload-monitoring」プロジェクトのPodが利用する設定情報(ConfigMapリソース)を編集します。
+
+「user-workload-monitoring-config」設定マップ(ConfigMap)の「YAML」タブを開いて、下記の「data: ...」以下の行を末尾に追加して「保存」をクリックして保存します。(これは本演習環境では設定済みなので、受講者は設定する必要はありません。)
 
 ```
 kind: ConfigMap
@@ -158,7 +172,9 @@ PodのCPUとメモリ使用については、「リミット(制限)」と「リ
 <div style="text-align: center;">Prometheusのクエリ</div>　　
 
 
-「イベント」タブでは、プロジェクト上の様々な記録を確認できます。PodやPVCなどを作成した際に実行される様々な操作記録(イベント)がストリーミングされていることを確認してみてください。これらのイベントは、ROSA/OpenShiftの様々なクラスター情報を保存する「etcd」データベースに保存されますが、保存期間は「3時間」となります。3時間を過ぎたらetcdデータベースから消去されます。この値は[ハードコーディング](https://github.com/openshift/cluster-kube-apiserver-operator/blob/master/bindata/assets/config/defaultconfig.yaml#L110)されており、ROSAの利用者が値を変更することはサポートしていません。
+「イベント」タブでは、プロジェクト上の様々な記録を確認できます。PodやPVCなどを作成した際に実行される様々な操作記録(イベント)がストリーミングされていることを確認してみてください。
+
+これらのイベントは、ROSA/OpenShiftの様々なクラスター情報を保存する「etcd」データベースに保存されますが、保存期間は「3時間」となります。3時間を過ぎたらetcdデータベースから消去されます。この値は[ハードコーディング](https://github.com/openshift/cluster-kube-apiserver-operator/blob/master/bindata/assets/config/defaultconfig.yaml#L110)されており、ROSAの利用者が値を変更することはサポートしていません。
 
 ![ストリーミングされたイベントの例](./images/events1.png)
 ![ストリーミングされたイベントの例](./images/events2.png)
