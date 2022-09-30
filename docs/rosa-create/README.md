@@ -89,9 +89,11 @@ OCM Organization Name:        Hiforumi Kojima
 OCM Organization External ID: XXXXXXXXXX
 ```
 
-ROSA CLIを利用して、最新のOpenShift CLI (oc) をインストールします。
+ROSA CLIを利用して、最新のOpenShift CLI (oc) をインストールします。下記の手順は、Linux版のopenshift-clientのtarファイルを解凍する例です。
 ```
 $ rosa download openshift-client
+$ tar xvf openshift-client-linux.tar.gz
+$ sudo mv oc /usr/local/bin/
 $ rosa verify openshift-client
 I: Verifying whether OpenShift command-line tool is available...
 I: Current OpenShift Client Version: 4.10.3
