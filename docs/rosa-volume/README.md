@@ -177,7 +177,7 @@ spec:
    - name: test-efs
      image: centos:latest
      command: [ "/bin/bash", "-c", "--" ]
-     args: [ "while true; do echo 'hello ebs' && sleep 30; done;" ]
+     args: [ "while true; do echo 'hello efs' && sleep 30; done;" ]
      volumeMounts:
        - mountPath: "/mnt/efs-data"
          name: efs-storage-vol
