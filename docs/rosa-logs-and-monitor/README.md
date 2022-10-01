@@ -59,7 +59,7 @@ STSを利用してROSAクラスターを作成している場合、CloudWatchを
 ![Amazon CloudWatchのロググループ](./images/loggroup.png)
 <div style="text-align: center;">Amazon CloudWatchのロググループ</div>　　
 
-末尾に「application」という名前が付いているロググループを選択して、ログストリームの1つを選択します。ここでは、[アプリケーションのデプロイのクイックスタート](../rosa-app-deploy-quickstart)で作成したNode.jsアプリケーションの、イメージビルドに関するログ(この例だと、「test-project20_sti-build」が名前に含まれているログストリーム)を選択します。受講者は、自身が作成したプロジェクトに関する「<プロジェクト名>_sti-build」を名前に含むログストリームを選択してみてください。
+末尾に「application」という名前が付いているロググループを選択して、ログストリームの1つを選択します。ここでは、[アプリケーションのデプロイのクイックスタート](../rosa-app-deploy-quickstart)で作成したNode.jsアプリケーションの、イメージビルドに関するログ(この例だと、「test-project20_sti-build」が名前に含まれているログストリーム)を選択します。受講者は、自身が作成したプロジェクトに関する「<プロジェクト名>_sti-build」を名前に含むログストリームを選択してみてください。ログストリームが表示されない場合、Cloudwatchの画面にある「さらにロードします」をクリックして、タイムスタンプが古いログストリームをロードしていきます。
 
 ![「test-project20」プロジェクトのログストリーム](./images/logstream.png)
 <div style="text-align: center;">「test-project20」プロジェクトのログストリーム</div>　　
