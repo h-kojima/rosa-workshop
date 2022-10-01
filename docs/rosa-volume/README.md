@@ -117,6 +117,8 @@ NFSトラフィックを許可するルールを追加した後に、Amazon EFS�
 
 「1777」というパーミッションの「1」は、Linuxのスティッキービット(Sticky Bit)を意味します。これが設定されている共有ディレクトリの中に作成されたファイル/ディレクトリは、それらの所有者や管理権限を持つrootユーザー以外は削除できなくなります。
 
+**[参考情報]** [Linux permissions: SUID, SGID, and sticky bit](https://www.redhat.com/sysadmin/suid-sgid-sticky-bit)
+
 他の値は空欄のままにしておいて、「アクセスポイントを作成」をクリックして、アクセスポイントを作成します。
 
 ![アクセスポイントの作成](./images/accesspoint-create3.png)
