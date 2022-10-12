@@ -1,45 +1,147 @@
 ## ROSAクラスターのロギングとモニタリング
 
-### [デモ] ROSAクラスターのロギングアドオンインストール
+### [デモ] ROSAクラスターのロギングの設定
 
 ※ここで紹介している内容は、インストラクターによって紹介されるデモ手順であり、受講者はコマンド/GUI操作を実施する必要はありません。次の「[ハンズオン] Amazon CloudWatchによるログ確認」まで読み進めて下さい。
 
 
-ROSAのロギングについては、ROSAのアドオンとして提供しているAmazon CloudWatchをベースとするログ転送ソリューション(Cluster Logging Operator)の利用を推奨しています。このアドオンは、[ROSAクラスター作成後に追加でインストール](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html-single/cluster_administration/index#rosa-install-logging)することで利用できるようになります。
+ROSAのロギングについては、Amazon CloudWatchをベースとするログ転送ソリューションの利用を推奨しています。以前のROSAまでは、ROSAのロギングアドオンOperator※によるCloudWatchへのログ転送をサポートしていましたが、ROSAのロギングアドオンOperatorが[非推奨扱いになった](https://access.redhat.com/solutions/6977966)ことに伴って、OpenShift Logging Operatorによる転送設定を推奨するようになりました。
 
-Cluster Logging Operatorは、Red HatのSaaSの1つである、OpenShiftクラスターのテレメトリ情報などを管理する[OpenShift Cluster Manager (OCM) のコンソール](https://console.redhat.com/openshift)から簡単にインストールできます。(この演習では、受講者はOCMコンソールへのアクセス権限を持たないことを想定します。)最初に、該当のROSAクラスターを選択して、「Add-ons」タブから「Cluster Logging Operator」を選択して、「Install」をクリックします。
+**※** OCMコンソールの「Add-ons」タブにあるCluster Logging Operatorと、「rosa install addon cluster-logging-operator」コマンドでインストールできるCluster Logging Operatorのことを指します。
 
-![Cluster Logging Operatorのインストール](./images/clo-install.png)
-<div style="text-align: center;">Cluster Logging Operatorのインストール</div>　　
+転送設定の概要は次のとおりです。STSの利用有無に関わらず、以下の手順を実施することができます。
 
-次に、Cluster Logging Operatorの設定画面が表示されます。各設定項目の意味は次のとおりです。
+1. Amazon CloudWatchのログ参照/書き込み権限を持つAWS IAMユーザーを作成して、このユーザーのアクセスキーとシークレットアクセスキーを取得します。
+1. ROSAのOpenShiftコンソールから、OpenShift Logging Operatorをインストールして、ロギングとログ転送用のインスタンスを作成します。このとき、上記手順で作成したAWS IAMユーザーの認証情報(アクセスキー/シークレットアクセスキー)を利用するように設定します。
 
-- `Use AWS CloudWatch`: CloudWatchの利用有無。CloudWatchでログ確認する際は必須の項目。チェックを入れなくても、Cluster Logging Operatorインストール後に設定変更はできます。チェックを入れない場合は、fluentdによるログ収集だけが行われます。
-- `Collect Applications logs`: アプリケーションログの収集。利用者が作成したプロジェクトにデプロイされるアプリケーションのログ(stdoutとstderrに出力されるログ)を収集します。後述のインフラストラクチャー関連のログは除きます。
-- `Collect Infrastructure logs`: インフラストラクチャーログの収集。ROSAクラスター作成時にデフォルトで作成される`openshift-*`,`kube-*`などのプロジェクトにある、インフラストラクチャー関連のログを収集します。
-- `Collect Audit logs`: セキュリティ監査に関連するログの収集。ノード監査システム(auditd)で生成されるログ(/var/log/audit/audit.log)、Kubernetes apiserver、OpenShift apiserverの監査ログを収集します。通常、ROSAクラスターの監査ログはRed HatのSREチームにより、Cluster Logging Operatorとは別の仕組み(現時点ではsplunk)を使ってROSAクラスターの外に保存され、[問題調査の際に、ROSAの利用者のサポートケースを使用したリクエストに伴って提供](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/introduction_to_rosa/rosa-policy-change-management_rosa-policy-responsibility-matrix)されます。そのため、ROSAの利用者はこれらのログを保存する必要は必ずしもありませんが、CloudWatchで監査ログを保存/確認したい場合はチェックを入れます。
-- `CloudWatch region`: CloudWatchを利用するリージョン。何も指定しなければ、ROSAクラスターがあるリージョンが利用されます。
+これらを順番に見ていきましょう。
 
+#### 1. CloudWatch用のAWS IAMユーザーの作成
 
-ここでは全てにチェックを入れて、「Install」をクリックします。およそ、10分ほど待つと、「installed」という表示に変わり、インストールが完了します。
+AWSのコンソールまたはAWS CLIで、CloudWatchのログ参照/書き込み権限を持つAWS IAMユーザーを作成します。IAMユーザー作成手順は、[AWS アカウントでの IAM ユーザーの作成](https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/id_users_create.html)をご参照ください。
 
-![Cluster Logging Operatorの設定とインストール完了画面](./images/clo-configure.png)
-![Cluster Logging Operatorの設定とインストール完了画面](./images/clo-installed.png)
-<div style="text-align: center;">Cluster Logging Operatorの設定とインストール完了画面</div>　　
+例として、下記画像のような権限を持つユーザーを作成します。この画像の例では、ログ参照/書き込み権限として「CloudWatchLogsFullAccess」を「rosauser01」ユーザーに付与しています。
 
-Cluster Logging Operatorのインストール完了後に、ROSAクラスターの「openshift-logging」プロジェクトを見てみます。もし、ROSAクラスターの管理者権限が割り当てられていない場合、事前に「rosa grant user」コマンドを実行して、自身のアカウントに割り当てておきます。
+![CloudWatchのログ参照/書き込み権限を持つ AWS IAMユーザー作成例](./images/iam-user-create.png)
+<div style="text-align: center;">CloudWatchのログ参照/書き込み権限を持つ AWS IAMユーザー作成例</div>　　
+
+この時に取得した、アクセスキーとシークレットアクセスキーをメモしておきます。
+
+#### 2. OpenShift Logging Operatorのインストールと設定
+
+OpenShiftには「Red Hat OpenShift Logging Operator」というOperatorがあり、OpenShiftのロギングスタックを運用するために利用されます。このOperatorによって、CloudWatchへのログ転送や、[Loki](https://access.redhat.com/documentation/ja-jp/openshift_container_platform/4.11/html/logging/cluster-logging-about-loki)によるロギングスタックの運用が可能になります。
+
+OpenShift Logging Operatorは、OpenShiftのコアコンポーネントがある`openshift-*`プロジェクトの1つ、「openshift-logging」プロジェクトにインストールします。これらのコアコンポーネントにアクセスするための権限である「cluster-admin」権限(dedicated-admin権限の上位権限)が必要となるので、「rosa grant user」コマンドで、この権限を付与します。
 
 ```
-$ rosa grant user dedicated-admin --user=<受講者が利用しているROSAのユーザID(GitHubのアカウントID)> --cluster rosa-XXXXX
-I: Granted role 'dedicated-admins' to user '<受講者が利用しているROSAのユーザID(GitHubのアカウントID)>' on cluster 'rosa-XXXXX'
+$ rosa grant user cluster-admin --user XXXXX -c rosa-XXXXX
+I: Granted role 'cluster-admins' to user 'XXXXX' on cluster 'rosa-XXXXX'
 ```
 
-このプロジェクトは、Cluster Logging Operatorのインストール前は何もない状態ですが、インストール後は、「cluster-logging-operator」と「fluetnd」Podが実行されていることが確認できます。
+OperatorHubから、「Red Hat OpenShift Logging Operator」をインストールします。「openshift logging」で検索した結果からインストールが可能です。Logging Operatorのインストールには、全てデフォルトのパラメーターを利用します。
 
-メモリ使用量が多い、ログ収集とCloudWatchへのログ転送に利用されるfluentd Podについては、全てのコントローラ/コンピュートノードで実行されます。後にご紹介する手順で、ROSAの利用者がコンピュートノードを追加/削除した場合、その操作に伴って、「cluster-logging-operator」Operatorがfluentd podを自動的に追加/削除します。
+![Logging Operatorのインストール](./images/logging-operator-install1.png)
+![Logging Operatorのインストール](./images/logging-operator-install2.png)
+![Logging Operatorのインストール](./images/logging-operator-install3.png)
+![Logging Operatorのインストール](./images/logging-operator-install4.png)
+![Logging Operatorのインストール](./images/logging-operator-install5.png)
+<div style="text-align: center;">Logging Operatorのインストール</div>　
 
-![openshift-loggingプロジェクトに追加されたPod](./images/openshift-logging-pods.png)
+
+インストールが完了したら、最初に、fluentdによるクラスターロギングを設定します。「インストール済みのOperator」の「Red Hat OpenShift Logging」Operatorを選択して、「Cluster Logging」の下にある「インスタンスの作成」から、次のYAMLを入力して「作成」をクリックします。
+
+```
+apiVersion: logging.openshift.io/v1
+kind: ClusterLogging
+metadata:
+  name: instance
+  namespace: openshift-logging
+spec:
+  collection:
+    type: fluentd
+  managementState: Managed
+```
+
+![ClusterLogging インスタンスの作成](./images/logging-instance-create1.png)
+![ClusterLogging インスタンスの作成](./images/logging-instance-create2.png)
+<div style="text-align: center;">ClusterLogging インスタンスの作成</div>　
+
+
+この段階では、logstore or logforward destination(ログ保存先またはログ転送先)の設定が無いために、ステータスが「Condition: CollectorDeadEnd」となっており、前述のYAMLで設定した、ログ収集/転送に利用するfluentdを実行するPodが起動されません。
+
+次にログ転送設定を行います。「1. CloudWatch用のAWS IAMユーザーの作成」で取得したアクセスキーをシークレットアクセスキーを、AWS認証情報としてOpenShiftのシークレットリソースに保存します。
+
+「OpenShift Logging Operator」をインストールした「openshift-logging」プロジェクトを選択して、左サイドメニューの「ワークロード」→「シークレット」に移動します。
+
+次に、「作成」から「キーと値のシークレット」をクリックして、次の値を入力して「作成」をクリックします。
+
+- シークレット名: AWS認証情報として保存するOpenShiftリソースの任意の名前。この例では「cw-secret」を指定。
+- キー/値: AWSアクセスキー(aws_access_key_id)とシークレットアクセスキー(aws_secret_access_key)を入力。
+
+![AWS認証情報を保存するシークレットの作成](./images/secret-create1.png)
+![AWS認証情報を保存するシークレットの作成](./images/secret-create2.png)
+![AWS認証情報を保存するシークレットの作成](./images/secret-create3.png)
+![AWS認証情報を保存するシークレットの作成](./images/secret-create4.png)
+<div style="text-align: center;">AWS認証情報を保存するシークレットの作成</div>　
+
+作成したシークレットリソース「cw-secret」を利用した、ログ転送設定のためのインスタンスを作成します。「OpenShift Logging Operator」を選択して、「Cluster Log Forwarder」の下にある「インスタンスの作成」から、次のYAMLを入力して「作成」をクリックします。
+
+この例では、「region: ap-northeast-1」を指定して、東京リージョンのCloudWatchへのログ転送を指定しています。また、前述の手順で作成した「cw-secret」シークレットも指定します。
+
+```
+apiVersion: "logging.openshift.io/v1"
+kind: ClusterLogForwarder
+metadata:
+  name: instance
+  namespace: openshift-logging
+spec:
+  outputs:
+   - name: cw
+     type: cloudwatch
+     cloudwatch:
+       region: ap-northeast-1
+     secret:
+        name: cw-secret
+  pipelines:
+    - name: all-logs
+      inputRefs:
+        - application
+        - infrastructure
+        - audit
+      outputRefs:
+        - cw
+```
+
+![ClusterLoggingForwarder インスタンスの作成](./images/logging-instance-create1.png)
+![ClusterLoggingForwarder インスタンスの作成](./images/loggingforwarder-instance-create1.png)
+![ClusterLoggingForwarder インスタンスの作成](./images/loggingforwarder-instance-create2.png)
+<div style="text-align: center;">ClusterLoggingForwarder インスタンスの作成</div>　
+
+
+どの種類のログを転送するかについては、前述したYAMLの「inputRefs:」以下の項目で指定できます。
+
+- `application`: アプリケーションログの収集。利用者が作成したプロジェクトにデプロイされるアプリケーションのログ(stdoutとstderrに出力されるログ)を収集します。後述のインフラストラクチャー関連のログは除きます。
+- `infrastructure`: インフラストラクチャーログの収集。ROSAクラスター作成時にデフォルトで作成される`openshift-*`,`kube-*`などのプロジェクトにある、インフラストラクチャー関連のログを収集します。
+- `audit`: セキュリティ監査に関連するログの収集。ノード監査システム(auditd)で生成されるログ(/var/log/audit/audit.log)、Kubernetes apiserver、OpenShift apiserverの監査ログを収集します。通常、ROSAクラスターの監査ログはRed HatのSREチームにより、Cluster Logging Operatorとは別の仕組み(現時点ではsplunk)を使ってROSAクラスターの外に保存され、[問題調査の際に、ROSAの利用者のサポートケースを使用したリクエストに伴って提供](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/introduction_to_rosa/rosa-policy-change-management_rosa-policy-responsibility-matrix)されます。そのため、ROSAの利用者はこれらのログを保存する必要は必ずしもありませんが、CloudWatchで監査ログを保存/確認したい場合は、「audit」を指定します。
+
+
+これでログ転送先の設定が完了したため、先ほど作成したLoggingインスタンスによって、自動的に`collector-*`という名前のPod(内部ではfluentdが実行)が、「openshift-logging」プロジェクトに作成されます。
+
+![openshift-loggingプロジェクトに作成されたPod](./images/logging-pods.png)
 <div style="text-align: center;">openshift-loggingプロジェクトに追加されたPod</div>　　
+
+
+メモリ使用量が多い、ログ収集とCloudWatchへのログ転送に利用されるcollector Podについては、インフラノードを除く、全てのコントローラ/コンピュートノードで実行されます。後にご紹介する手順で、ROSAの利用者がコンピュートノードを追加/削除した場合、その操作に伴って、「cluster-logging-operator」Operatorが、collector podを自動的に追加/削除します。
+
+
+これでCloudWatchへのログ転送設定は完了です。もし、これ以上`openshift-*`などのプロジェクトにあるROSAのコアコンポーネントにアクセスしない場合は、「cluster-admin」権限を、「rosa revoke user」コマンドで削除しておきます。
+
+```
+$ rosa revoke user cluster-admins --user XXXXX --cluster rosa-XXXXX
+? Are you sure you want to revoke role cluster-admins from user XXXXX in cluster rosa-XXXXX? Yes
+I: Revoked role 'cluster-admins' from user 'XXXXX' on cluster 'rosa-XXXXX'
+```
+
 
 
 #### [Tips] STSを利用してROSAクラスターを作成している時の、ロギングアドオンインストール

@@ -133,6 +133,8 @@ Amazon EFSで利用可能なファイルシステムとアクセスポイント�
 
 ここからはROSAクラスターでの操作となります。ROSAクラスターに管理者権限を持つユーザーでログインして、左サイドメニューにある、AdministratorパースペクティブのOperatorHubから、Amazon EFSをPodから自動的に利用できるようにするための、「AWS EFS Operator」を選択します。なお、「EFS」でOperatorHubのカタログを検索すると、「AWS EFS CSI Driver Operator」も検索結果として表示されますが、このOperatorではなく、「AWS EFS Operator」の方となりますので、注意してください。
 
+**[Tips]** Operatorは、Kubernetes/OpenShift上で実行されるコンテナアプリの運用(自動構築や削除など)を自動化するための、専用コンテナとなります。Operatorは、対象となるコンテナアプリを運用するためのインタフェースを提供します。このインタフェースの利用例については、後述する「[ハンズオン] Amazon EFSの利用」でご紹介します。なお、Operator自身も通常のアプリケーションと同様に、Podとして実行されます。
+
 「AWS EFS Operator」を選択したあとは、全てデフォルトの値を利用してインストールを完了します。
 
 ![AWS EFS Operatorのインストール](./images/aws-efs-operator-install1.png)
