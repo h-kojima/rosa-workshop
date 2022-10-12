@@ -25,7 +25,7 @@ AWSのコンソールまたはAWS CLIで、CloudWatchのログ参照/書き込�
 ![CloudWatchのログ参照/書き込み権限を持つ AWS IAMユーザー作成例](./images/iam-user-create.png)
 <div style="text-align: center;">CloudWatchのログ参照/書き込み権限を持つ AWS IAMユーザー作成例</div>　　
 
-この時に取得した、アクセスキーとシークレットアクセスキーをメモしておきます。
+この時に取得した、AWS IAMユーザーのアクセスキーとシークレットアクセスキーをメモしておきます。
 
 #### 2. OpenShift Logging Operatorのインストールと設定
 
