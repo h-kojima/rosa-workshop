@@ -144,13 +144,13 @@ I: Revoked role 'cluster-admins' from user 'XXXXX' on cluster 'rosa-XXXXX'
 
 
 
-#### [Tips] STSを利用してROSAクラスターを作成している時の、ロギングアドオンインストール
+#### [Tips] STSを利用した、Amazon CloudWatchへのログ転送設定
 
-STSを利用してROSAクラスターを作成している場合、CloudWatchを利用する権限(AWS IAMポリシー/ロール)を持ったAWS IAMユーザを作成し、そのユーザの認証情報をROSAクラスターの「openshift-logging」プロジェクトのシークレットリソースとして保存しておく必要があります。
+前述したAWSアカウントでのIAMユーザー作成が許可されていない場合、ROSAクラスターインストールの時と同様に、AWS STSを利用したログ転送の設定が可能です。この場合、AWS IAMの一時的な認証情報として利用される、専用のAWS IAMロール(CloudWatchへのログ転送に必要)を作成する必要があります。
 
-これにより、ロギングアドオンインストール後に、そのユーザ権限を持ってCloudWatchへのログ転送が可能になります。具体的な手順は、下記を参考にしてください。
+本演習では取り扱いませんが、具体的な設定手順については、下記を参考にしてください。
 
-**[参考情報]** [STSを利用したROSAクラスターへのロギングアドオンインストール](https://www.rosaworkshop.io/ostoy/9-logging/#installing-the-cluster-logging-add-on-service)
+**[参考情報]** [STSを利用した、Amazon CloudWatchへのログ転送設定](../rosa-sts-logs)
 
 
 
