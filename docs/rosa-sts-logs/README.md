@@ -1,5 +1,7 @@
 ## [参考情報] STSを利用した、Amazon CloudWatchへのログ転送設定
 
+※ここで紹介している内容は参考情報であり、受講者はコマンド/GUI操作を実施する必要はありません。
+
 OpenShiftでは、AWSなどのクラウドプロバイダーの認証情報を管理するためのOperatorとして、[Cloud Credential Operator (CCO)](https://access.redhat.com/documentation/ja-jp/openshift_container_platform/4.11/html/operators/cloud-credential-operator_cluster-operators-ref) というOperatorがデフォルトで実行されています。これらの認証情報は、CredentialsRequestという[Kubernetesのカスタムリソース](https://kubernetes.io/ja/docs/concepts/extend-kubernetes/api-extension/custom-resources/)(Podなどの標準リソースとは異なる、独自定義のリソース。Kubernetes APIを拡張するためのもの)の1つとして管理されています。
 
 このCredentialsRequestをもとに、AWS STSを利用するための、AWS IAMロールとOpenShiftシークレットリソースを作成することで、CloudWatchへのログ転送が可能になります。
