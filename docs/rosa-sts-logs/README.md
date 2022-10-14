@@ -141,7 +141,7 @@ ClusterLogForwarderインスタンス作成時に指定するシークレット�
 ![「cloudwatch-logging-role01」シークレット](./images/cloudwatch-logging-role01-secret.png)
 <div style="text-align: center;">「cloudwatch-logging-role01」シークレット</div>　　
 
-![「logcollector」サービスアカウント](./images/openshift-logging-sa.png)
+![「logcollector」サービスアカウント](./images/logcollector-sa.png)
 <div style="text-align: center;">「logcollector」サービスアカウント</div>　　
 
 ![「logcollector」サービスアカウントが付与された、「collector」デーモンセット](./images/collector-ds.png)
