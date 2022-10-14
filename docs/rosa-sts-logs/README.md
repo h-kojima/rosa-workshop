@@ -156,7 +156,16 @@ ClusterLogForwarderインスタンス作成時に指定するシークレット�
 <div style="text-align: center;">各collector Podにあるシークレットとトークン</div>　　
 
 
-これで、STSを利用した、Amazon CloudWatchへのログ転送設定手順の紹介は終了です。[ROSAクラスターのロギングとモニタリング](../rosa-logs-and-monitor)ページに戻って、「[ハンズオン] Amazon CloudWatchによるログ確認」に進んでください。
+これで、STSを利用した、Amazon CloudWatchへのログ転送設定手順の紹介は終了です。もし、これ以上openshift-*などのプロジェクトにあるROSAのコアコンポーネントにアクセスしない場合は、「cluster-admin」権限を、「rosa revoke user」コマンドで削除しておきます。
+
+```
+$ rosa revoke user cluster-admins --user XXXXX --cluster rosa-XXXXX
+? Are you sure you want to revoke role cluster-admins from user XXXXX in cluster rosa-XXXXX? Yes
+I: Revoked role 'cluster-admins' from user 'XXXXX' on cluster 'rosa-XXXXX'
+```
+
+以降は、[ROSAクラスターのロギングとモニタリング](../rosa-logs-and-monitor)ページに戻って、「[ハンズオン] Amazon CloudWatchによるログ確認」に進んでください。
+
 
 #### [参考情報]
 - [Short lived Credentials with AWS Security Token Service](https://github.com/openshift/cloud-credential-operator/blob/master/docs/sts.md)
