@@ -156,7 +156,7 @@ ClusterLogForwarderインスタンス作成時に指定するシークレット�
 <div style="text-align: center;">各collector Podにあるシークレットとトークン</div>　　
 
 
-これで、STSを利用した、Amazon CloudWatchへのログ転送設定手順の紹介は終了です。もし、これ以上openshift-*などのプロジェクトにあるROSAのコアコンポーネントにアクセスしない場合は、「cluster-admin」権限を、「rosa revoke user」コマンドで削除しておきます。
+これで、STSを利用した、Amazon CloudWatchへのログ転送設定手順の紹介は終了です。もし、これ以上`openshift-*`などのプロジェクトにあるROSAのコアコンポーネントにアクセスしない場合は、「cluster-admin」権限を、「rosa revoke user」コマンドで削除しておきます。
 
 ```
 $ rosa revoke user cluster-admins --user XXXXX --cluster rosa-XXXXX
