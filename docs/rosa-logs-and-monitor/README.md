@@ -62,6 +62,8 @@ spec:
   managementState: Managed
 ```
 
+**[Tips]** Amazon CloudWatch Logsには[各種クォータ(制限値)](https://docs.aws.amazon.com/ja_jp/AmazonCloudWatch/latest/logs/cloudwatch_limits_cwl.html)が設定されています。これらの制限値を超えないように、[ログ転送のパフォーマンスを調整](https://access.redhat.com/documentation/ja-jp/openshift_container_platform/4.11/html/logging/cluster-logging-collector-tuning_cluster-logging-collector)できます。
+
 ![ClusterLogging インスタンスの作成](./images/logging-instance-create1.png)
 ![ClusterLogging インスタンスの作成](./images/logging-instance-create2.png)
 <div style="text-align: center;">ClusterLogging インスタンスの作成</div>　
