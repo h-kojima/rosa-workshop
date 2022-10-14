@@ -156,7 +156,7 @@ ClusterLogForwarderインスタンス作成時に指定するシークレット�
 <div style="text-align: center;">各collector Podにあるシークレットとトークン</div>　　
 
 
-これで、STSを利用した、Amazon CloudWatchへのログ転送設定手順の紹介は終了です。ROSAクラスターのロギングとモニタリングページに戻って、[\[ハンズオン\] Amazon CloudWatchによるログ確認](../rosa-logs-and-monitor)に進んでください。
+これで、STSを利用した、Amazon CloudWatchへのログ転送設定手順の紹介は終了です。[ROSAクラスターのロギングとモニタリング](../rosa-logs-and-monitor)ページに戻って、「[ハンズオン] Amazon CloudWatchによるログ確認」に進んでください。
 
 #### [参考情報]
 - [Short lived Credentials with AWS Security Token Service](https://github.com/openshift/cloud-credential-operator/blob/master/docs/sts.md)
