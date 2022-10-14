@@ -131,7 +131,7 @@ spec:
 <div style="text-align: center;">openshift-loggingプロジェクトに追加されたPod</div>　　
 
 
-メモリ使用量が多い、ログ収集とCloudWatchへのログ転送に利用されるcollector Podについては、インフラノードを除く、全てのコントローラ/コンピュートノードで実行されます。後にご紹介する手順で、ROSAの利用者がコンピュートノードを追加/削除した場合、その操作に伴って、「cluster-logging-operator-XXXXX」Pod(コンピュートノードで実行されるOperator)が、collector podを自動的に追加/削除します。
+メモリ使用量が多い、ログ収集とCloudWatchへのログ転送に利用されるcollector Podについては、インフラノードを除く、全てのコントローラ/コンピュートノードで実行されます。後にご紹介する手順で、ROSAの利用者がコンピュートノードを追加/削除した場合、その操作に伴って、上記画像に表示されている「cluster-logging-operator-XXXXX」Pod(Operatorとして実行されるこのPodは、コンピュートノードでで実行されます)が、collector podを自動的に追加/削除します。
 
 
 これでCloudWatchへのログ転送設定は完了です。もし、これ以上`openshift-*`などのプロジェクトにあるROSAのコアコンポーネントにアクセスしない場合は、「cluster-admin」権限を、「rosa revoke user」コマンドで削除しておきます。
