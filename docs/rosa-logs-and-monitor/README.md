@@ -473,7 +473,7 @@ spec:
 $ rosa grant user cluster-admin --user XXXXX -c rosa-XXXXX
 ```
 
-そして、「openshift-user-workload-monitoring」プロジェクトの「alertmanager-user-workload」シークレットリソースを、次のように上書き編集します。「matchers:」では、複数の条件式の*AND*を設定できます。この例だと、アラートのラベルについて、「severityが"critical"か"warning"」と「namespaceが"<アラート送信対象となるプロジェクト名>"」の2つの条件全てに一致した場合、「test-receiver20」レシーバーで設定したメールアドレス(Gmailを例としています)にアラートを送信するように設定しています。
+そして、「openshift-user-workload-monitoring」プロジェクトの「alertmanager-user-workload」シークレットリソースを、次のように上書き編集します。「matchers:」では、複数の条件式の*AND*を設定できます。この例だと、アラートのラベルについて、「severityが"critical"または"warning"」と「namespaceが"<アラート送信対象となるプロジェクト名>"」の2つの条件全てに一致した場合、「test-receiver20」レシーバーで設定したメールアドレス(Gmailを例としています)にアラートを送信するように設定しています。
 
 
 ```
