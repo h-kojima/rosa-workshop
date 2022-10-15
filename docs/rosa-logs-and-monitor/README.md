@@ -269,7 +269,7 @@ PodのCPUとメモリ使用については、「リミット(制限)」と「リ
 
 このダッシュボードにある、CPUやメモリの使用率は、これらの「リミット」と「リクエスト」の値に対してどのくらい使用されているか、という情報となります。上記画像の例では、使用率は7.70%となっているため、まだまだリソースに余裕があるということを示しています。
 
-「メトリクス」タブでは、Prometheusのクエリ(PromQL)によるグラフ表示が可能です。予め用意されたクエリ(メモリー使用量など)を用いて、データを確認してみてください。本演習では扱いませんが、カスタムクエリを実施したい場合、[こちらのドキュメント](https://prometheus.io/docs/prometheus/latest/querying/basics/)を参考にできます。
+「メトリクス」タブでは、Prometheusのクエリ(PromQL)によるグラフ表示が可能です。予め用意されたクエリ(メモリー使用量など)を用いて、データを確認してみてください。カスタムクエリを実施したい場合、[こちらのドキュメント](https://prometheus.io/docs/prometheus/latest/querying/basics/)を参考にできます。
 
 ![Prometheusのクエリ](./images/promql1.png)
 ![Prometheusのクエリ](./images/promql2.png)
@@ -313,15 +313,6 @@ data:
 ![アラート設定の有効化](./images/alertmanager-config.png)
 <div style="text-align: center;">アラート設定の有効化</div>　　
 
-
-**[Tips]** 「rosa grant user」コマンドにより「dedicated-admin」権限が付与されたOpenShiftユーザーで、次のコマンドを実行することで、対象となるユーザープロジェクト専用のアラートルール編集権限を付与することができます。これによって、ROSAクラスターの管理者でなくても、アラートルールを編集できるようになります。
-
-OpenShift CLI(ocコマンド)でROSAクラスターにログインするには、ROSAクラスターのWebコンソール右上にあるユーザー名をクリックして、「ログインコマンドのコピー」から確認できるコマンドを実行します。
-
-```
-$ oc login --token=sha256~XXXXX --server=https://api.XXXXX.openshiftapps.com:6443
-$ oc adm policy add-role-to-user alert-routing-edit <ユーザー名> -n <プロジェクト名>
-```
 
 この設定追加により、「alertmanager-user-workload」Podが追加で実行されます。このPodも「prometheus-user-workload」Podと同様に、コンピュートノードで実行されるレプリカ数2(固定値)のPodです。
 
@@ -384,7 +375,7 @@ $ : ↓ 「dedicated-admin」権限がない場合は、付与
 $ rosa grant user dedicated-admin --user XXXXX -c rosa-XXXXX
 ```
 
-ServiceMonitorを、次のYAMLファイルから作成します。先ほどと同様に、ユーザー名の左横にある「+」アイコンをクリックして作成します。「interval: 30s」で、メトリクスデータをスクレイピング(収集・加工)する間隔を30秒と設定しています。また、「selector」を指定して、「app: prometheus-example-app」ラベルを持つサービスを対象としています。
+ServiceMonitorを、次のYAMLファイルから作成します。先ほどと同様に、ユーザー名の左横にある「+」アイコンをクリックして作成します。「interval: 30s」で、メトリクスデータをスクレイピング(収集・加工)する間隔を30秒と設定しています。また、「selector」を指定して、「app: prometheus-example-app」ラベルを持つサービスリソースを対象としています。
 
 ```
 apiVersion: monitoring.coreos.com/v1
@@ -416,9 +407,9 @@ spec:
 ![カスタムクエリーの実行](./images/custom-query2.png)
 <div style="text-align: center;">カスタムクエリーの実行</div>　　
 
-ここで得られたメトリクスの1つ、上記画像の右下に記載された「version」の値「1」を利用して、簡単なアラートルールを作成してみます。そのための、KubernetesカスタムリソースであるPrometheusRuleが利用できるようになっているので、このリソースを作成します。1つ以上のサンプルアプリPodがダウンしたときに、アラートを発行する設定とします。
+ここで得られたメトリクスの1つ、上記画像の右下に記載された「version」の値「1」を利用して、簡単なアラートルールを作成してみます。アラートルール作成のための、KubernetesカスタムリソースであるPrometheusRuleが利用できるようになっているので、このリソースを作成します。1つ以上のサンプルアプリPodがダウンしたときに、アラートを発行する設定とします。
 
-このサンプルアプリの同時実行数は2となるので、「version」の合計値が「2」となることから、1つ以上Podがダウンしたときは、「version」の合計値が1(2未満)か、「version」メトリクスが取得できない場合を想定した条件式を「expr:」で設定します。「for: 30s」では、アラート発行のための条件式が真となって、アラートが「pending」状態から「firing」状態になるまでの時間を30秒と設定しています。
+このサンプルアプリの同時実行数は2となるので、「version」の合計値が「2」となることから、1つ以上Podがダウンしたときは、「version」の合計値が1(2未満)か、「version」メトリクスが取得できない場合を想定した条件式を「expr:」で設定します。「for: 30s」では、アラート発行のための条件式が真となって、アラートが「pending(保留中)」状態から「firing(実行中)」状態になるまでの時間を30秒と設定しています。
 
 ```
 apiVersion: monitoring.coreos.com/v1
@@ -462,7 +453,7 @@ spec:
 ![「firing(実行中)」状態のアラート](./images/firing-alert2.png)
 <div style="text-align: center;">「firing(実行中)」状態のアラート</div>　　
 
-このアラートは、サンプルアプリのPod数を再度2に戻すと、自動的に消去されます。
+サンプルアプリのPod数を再度2に戻すと、アラート状態が「Firing(実行中)」から、もともとの何もない状態に戻ります。
 
 
 
