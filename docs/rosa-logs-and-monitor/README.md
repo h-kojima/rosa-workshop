@@ -332,6 +332,7 @@ metadata:
   labels:
     app: prometheus-example-app
   name: prometheus-example-app
+  namespace: <受講者が作成したプロジェクト名>
 spec:
   replicas: 2
   selector:
@@ -353,6 +354,7 @@ metadata:
   labels:
     app: prometheus-example-app
   name: prometheus-example-app
+  namespace: <受講者が作成したプロジェクト名>
 spec:
   ports:
   - port: 8080
@@ -409,7 +411,7 @@ spec:
 
 ここで得られたメトリクスの1つ、上記画像の右下に記載された「version」の値「1」を利用して、簡単なアラートルールを作成してみます。アラートルール作成のための、KubernetesカスタムリソースであるPrometheusRuleが利用できるようになっているので、このリソースを作成します。1つ以上のサンプルアプリPodがダウンしたときに、アラートを発行する設定とします。
 
-このサンプルアプリの同時実行数は2となるので、「version」の合計値が「2」となることから、1つ以上Podがダウンしたときの「version」の合計値が1(2未満)になるか、または、全てのPodがダウンして「version」メトリクスが取得できない場合を想定した条件式を「expr:」で設定します。「for: 30s」では、アラート発行のための条件式が真となって、アラートが「pending(保留中)」状態から「firing(実行中)」状態になるまでの時間を30秒と設定しています。
+このサンプルアプリの同時実行数は2となるので、「version」の値の合計値が「2」となることから、1つ以上Podがダウンしたときの「version」の値の合計値が1(2未満)になるか、または、全てのPodがダウンして「version」メトリクスが取得できない場合を想定した条件式を「expr:」で設定します。「for: 30s」では、アラート発行のための条件式が真となって、アラートが「pending(保留中)」状態から「firing(実行中)」状態になるまでの時間を30秒と設定しています。
 
 ```
 apiVersion: monitoring.coreos.com/v1
@@ -473,7 +475,7 @@ spec:
 $ rosa grant user cluster-admin --user XXXXX -c rosa-XXXXX
 ```
 
-そして、「openshift-user-workload-monitoring」プロジェクトの「alertmanager-user-workload」シークレットリソースを、次のように上書き編集します。「matchers:」では、複数の条件式の*AND*を設定できます。この例だと、アラートのラベルについて、「severityが"critical"または"warning"」と「namespaceが"<アラート送信対象となるプロジェクト名>"」の2つの条件全てに一致した場合、「test-receiver20」レシーバーで設定したメールアドレス(Gmailを例としています)にアラートを送信するように設定しています。
+そして、「openshift-user-workload-monitoring」プロジェクトの「alertmanager-user-workload」シークレットリソースを、次のように上書き編集します。「matchers:」では、複数の条件式の**AND**を設定できます。この例だと、アラートのラベルについて、「severityが"critical"または"warning"」と「namespaceが"<アラート送信対象となるプロジェクト名>"」の2つの条件全てに一致した場合、「test-receiver20」レシーバーで設定したメールアドレス(Gmailを例としています)にアラートを送信するように設定しています。
 
 
 ```
