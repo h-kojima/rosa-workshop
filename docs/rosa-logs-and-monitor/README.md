@@ -284,8 +284,240 @@ PodのCPUとメモリ使用については、「リミット(制限)」と「リ
 ![ストリーミングされたイベントの例](./images/events2.png)
 <div style="text-align: center;">ストリーミングされたイベントの例</div>　　
 
+### [ハンズオン] プロジェクトのアラート設定
 
-なお、2022年9月時点で、[ROSAクラスターの利用者がモニタリングのアラート機能を利用することはできません。](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/cluster_administration/rosa-managing-alerts)利用者は、クラスター全体のリソース利用に関するアラート発行をSREチームに任せたり、CloudWatchによるアプリケーションログ監視をする、といった前提でROSAクラスターをご利用いただくことになります。
+ROSAクラスターでは、Red HatのSREチームによってPrometheusのAlertmanagerによる様々なアラートが利用されています。これは、予め定義しておいた条件式(アラートルール)に一致した場合、アラートが表示されるという仕組みです。ROSA v4.11からは、ROSAの利用者が作成したプロジェクトで実行しているアプリケーションを対象としたアラート設定が可能になりました。
+
+このアラート設定を有効化するには、モニタリングの時と同様に、「openshift-user-workload-monitoring」プロジェクトの「user-workload-monitoring-config」設定マップ(ConfigMap)を、次のように末尾3行の「alertmanager: ...」を追加して保存します。(これは本演習環境では設定済みなので、受講者は設定する必要はありません。)
+
+```
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: user-workload-monitoring-config
+  namespace: openshift-user-workload-monitoring
+data:
+  config.yaml: |
+    prometheus:
+      retention: 30d
+      volumeClaimTemplate:
+        spec:
+          resources:
+            requests:
+              storage: 200Gi
+    alertmanager:
+      enabled: true 
+      enableAlertmanagerConfig: true
+```
+
+![アラート設定の有効化](./images/alertmanager-config.png)
+<div style="text-align: center;">アラート設定の有効化</div>　　
+
+
+**[Tips]** 「rosa grant user」コマンドにより「dedicated-admin」権限が付与されたOpenShiftユーザーで、次のコマンドを実行することで、対象となるユーザープロジェクト専用のアラートルール編集権限を付与することができます。これによって、ROSAクラスターの管理者でなくても、アラートルールを編集できるようになります。
+
+OpenShift CLI(ocコマンド)でROSAクラスターにログインするには、ROSAクラスターのWebコンソール右上にあるユーザー名をクリックして、「ログインコマンドのコピー」から確認できるコマンドを実行します。
+
+```
+$ oc login --token=sha256~XXXXX --server=https://api.XXXXX.openshiftapps.com:6443
+$ oc adm policy add-role-to-user alert-routing-edit <ユーザー名> -n <プロジェクト名>
+```
+
+この設定追加により、「alertmanager-user-workload」Podが追加で実行されます。このPodも「prometheus-user-workload」Podと同様に、コンピュートノードで実行されるレプリカ数2(固定値)のPodです。
+
+![「alertmanager-user-workload」Podの追加](./images/alertmanager-pods.png)
+<div style="text-align: center;">「alertmanager-user-workload」Podの追加</div>　　
+
+
+ユーザープロジェクトを対象としたカスタムアラートを設定するには、Prometheusのフォーマットに沿ったメトリクスを出力するアプリケーションを実行しておく必要があります。そのためのサンプルアプリがありますので、まずはこちらを適当なプロジェクトで実行します。
+
+ROSAクラスターのWebコンソール右上にある、ユーザー名の左横にある「+」アイコンをクリックします。サンプルアプリケーションを実行するための、次のYAMLファイルを入力して「作成」をクリックします。これによって、レプリカ数2の「prometheus-example-app」Podが実行されます。また、PrometehusメトリクスをROSAクラスター内部で見るために利用する「prometheus-example-app」[サービスリソース](https://kubernetes.io/ja/docs/concepts/services-networking/service/)も、同時に作成しています。
+
+```
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: prometheus-example-app
+  name: prometheus-example-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: prometheus-example-app
+  template:
+    metadata:
+      labels:
+        app: prometheus-example-app
+    spec:
+      containers:
+      - image: quay.io/brancz/prometheus-example-app:v0.2.0
+        imagePullPolicy: IfNotPresent
+        name: prometheus-example-app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: prometheus-example-app
+  name: prometheus-example-app
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+    name: web
+  selector:
+    app: prometheus-example-app
+  type: ClusterIP
+```
+
+![Prometheusサンプルアプリの作成](./images/prometheus-example-app-deploy.png)
+<div style="text-align: center;">Prometheusサンプルアプリの作成</div>　　
+
+
+「prometheus-example-app」サービスリソースを利用したモニタリングのための、[Kubernetesカスタムリソース](https://kubernetes.io/ja/docs/concepts/extend-kubernetes/api-extension/custom-resources/)としてServiceMonitorというリソースが、OpenShiftでは利用できるようになっています。これを「dedicated-admin」権限を持つユーザーで作成します。
+
+```
+$ : ↓ 「dedicated-admin」権限がない場合は、付与
+$ rosa grant user dedicated-admin --user XXXXX -c rosa-XXXXX
+```
+
+ServiceMonitorを、次のYAMLファイルから作成します。先ほどと同様に、ユーザー名の左横にある「+」アイコンをクリックして作成します。「interval: 30s」で、メトリクスデータをスクレイピング(収集・加工)する間隔を30秒と設定しています。また、「selector」を指定して、「app: prometheus-example-app」ラベルを持つサービスを対象としています。
+
+```
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    k8s-app: prometheus-example-monitor
+  name: prometheus-example-monitor
+  namespace: <受講者が作成したプロジェクト名>
+spec:
+  endpoints:
+  - interval: 30s
+    port: web
+    scheme: http
+    path: /metrics
+  selector:
+    matchLabels:
+      app: prometheus-example-app
+```
+
+![ServiceMonitorリソースの作成](./images/servicemonitor-create.png)
+<div style="text-align: center;">ServiceMonitorリソースの作成</div>　　
+
+
+ここまでの設定により、Developerパースペクティブの「監視」メニューの「メトリクス」タブから、このサンプルアプリケーションにあるメトリクスを見れるようになります。「メトリクス」タブから「カスタムクエリー」を選択して、「version」を入力してEnterキーを押します。すると、次のようなメトリクスデータを確認できます。
+
+
+![カスタムクエリーの実行](./images/custom-query1.png)
+![カスタムクエリーの実行](./images/custom-query2.png)
+<div style="text-align: center;">カスタムクエリーの実行</div>　　
+
+ここで得られたメトリクスの1つ、上記画像の右下に記載された「version」の値「1」を利用して、簡単なアラートルールを作成してみます。そのための、KubernetesカスタムリソースであるPrometheusRuleが利用できるようになっているので、このリソースを作成します。1つ以上のサンプルアプリPodがダウンしたときに、アラートを発行する設定とします。
+
+このサンプルアプリの同時実行数は2となるので、「version」の合計値が「2」となることから、1つ以上Podがダウンしたときは、「version」の合計値が1(2未満)か、「version」メトリクスが取得できない場合を想定した条件式を「expr:」で設定します。「for: 30s」では、アラート発行のための条件式が真となって、アラートが「pending」状態から「firing」状態になるまでの時間を30秒と設定しています。
+
+```
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: example-alert
+  namespace: <受講者が作成したプロジェクト名>
+spec:
+  groups:
+  - name: prometheus-example-app-down
+    rules:
+    - alert: PrometheusExampleAppDown
+      annotations:
+        description: One or more example pods down.
+        summary: Example Pods Down.
+      expr: sum(version) < 2 or absent(version)
+      for: 30s
+      labels:
+        severity: warning
+```
+
+![アラートルールの作成](./images/prometheus-rule-create.png)
+<div style="text-align: center;">アラートルールの作成</div>　　
+
+
+作成したアラートルールや、それに伴ったアラート状態は、Developerパースペクティブの「監視」メニューの「アラートタブ」から確認できます。右側にある「・」が3つ縦に並んだアイコンをクリックして、「アラートルールの表示」をクリックします。
+
+![アラートルールの確認](./images/alert-rule-view1.png)
+![アラートルールの確認](./images/alert-rule-view2.png)
+<div style="text-align: center;">アラートルールの確認</div>　　
+
+
+ここで、アラート発行をテストしてみます。Developerパースペクティブの「トポロジー」メニューから、「prometheus-example-app」アプリケーションを選択して、詳細タブから「↓矢印」を1回クリックして、Podの数を1つ減らします。
+
+![「prometheus-example-app」Podを1つ削除](./images/pod-remove.png)
+<div style="text-align: center;">「prometheus-example-app」Podを1つ削除</div>　　
+
+これにより、アラート状態が「firing(実行中)」に変わります。Developerパースペクティブの「監視」メニューの「アラート」タブから確認できます。「One or more...」をクリックして、アラートの詳細を確認できます。
+
+![「firing(実行中)」状態のアラート](./images/firing-alert1.png)
+![「firing(実行中)」状態のアラート](./images/firing-alert2.png)
+<div style="text-align: center;">「firing(実行中)」状態のアラート</div>　　
+
+このアラートは、サンプルアプリのPod数を再度2に戻すと、自動的に消去されます。
+
+
+
+### [参考手順] アラート送信の設定
+
+※ここで紹介している内容は参考手順です。本演習環境用に、アラート送信先となるサンプルメールアドレスやslackチャネルなどは用意していませんので、受講者はコマンド/GUI操作を実施する必要はありません。そのまま読み進めて、次の演習に移って下さい。
+
+選択した「アラートの詳細」の左下にあるラベルに一致した「firing(実行中)」状態のアラートを、指定したメールアドレスやslackチャネルに送信できます。前述の画像を例にあげると、次のラベルのいずれかに一致したアラートを送信するように設定できます。
+
+- alertname = PrometheusExampleAppDown
+- namespace = test-project20
+- serverity = warning
+
+アラート送信の設定には、「cluster-admin」権限が必要になるので、「rosa grant user」コマンドで権限付与しておきます。
+
+```
+$ rosa grant user cluster-admin --user XXXXX -c rosa-XXXXX
+```
+
+そして、「openshift-user-workload-monitoring」プロジェクトの「alertmanager-user-workload」シークレットリソースを、次のように上書き編集します。「matchers:」では、複数の条件式の*AND*を設定できます。この例だと、アラートのラベルについて、「severityが"critical"か"warning"」と「namespaceが"<アラート送信対象となるプロジェクト名>"」の2つの条件全てに一致した場合、「test-receiver20」レシーバーで設定したメールアドレス(Gmailを例としています)にアラートを送信するように設定しています。
+
+
+```
+route:
+  receiver: Default
+  routes:
+  - matchers:
+      - severity =~ "critical|warning"
+      - namespace = "<アラート送信対象となるプロジェクト名>"
+    receiver: test-receiver20
+receivers:
+- name: Default
+- name: test-receiver20
+  email_configs:
+  - to: XXXXX@gmail.com
+    from: XXXXX@gmail.com
+    smarthost: smtp.gmail.com:587
+    auth_username: XXXXX@gmail.com
+    auth_password: XXXXX
+```
+
+このYAMLファイルは、Developerパースペクティブの「シークレット」メニューから、コンソール上部にある「プロジェクト」で「openshift-user-workload-monitoring」プロジェクトを選択して「alertmanager-user-workload」シークレットを選択します。選択したあとは、右上にある「アクション」から「シークレットの編集」をクリックします。
+
+そして、前述のYAMLファイルを入力して、「保存」をクリックします。
+
+
+![「alertmanager-user-workload」シークレットの編集](./images/alertmanager-user-workload-edit1.png)
+![「alertmanager-user-workload」シークレットの編集](./images/alertmanager-user-workload-edit2.png)
+<div style="text-align: center;">「alertmanager-user-workload」シークレットの編集</div>　　
+
+この後30秒ほど待つと、アラートが指定した宛先に送信されていることを確認できます。下記画像は、Gmailへのアラート送信例です。
+
+
+![Gmailに届いたアラートメールの例](./images/gmail-alerts.png)
+<div style="text-align: center;">Gmailに届いたアラートメールの例</div>　　
 
 
 
