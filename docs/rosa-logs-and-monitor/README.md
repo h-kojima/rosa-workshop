@@ -513,6 +513,12 @@ receivers:
 <div style="text-align: center;">Gmailに届いたアラートメールの例</div>　　
 
 
+アラート送信テストが完了して、これ以上「openshift-user-workload-monitoring」プロジェクトの「alertmanager-user-workload」シークレットリソースを編集しない場合は、「cluster-admin」権限を削除しておきます。
+
+```
+$ rosa revoke user cluster-admin --user XXXXX -c rosa-XXXXX
+```
+
 
 これで、ROSAクラスターのロギングとモニタリングに関する演習は終了です。次の演習の[コンピュートノードの追加/削除とオートスケールの設定](../rosa-nodes)に進んでください。
 
