@@ -269,11 +269,11 @@ PodのCPUとメモリ使用については、「リミット(制限)」と「リ
 
 このダッシュボードにある、CPUやメモリの使用率は、これらの「リミット」と「リクエスト」の値に対してどのくらい使用されているか、という情報となります。上記画像の例では、使用率は7.70%となっているため、まだまだリソースに余裕があるということを示しています。
 
-「メトリクス」タブでは、Prometheusのクエリ(PromQL)によるグラフ表示が可能です。予め用意されたクエリ(メモリー使用量など)を用いて、データを確認してみてください。カスタムクエリを実施したい場合、[こちらのドキュメント](https://prometheus.io/docs/prometheus/latest/querying/basics/)を参考にできます。
+「メトリクス」タブでは、Prometheusのクエリー(PromQL)によるグラフ表示が可能です。予め用意されたクエリー(メモリー使用量など)を用いて、データを確認してみてください。カスタムクエリーを実施したい場合、[こちらのドキュメント](https://prometheus.io/docs/prometheus/latest/querying/basics/)を参考にできます。
 
-![Prometheusのクエリ](./images/promql1.png)
-![Prometheusのクエリ](./images/promql2.png)
-<div style="text-align: center;">Prometheusのクエリ</div>　　
+![Prometheusのクエリー](./images/promql1.png)
+![Prometheusのクエリー](./images/promql2.png)
+<div style="text-align: center;">Prometheusのクエリー</div>　　
 
 
 「イベント」タブでは、プロジェクト上の様々な記録を確認できます。PodやPVCなどを作成した際に実行される様々な操作記録(イベント)がストリーミングされていることを確認してみてください。
