@@ -44,7 +44,7 @@ logging-cr.yaml
 また、「openshift-logging」プロジェクトにあるログ収集/転送Pod(collector Pod)に対して、[サービスアカウント](https://access.redhat.com/documentation/ja-jp/openshift_container_platform/4.11/html/authentication_and_authorization/understanding-and-creating-service-accounts)「logcollector」を付与します。サービスアカウントは、OpenShiftの各プロジェクトに存在するオブジェクトであり、ユーザーの認証情報を共有せずに各コンポーネントがAPIアクセスを制御するための方法を提供します。このサービスアカウントを介して、AWS IAMの一時的な認証情報を利用することになります。
 
 
-このYAMLファイルをもとに、AWS IAMロールを作成します。作成するためのツールとして、OpenShiftのCCOが提供する「ccoctl」というバイナリファイルを利用できます。「ccoctl」を入手するために、予め、cluster-admin権限を付与しておいたユーザーを利用して、OpenShift CLIであるocコマンドでログインしておきます。ocによるログインコマンドは、ROSAクラスターのWebコンソール右上にあるユーザー名をクリックして、「ログインコマンドのコピー」から確認できます。
+このYAMLファイルをもとに、AWS IAMロールを作成します。作成するためのツールとして、OpenShiftのCCOが提供する「ccoctl」というバイナリファイル(ROSAの場合、x86_64版RHEL8用のバイナリファイル)を利用できます。「ccoctl」を入手するために、予め、cluster-admin権限を付与しておいたユーザーを利用して、OpenShift CLIであるocコマンドでログインしておきます。ocによるログインコマンドは、ROSAクラスターのWebコンソール右上にあるユーザー名をクリックして、「ログインコマンドのコピー」から確認できます。
 
 ```
 $ rosa grant user cluster-admin --user XXXXX -c rosa-XXXXX
@@ -63,7 +63,7 @@ ccoctl logging-cr.yaml pull-secret.txt
 $ chmod +x ccoctl
 ```
 
-入手したccoctlを利用して、AWS IAMロールと、OpenShiftシークレットリソースを作成するためのマニフェストファイルを作成します。ccoctlコマンド実行(2022年10月時点では、x86_64版のRHEL8での実行を想定したバイナリファイル)には、rosaコマンドでROSAクラスターを作成した時に利用した、AWS認証情報(「~/.aws/credentials」など)が必要になります。ここで指定しているオプションは次のとおりです。
+入手したccoctlを利用して、AWS IAMロールと、OpenShiftシークレットリソースを作成するためのマニフェストファイルを作成します。ccoctlコマンド実行には、rosaコマンドでROSAクラスターを作成した時に利用した、AWS認証情報(「~/.aws/credentials」など)が必要になります。ここで指定しているオプションは次のとおりです。
 
 - `name`: 作成するAWS IAMロールの接頭辞
 - `credentials-requests-dir`: 先ほど作成した「logging-cr.yaml」ファイルがあるディレクトリパス
