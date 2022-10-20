@@ -127,7 +127,7 @@ $ oc apply -f manifests/openshift-logging-cloudwatch-logging-role01-credentials.
 secret/cloudwatch-logging-role01 created
 ```
 
-これで、「cloudwatch-logging-role01」という名前のシークレットリソースが、ROSAクラスター上に作成されました。
+これで、「cloudwatch-logging-role01」という名前のシークレットリソースが、ROSAクラスターの「openshift-logging」プロジェクトに作成されました。
 
 あとは、[ROSAクラスターのロギングとモニタリング](../rosa-logs-and-monitor)の「[デモ] ROSAクラスターのロギングの設定」で記載している手順と同じく、OpenShift Logging Operatorをインストールして、ClusterLoggingインスタンスとClusterLogForwarderインスタンスを作成すれば、設定完了です。
 
