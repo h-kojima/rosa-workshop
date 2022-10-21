@@ -36,6 +36,9 @@ time="2022-06-07T05:59:28Z" level=info msg="running file observer" files="[/etc/
 \ I: Cluster 'test-cluster01' completed uninstallation
 ```
 
+**[Tips]** ROSAクラスターから[Amazon EFSによる永続ボリュームを利用](../rosa-volume)できるように設定している場合、ROSAクラスターのコンピュートノードが利用するVPCやサブネットが、EFSのファイルシステムによって利用されている状態になっているため、ROSAクラスター削除(サブネット削除操作も含みます)が完了しないことがあります。この場合は、当該EFSファイルシステムを削除すると、ROSAクラスターの削除が完了します。
+
+
 ROSAクラスターが削除完了したあとに、各ROSAクラスターがAWSリソースの作成と認証に利用するIAMロールとOIDCプロバイダーを削除します。このとき、「rosa delete cluster」コマンドを実行したときに表示された、「rosa delete operator-roles」, 「rosa delete oidc-provider」コマンドを実行します。
 
 ちなみに、OCMのコンソールからROSAクラスターを削除した時にも、IAMロールとOIDCプロバイダーは自動削除されないため、この削除コマンドを実施する必要があります。その場合、ROSAクラスター削除前に「rosa list clusters」コマンドで確認しておいたROSAクラスターのID(NAMEではありません)を、「-c XXXXXXXX」の「XXXXXXXX」として指定します。
@@ -59,7 +62,6 @@ I: Successfully deleted the account roles
 
 ManagedOpenShift-XXX-Roleに紐づけられていたManagedOpenShift-XXXXXポリシーは削除されませんので、必要に応じてAWS CLIやIAMコンソールから、手動で削除します。これで、ROSAクラスターの削除とAWSアカウントのクリーンアップが完了します。
 
-**[Tips]** ROSAクラスターから[Amazon EFSによる永続ボリュームを利用](../rosa-volume)できるように設定している場合、ROSAクラスターのコンピュートノードが利用するVPCやサブネットが、EFSのファイルシステムによって利用されている状態になっているため、ROSAクラスター削除(サブネット削除操作も含みます)が完了しないことがあります。この場合は、当該EFSファイルシステムを削除すると、ROSAクラスターの削除操作が完了します。
 
 これで、ROSAクラスターの基本的な利用方法を学習する演習とデモ紹介は終了しました。時間に余裕がありましたら、オプションの演習である[ROSAクラスターでのJavaアプリケーション開発 スターターラボ](../rosa-sample-app-develop)に進んでください。
 
