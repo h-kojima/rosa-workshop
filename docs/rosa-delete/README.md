@@ -59,6 +59,8 @@ I: Successfully deleted the account roles
 
 ManagedOpenShift-XXX-Roleに紐づけられていたManagedOpenShift-XXXXXポリシーは削除されませんので、必要に応じてAWS CLIやIAMコンソールから、手動で削除します。これで、ROSAクラスターの削除とAWSアカウントのクリーンアップが完了します。
 
+**[Tips]** ROSAクラスターから[Amazon EFSによる永続ボリュームを利用](../rosa-volume)できるように設定している場合、ROSAクラスターのコンピュートノードが利用するサブネットが、EFSのファイルシステムによって利用されている状態になっているため、ROSAクラスター削除(サブネット削除操作も含みます)が完了しないことがあります。この場合は、当該EFSファイルシステムを削除すると、ROSAクラスターの削除操作が完了します。
+
 これで、ROSAクラスターの基本的な利用方法を学習する演習とデモ紹介は終了しました。時間に余裕がありましたら、オプションの演習である[ROSAクラスターでのJavaアプリケーション開発 スターターラボ](../rosa-sample-app-develop)に進んでください。
 
 [HOME](../../README.md)
