@@ -1,9 +1,9 @@
 The talk scripts of this page are as follows:
 
-ROSAの、レッドハット、クラウドプロバイダー、お客様の、
+ROSAの、レッドハット、AWS、お客様の、
 それぞれの責任についてご紹介します。
 
-大まかには、クラウドプロバイダがIaaS基盤、レッドハットがOpenShift、
+大まかには、AWSがIaaS基盤、レッドハットがOpenShift、
 
 お客様がアプリ部分、VPN/VPC接続、
 クラスターのプライベートネットワークなどを担当します。
