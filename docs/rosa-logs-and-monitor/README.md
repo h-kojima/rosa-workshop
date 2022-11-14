@@ -71,7 +71,7 @@ spec:
 
 この段階では、logstore or logforward destination(ログ保存先またはログ転送先)の設定が無いために、ステータスが「Condition: CollectorDeadEnd」となっており、前述のYAMLで設定した、ログ収集/転送に利用するfluentdを実行するPodが起動されません。
 
-次にログ転送設定を行います。「1. CloudWatch用のAWS IAMユーザーの作成」で取得したアクセスキーをシークレットアクセスキーを、AWS認証情報としてOpenShiftのシークレットリソースに保存します。
+次にログ転送設定を行います。「1. CloudWatch用のAWS IAMユーザーの作成」で取得したアクセスキーとシークレットアクセスキーを、AWS認証情報としてOpenShiftのシークレットリソースに保存します。
 
 「OpenShift Logging Operator」をインストールした「openshift-logging」プロジェクトを選択して、左サイドメニューの「ワークロード」→「シークレット」に移動します。
 
