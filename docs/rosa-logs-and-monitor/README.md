@@ -7,7 +7,7 @@
 
 ROSAのロギングについては、Amazon CloudWatchをベースとするログ転送ソリューションの利用を推奨しています。以前のROSAまでは、ROSAのロギングアドオンOperator※によるCloudWatchへのログ転送をサポートしていましたが、ROSAのロギングアドオンOperatorが[非推奨扱いになった](https://access.redhat.com/solutions/6977966)ことに伴って、OpenShift Logging Operatorによる転送設定を推奨するようになりました。
 
-**※** OCMコンソールの「Add-ons」タブにある「Cluster Logging Operator」メニューから、または、「rosa install addon cluster-logging-operator」コマンドで、ROSAクラスターにインストールできるOperatorのことです。
+**※** ROSAのロギングアドオンOperatorとは、OCMコンソールの「Add-ons」タブにある「Cluster Logging Operator」メニューから、または、「rosa install addon cluster-logging-operator」コマンドで、ROSAクラスターにインストールできるOperatorのことです。
 
 転送設定の概要は次のとおりです。STSの利用有無に関わらず、以下の手順を実施することができます。
 
