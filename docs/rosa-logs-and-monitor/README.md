@@ -455,7 +455,7 @@ spec:
 ![「firing(実行中)」状態のアラート](./images/firing-alert2.png)
 <div style="text-align: center;">「firing(実行中)」状態のアラート</div>　　
 
-サンプルアプリのPod数を再度2に戻すと、アラート状態が「Firing(実行中)」から、もともとの何もない状態に戻ります。
+サンプルアプリのPod数を再度2に戻すと、アラート状態が「firing(実行中)」から、もともとの何もない状態に戻ります。
 
 
 
