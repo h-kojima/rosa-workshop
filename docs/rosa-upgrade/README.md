@@ -9,6 +9,12 @@ OpenShift Cluster Manager (OCM)を使用して、AWS STSを使用するROSAク�
 ![ROSAクラスターの設定](./images/rosa-settings.png)
 <div style="text-align: center;">ROSAクラスターの設定画面</div>　　
 
+**[Tips]** ここで「Update strategy」の「Recurring updates」を選択すると、指定した日時の2日前以上にリリースされたz-streamの更新(4.10.24など)が、ROSAクラスターに自動適用されます。新しいマイナーバージョン(4.11や4.12など)がリリースされた場合は、利用者に通知され、次のマイナーバージョンに更新されることを手動で許可する必要があります。
+
+![ROSAクラスターの定期更新の設定](./images/recurring-updates.png)
+<div style="text-align: center;">ROSAクラスターの定期更新の設定</div>　
+
+
 アップグレードするバージョンを選択して、「Next」をクリックします。
 
 ![バージョンの選択](./images/version-select.png)
