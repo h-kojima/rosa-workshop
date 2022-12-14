@@ -124,7 +124,7 @@ spec:
 
 - `application`: アプリケーションログの収集。利用者が作成したプロジェクトにデプロイされるアプリケーションのログ(stdoutとstderrに出力されるログ)を収集します。後述のインフラストラクチャー関連のログは除きます。
 - `infrastructure`: インフラストラクチャーログの収集。ROSAクラスター作成時にデフォルトで作成される`openshift-*`,`kube-*`などのプロジェクトにある、インフラストラクチャー関連のログを収集します。
-- `audit`: セキュリティ監査に関連するログの収集。ノード監査システム(auditd)で生成されるログ(/var/log/audit/audit.log)、Kubernetes apiserver、OpenShift apiserverの監査ログを収集します。通常、ROSAクラスターの監査ログはRed HatのSREチームにより、OpenShift Logging Operatorとは別の仕組み(現時点ではsplunk)を使ってROSAクラスターの外に保存され、[問題調査の際に、ROSAの利用者のサポートケースを使用したリクエストに伴って提供](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/introduction_to_rosa/rosa-policy-change-management_rosa-policy-responsibility-matrix)されます。そのため、ROSAの利用者はこれらのログを保存する必要は必ずしもありませんが、CloudWatchで監査ログを保存/確認したい場合は、「audit」を指定します。
+- `audit`: セキュリティ監査に関連するログの収集。ノード監査システム(auditd)で生成されるログ(/var/log/audit/audit.log)、Kubernetes apiserver、OpenShift apiserverの監査ログを収集します。通常、ROSAクラスターの監査ログはRed HatのSREチームにより、OpenShift Logging Operatorとは別の仕組み(現時点ではsplunk)を使って[ROSAクラスターの外に保存](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/introduction_to_rosa/rosa-policy-process-security#rosa-policy-incident_rosa-policy-process-security)され、[問題調査の際に、ROSAの利用者のサポートケースを使用したリクエストに伴って提供](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/introduction_to_rosa/rosa-policy-change-management_rosa-policy-responsibility-matrix)されます。そのため、ROSAの利用者は監査ログを保存する必要は必ずしもありませんが、CloudWatchで監査ログを保存/確認したい場合は、「audit」を指定します。
 
 
 これでログ転送先の設定が完了したため、先ほど作成したLoggingインスタンスによって、自動的に`collector-*`という名前のPod(内部ではfluentdが実行)が、「openshift-logging」プロジェクトに作成されます。
