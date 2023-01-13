@@ -227,6 +227,8 @@ OpenShiftでのジョブは、「ワークロード」メニューの「ジョ�
 $ rosa delete machinepool mp20 -c rosa-XXXXX
 ```
 
+**[Tips]** ROSAクラスターでコンピュートノードを追加していくと、追加した台数に応じて、コントロールプレーンとインフラストラクチャーノードが、SREチームにより、手動で「スケールアップ」されます。どのサイズのEC2インスタンスがコントロールプレーンとインフラストラクチャーノードで使われるかについては、[こちらの表](https://docs.openshift.com/rosa/rosa_planning/rosa-limits-scalability.html#node-sizing-during-installation_rosa-limits-scalability)から確認できます。
+
 これでROSAの基本的な演習は終了です。この後は、インストラクターによる、[ROSAクラスターのアップグレード](../rosa-upgrade)と[ROSAクラスターの削除](../rosa-delete)のデモ紹介があります。
 
 デモ紹介を待っている間、時間に余裕があれば、オプション演習の[ROSAクラスターでのJavaアプリケーション開発 スターターラボ](../rosa-sample-app-develop)に進んでください。
