@@ -102,7 +102,8 @@ I: Current OpenShift Client Version: 4.10.3
 
 STSを使用してROSAクラスターを作成するために必要な、AWS IAMロールとポリシーを作成します。
 
-最初に、ROSAクラスターの管理に利用する[OpenShift Cluster Manager (OCM)](https://cloud.redhat.com/openshift)(OpenShiftクラスターのテレメトリ情報などを管理するRed HatのSaaS)とAWSアカウントをリンクするために必要なロール「ocm-role」と、Red Hatアカウントのユーザー情報を確認するために必要なロール「user-role」の2つを作成します。
+最初に、ROSAクラスターの管理に利用する[OpenShift Cluster Manager (OCM)](https://cloud.redhat.com/openshift)(OpenShiftクラスターのテレメトリ情報などを管理するRed HatのSaaS)とAWSアカウントをリンクするために必要なロール「ocm-role」と、Red Hatアカウントのユーザー情報を確認するために必要なロール「user-role」の2つを作成します。  
+※ ROSA CLIを使ってROSAクラスターを作成する場合、この「ocm-role」と「user-role」は不要になりました。
 ```
 $ rosa create ocm-role --mode auto -y
 I: Creating ocm role
