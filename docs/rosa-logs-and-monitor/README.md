@@ -48,7 +48,7 @@ OperatorHubから、「Red Hat OpenShift Logging Operator」をインストー�
 <div style="text-align: center;">Logging Operatorのインストール</div>　
 
 
-インストールが完了したら、最初に、fluentdによるクラスターロギングを設定します。「インストール済みのOperator」の「Red Hat OpenShift Logging」Operatorを選択して、「Cluster Logging」の下にある「インスタンスの作成」から、次のYAMLを入力して「作成」をクリックします。
+インストールが完了したら、最初に、vectorによるクラスターロギングを設定します。「インストール済みのOperator」の「Red Hat OpenShift Logging」Operatorを選択して、「Cluster Logging」の下にある「インスタンスの作成」から、次のYAMLを入力して「作成」をクリックします。
 
 ```
 apiVersion: logging.openshift.io/v1
@@ -58,7 +58,8 @@ metadata:
   namespace: openshift-logging
 spec:
   collection:
-    type: fluentd
+    logs:
+      type: vector
   managementState: Managed
 ```
 
@@ -69,7 +70,7 @@ spec:
 <div style="text-align: center;">ClusterLogging インスタンスの作成</div>　
 
 
-この段階では、logstore or logforward destination(ログ保存先またはログ転送先)の設定が無いために、ステータスが「Condition: CollectorDeadEnd」となっており、前述のYAMLで設定した、ログ収集/転送に利用するfluentdを実行するPodが起動されません。
+この段階では、logstore or logforward destination(ログ保存先またはログ転送先)の設定が無いために、ステータスが「Condition: CollectorDeadEnd」となっており、前述のYAMLで設定した、ログ収集/転送に利用するvectorを実行するPodが起動されません。
 
 次にログ転送設定を行います。「1. CloudWatch用のAWS IAMユーザーの作成」で取得したアクセスキーとシークレットアクセスキーを、AWS認証情報としてOpenShiftのシークレットリソースに保存します。
 
@@ -127,7 +128,7 @@ spec:
 - `audit`: セキュリティ監査に関連するログの収集。ノード監査システム(auditd)で生成されるログ(/var/log/audit/audit.log)、Kubernetes apiserver、OpenShift apiserverの監査ログを収集します。通常、ROSAクラスターの監査ログはRed HatのSREチームにより、OpenShift Logging Operatorとは別の仕組み(現時点ではsplunk)を使って[ROSAクラスターの外に保存](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/introduction_to_rosa/rosa-policy-process-security#rosa-policy-incident_rosa-policy-process-security)され、[問題調査の際に、ROSAの利用者のサポートケースを使用したリクエストに伴って提供](https://access.redhat.com/documentation/ja-jp/red_hat_openshift_service_on_aws/4/html/introduction_to_rosa/rosa-policy-change-management_rosa-policy-responsibility-matrix)されます。そのため、ROSAの利用者は監査ログを保存する必要は必ずしもありませんが、CloudWatchで監査ログを保存/確認したい場合は、「audit」を指定します。
 
 
-これでログ転送先の設定が完了したため、先ほど作成したLoggingインスタンスによって、自動的に`collector-*`という名前のPod(内部ではfluentdが実行)が、「openshift-logging」プロジェクトに作成されます。
+これでログ転送先の設定が完了したため、先ほど作成したLoggingインスタンスによって、自動的に`collector-*`という名前のPod(内部ではvectorが実行)が、「openshift-logging」プロジェクトに作成されます。
 
 ![openshift-loggingプロジェクトに作成されたPod](./images/logging-pods.png)
 <div style="text-align: center;">openshift-loggingプロジェクトに追加されたPod</div>　　
