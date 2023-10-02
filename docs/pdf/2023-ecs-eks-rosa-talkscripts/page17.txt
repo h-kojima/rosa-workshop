@@ -1,0 +1,10 @@
+The talk scripts of this page are as follows:
+
+OpenShiftのイメージビルド機能である、Source-to-Image、
+
+通称、S2I、に利用可能なカタログのイメージがこちらです。
+
+開発者が指定したGitリポジトリにあるソースコードをもとに、
+
+様々な言語によるイメージビルドの自動化を可能にしています。
+

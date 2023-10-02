@@ -1,0 +1,19 @@
+The talk scripts of this page are as follows:
+
+Red Hat OpenShiftは、レッドハットが提供するRHELと並ぶ主力製品の1つです。
+
+OpenShiftはRHELと統合されており、RHELをベースとした専用のOSである、
+
+CoreOSの上で実行されるKubernetesディストリビューションとなります。
+
+後でまたご紹介しますが、エンタープライズシステムで必要となる様々な機能が統合されており、
+
+その中には、前述のCNCFのプロジェクトも多数含まれています。
+
+
+ROSAは、AWS上のマネージドなOpenShiftサービスです。
+
+ROSAは、レッドハットとAWSによる共同サポートを提供しており、
+
+ユーザーは、レッドハットとAWSのどちらにも、サポートチケットをあげて問い合わせることができます。
+

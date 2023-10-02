@@ -1,0 +1,6 @@
+The talk scripts of this page are as follows:
+
+ここからは、マネージドなKubernetesサービスである、
+
+EKSとROSAのサンプルユースケースをご紹介していきます。
+

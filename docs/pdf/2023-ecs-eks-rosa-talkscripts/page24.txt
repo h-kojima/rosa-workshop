@@ -1,0 +1,25 @@
+The talk scripts of this page are as follows:
+
+ROSAを使う場合は、ロギングにはEKSと同様に、CloudWatchの利用を想定します。
+
+ROSAに含まれるOpenShift標準のロギング機能も利用できますが、
+
+2023年7月時点では、サポートに必要な要件が、かなり大きなサイズとなりますので、ご注意ください。
+
+この資料では、小さなサイズの環境で利用開始することも考慮して、
+
+AWSのサービスであるCloudWatchの利用を前提としています。
+
+OpenShiftのログ転送には、OpenShiftのLogging Operatorによる転送設定が可能になっています。
+
+この転送設定には、OpenShiftクラスター内に保存したAWSのIAM認証情報を利用します。
+
+
+なお、モニタリングについては、
+
+ROSAに含まれるOpenShiftのデフォルトで有効化されている、Prometheusを利用します。
+
+このとき、OpenShiftクラスターと連携した認証プロバイダーのユーザーアカウントが、
+
+管理するリソース利用率だけが見える設定が、デフォルトで適用されています。
+

@@ -1,0 +1,10 @@
+The talk scripts of this page are as follows:
+
+この資料では、AWSのマネージドなコンテナオーケストレーションサービスである、
+
+Amazon ECS、EKS、ROSAの特徴の違いや想定される用途をご紹介します。
+
+また、Kubernetesに興味のある人から特に聞かれることの多い、EKSとROSAについて、
+
+いくつかのサンプルユースケースと共に、両者の違いも合わせてご紹介します。
+
