@@ -361,6 +361,22 @@ I: Cluster 'test-cluster01' is now ready
 
 40分くらい待つとROSAクラスターのデプロイが完了して、STATEが「ready」状態になり、作成したROSAクラスターにアクセスできるようになります。
 
+**[Tips]** 作成したROSAクラスターについて、管理者権限を持つアカウントの作成には「rosa create admin」コマンドを実行します。下記のコマンドによって、ROSAクラスターのコンソールのURL(Console URLと表示されている箇所)と、管理者アカウント「cluster-admin」とパスワードを確認して、ログインできるようになります。
+
+```
+$ rosa create admin -c test-cluster01
+I: Admin account has been added to cluster 'classic01'.
+I: Please securely store this generated password. If you lose this password you can delete and recreate the cluster admin user.
+I: To login, run the following command:
+
+   oc login https://api.test-cluster01.qwhv.p1.openshiftapps.com:6443 --username cluster-admin --password XXXXX-XXXXX-XXXXX-XXXXX
+
+I: It may take several minutes for this access to become active.
+
+$ rosa describe cluster -c test-cluster01 |grep Console
+Console URL:                https://console-openshift-console.apps.test-cluster01.qwhv.p1.openshiftapps.com
+```
+
 ROSAクラスターの作成完了を待っている間、予め作成済みである別のROSAクラスターを利用して、受講者は演習を進めます。[GitHubを利用したROSAクラスターへのアクセス](../rosa-access)に進んでください。
 
 #### [参考情報]
