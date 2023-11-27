@@ -20,11 +20,9 @@ Red Hat OpenShift Service on AWS (ROSA) Workshops プロジェクトは、イン
 
 ### 演習の前提要件
 
-- AWS/GitHubにアクセス可能なネットワーク環境
+- AWSにアクセス可能なネットワーク環境
 - RHELサーバにSSHログインして、コマンドが実行可能
    - ROSA/OpenShift CLIがインストールされているRHELサーバを利用するために、SSHログインが必要です。
-- GitHubアカウント(個人アカウントも可)が利用可能
-   - ROSAクラスターの認証情報として利用します。
 - ROSAクラスターにアクセス可能なWebブラウザ
    - [「Browsers and Client Tools」表](https://access.redhat.com/articles/4763741)にある、最新版のOpenShiftに対応したWebブラウザ(Firefox/MS Edge/Chrome/Safari)のいずれかを利用します。
 
@@ -36,7 +34,6 @@ Red Hat OpenShift Service on AWS (ROSA) Workshops プロジェクトは、イン
 ### コンテンツ
 
 1. [\[デモ\] AWS Security Token Service (STS) を使用したROSAクラスターの作成](docs/rosa-create)
-1. [\[ハンズオン\] GitHubを利用したROSAクラスターへのアクセス](docs/rosa-access)
 1. [\[ハンズオン\] アプリケーションのデプロイのクイックスタート](docs/rosa-app-deploy-quickstart)
 1. [\[デモとハンズオン\] 永続ボリュームとしての Amazon EBS/EFS の利用設定](docs/rosa-volume)
 1. [\[デモとハンズオン\] AWS Controllers for Kubernetes (ACK) による Amazon S3の利用](docs/rosa-ack-s3)
@@ -45,4 +42,5 @@ Red Hat OpenShift Service on AWS (ROSA) Workshops プロジェクトは、イン
 1. [\[デモ\] ROSAクラスターのアップグレード](docs/rosa-upgrade)
 1. [\[デモ\] ROSAクラスターの削除](docs/rosa-delete)
 2. [\[ハンズオン\] (オプション)ROSAクラスターでのJavaアプリケーション開発 スターターラボ](docs/rosa-sample-app-develop)
+2. [\[ハンズオン\] (オプション)GitHubを利用したROSAクラスターへのアクセス](docs/rosa-access)
 2. [\[補足情報\] ECS/EKS/ROSAの比較情報](docs/rosa-compare)
