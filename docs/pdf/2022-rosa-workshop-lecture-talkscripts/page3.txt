@@ -1,3 +1,0 @@
-The talk scripts of this page are as follows:
-
-それでは、コンテナはなぜ使われるのか、について見ていきましょう。

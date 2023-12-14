@@ -1,3 +1,0 @@
-The talk scripts of this page are as follows:
-
-では、こうした特徴を持つコンテナがどのように使われるか、を見ていきましょう。

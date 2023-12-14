@@ -1,6 +1,0 @@
-The talk scripts of this page are as follows:
-
-以上で、Amazon ECS、EKS、ROSAの特徴の違いや、想定される用途のご紹介を終わります。
-
-ご清聴ありがとうございました。
-

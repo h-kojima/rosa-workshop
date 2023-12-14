@@ -1,6 +1,0 @@
-The talk scripts of this page are as follows:
-
-本資料では、これからコンテナやOpenShiftの導入をご検討されている方向けに、
-AWSが提供するクラウドサービスの1つである、
-
-Red Hat OpenShift Service on AWS、通称ROSAの概要をご紹介します。

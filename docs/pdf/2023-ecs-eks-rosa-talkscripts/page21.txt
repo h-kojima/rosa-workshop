@@ -1,4 +1,0 @@
-The talk scripts of this page are as follows:
-
-ここからは、2つめの、EKSとROSAのサンプルユースケースをご紹介していきます。
-
